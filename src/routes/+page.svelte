@@ -1,9 +1,11 @@
 <script>
+	export let data;
+	console.log('data', data);
 	import Banner from '$lib/components/Banner.svelte';
 	import Carousel from '$lib/components/Carousel.svelte';
 </script>
 
-<Banner />
+<Banner {...data.data[0]} />
 
 <div class="side-by-side">
 	<img
@@ -23,16 +25,17 @@
 	</div>
 </div>
 
-<Carousel />
+<Carousel slides={data.data} title="More Projects" />
 
 <style>
 	.side-by-side {
-		height: 69vh;
 		max-width: 100%;
-		display: flex;
-		padding: 2rem;
-		gap: 2rem;
+		display: grid;
+		grid-template-columns: 1fr 1fr;
 		position: relative;
+		background-color: lavender;
+		color: var(--background);
+		padding: 2rem;
 	}
 	.content {
 		height: 100%;
@@ -40,8 +43,7 @@
 		place-content: center;
 	}
 	img {
-		width: auto;
+		width: 100%;
 		height: 100%;
-		object-fit: contain;
 	}
 </style>

@@ -5,32 +5,46 @@
 	export let title = 'Skeleton Flowers & Water';
 	export let description =
 		'Proident sunt quis culpa veniam nulla officia ullamco et reprehenderit do incididunt irure sit. Cillum do proident laborum est. Pariatur tempor elit elit excepteur sit reprehenderit quis.';
+
+	import { fly } from 'svelte/transition';
 </script>
 
 <section>
 	{#if src}
 		<img {src} {alt} />
 	{/if}
-	<div class="content">
-		<span>{eyebrow}</span>
-		<h1>{title}</h1>
-		<p>{description}</p>
-	</div>
+	{#if title || description}
+		<div in:fly={{ x: -50, duration: 400 }} class="content">
+			<span>{eyebrow}</span>
+			<h1>{title}</h1>
+			<p>{description}</p>
+		</div>
+	{/if}
 </section>
 
 <style>
 	section {
 		display: flex;
 		justify-content: flex-start;
+		gap: 2rem;
 		align-items: flex-end;
-		min-width: 100%;
-		width: 100vw;
-		height: 69vh;
-		background: grey;
-		padding: 2rem;
+		height: calc(100vh - 3rem);
+		background: linear-gradient(rgba(0, 0, 0, 0), black);
 	}
 
 	.content {
 		max-width: 30rem;
+		padding: 3rem 2rem;
+	}
+
+	img {
+		width: 100%;
+		height: 100%;
+		object-fit: contain;
+		position: absolute;
+		z-index: -1;
+	}
+	p {
+		margin-bottom: 0;
 	}
 </style>
