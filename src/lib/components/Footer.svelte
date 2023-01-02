@@ -1,5 +1,8 @@
 <footer>
-	<h3>site links</h3>
+	<img
+		src="https://cdn.discordapp.com/attachments/1039738613606395925/1053866314655072266/sfw.png"
+		alt="abstract skeleton flowers and water"
+	/>
 	<div class="rows">
 		<div class="row">
 			<h3>group of links</h3>
@@ -30,6 +33,11 @@
 		justify-content: space-between;
 		align-items: center;
 		padding: 4rem;
+		height: 50vh;
+	}
+	img {
+		height: 100%;
+		width: auto;
 	}
 	.rows {
 		display: flex;

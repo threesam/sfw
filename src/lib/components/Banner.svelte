@@ -5,6 +5,9 @@
 	export let title = 'Skeleton Flowers & Water';
 	export let description =
 		'Proident sunt quis culpa veniam nulla officia ullamco et reprehenderit do incididunt irure sit. Cillum do proident laborum est. Pariatur tempor elit elit excepteur sit reprehenderit quis.';
+	export let slug = '';
+	export let path = '/';
+	const handle = path + slug.current;
 
 	import { fly } from 'svelte/transition';
 </script>
@@ -16,8 +19,9 @@
 	{#if title || description}
 		<div in:fly={{ x: -50, duration: 400 }} class="content">
 			<span>{eyebrow}</span>
-			<h1>{title}</h1>
+			<h2>{title}</h2>
 			<p>{description}</p>
+			<a href={handle} class="link">learn more</a>
 		</div>
 	{/if}
 </section>
@@ -46,5 +50,9 @@
 	}
 	p {
 		margin-bottom: 0;
+	}
+	h2 {
+		margin: 0;
+		margin-top: 0.5rem;
 	}
 </style>

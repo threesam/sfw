@@ -5,10 +5,6 @@
 			href: '/projects'
 		},
 		{
-			title: 'about',
-			href: '/about'
-		},
-		{
 			title: 'contact',
 			href: '/contact'
 		}

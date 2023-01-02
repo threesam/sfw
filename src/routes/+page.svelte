@@ -2,12 +2,13 @@
 	export let data;
 	console.log('data', data);
 	import Banner from '$lib/components/Banner.svelte';
+	import SubscribeForm from '$lib/components/SubscribeForm.svelte';
 	import Carousel from '$lib/components/Carousel.svelte';
 </script>
 
-<Banner {...data.data[0]} />
+<Banner {...data.data[2]} />
 
-<div class="side-by-side">
+<!-- <div class="side-by-side">
 	<img
 		src="https://cdn.discordapp.com/attachments/1039738613606395925/1053866314655072266/sfw.png"
 		alt="abstract skeleton flowers and water"
@@ -23,10 +24,10 @@
 			velit anim occaecat est.
 		</p>
 	</div>
-</div>
+</div> -->
+<SubscribeForm />
 
-<Carousel slides={data.data} title="More Projects" />
-
+<!-- <Carousel slides={data.data} title="More Projects" /> -->
 <style>
 	.side-by-side {
 		max-width: 100%;

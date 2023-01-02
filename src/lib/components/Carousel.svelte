@@ -33,7 +33,7 @@
 	<section>
 		<h2>{title}</h2>
 		<div class="slides">
-			{#each slides.concat(slides[0]) as slide}
+			{#each slides as slide}
 				<Slide {...slide} />
 			{/each}
 			<div class="title-slide">
