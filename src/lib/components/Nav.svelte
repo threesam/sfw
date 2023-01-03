@@ -1,9 +1,9 @@
 <script>
 	export let links = [
-		{
-			title: 'projects',
-			href: '/projects'
-		},
+		// {
+		// 	title: 'projects',
+		// 	href: '/projects'
+		// },
 		{
 			title: 'contact',
 			href: '/contact'
