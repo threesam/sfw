@@ -14,7 +14,8 @@ export async function load({ params }) {
   const data = await client.fetch(`*[_type == "project" && slug.current == "${slug}"][0]{
     ...,
     "src": mainImage.asset->url,
-    "alt": mainImage.alt
+    "alt": mainImage.alt,
+    "imagePalette": mainImage.asset->metadata.palette,
   }`)
 
   if (data) {

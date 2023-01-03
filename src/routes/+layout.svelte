@@ -1,6 +1,7 @@
 <script>
 	export let data = {};
-	console.log('data', data);
+	import { sanityData } from '$lib/stores/sanity.ts';
+	sanityData.set(data);
 
 	import Header from '$lib/components/Header.svelte';
 	import Footer from '$lib/components/Footer.svelte';
@@ -17,6 +18,7 @@
 <style>
 	main {
 		max-width: 100%;
+		width: 100%;
 		min-height: 100vh;
 		display: flex;
 		flex-direction: column;

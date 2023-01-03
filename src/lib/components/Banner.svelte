@@ -1,6 +1,7 @@
 <script>
 	export let src = '';
 	export let alt = '';
+	export let imagePalette = '';
 	export let eyebrow = 'Upcoming';
 	export let title = 'Skeleton Flowers & Water';
 	export let description =
@@ -10,6 +11,8 @@
 	const handle = path + slug.current;
 
 	import { fly } from 'svelte/transition';
+
+	import ArrowDown from './icons/ArrowDown.svelte';
 </script>
 
 <section>
@@ -24,12 +27,16 @@
 			<a href={handle} class="link">learn more</a>
 		</div>
 	{/if}
+	<div class="arrow">
+		<ArrowDown />
+	</div>
 </section>
 
 <style>
 	section {
 		display: flex;
 		justify-content: flex-start;
+		position: relative;
 		gap: 2rem;
 		align-items: flex-end;
 		height: calc(100vh - 3rem);
@@ -54,5 +61,12 @@
 	h2 {
 		margin: 0;
 		margin-top: 0.5rem;
+	}
+
+	.arrow {
+		position: absolute;
+		bottom: 2rem;
+		right: 1rem;
+		width: 3rem;
 	}
 </style>

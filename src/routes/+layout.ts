@@ -10,8 +10,9 @@ const client = sanityClient({
 export async function load({ params }) {
   const data = await client.fetch(`*[_type == "project"]{
     ...,
-    "mainImage": mainImage.asset->url,
-    "alt": mainImage.alt
+    "src": mainImage.asset->url,
+    "alt": mainImage.alt,
+    "imagePalette": mainImage.asset->metadata.palette,
   }`)
 
   if (data) {

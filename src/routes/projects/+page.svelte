@@ -1,5 +1,6 @@
 <script>
 	export let data = {};
+	console.log('data', data);
 
 	const { data: projects } = data;
 
@@ -11,7 +12,6 @@
 </script>
 
 <Banner {...first} path="/projects/" />
-<SubscribeForm />
 {#each projects.reverse() as project}
 	<SideBySide {...project} path="/projects/" />
 {/each}

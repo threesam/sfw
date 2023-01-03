@@ -31,35 +31,30 @@
 			}
 		}
 	});
-
-	import SocialLinks from './SocialLinks.svelte';
 </script>
 
-<section>
-	<div class="subscribe-form">
-		<h2>Follow the Latest</h2>
-		<SocialLinks />
-		<form action="/api/subscribe" method="post" on:submit|preventDefault={handleSubmit}>
-			<label for="email">
-				<input
-					type="email"
-					name="email"
-					id="email"
-					placeholder="enter email"
-					on:change={handleChange}
-					bind:value={$form.email}
-				/>
-			</label>
-			<button type="submit">I'm in</button>
-		</form>
-		{#if isSubmitted}
-			<h5 transition:slide>{message}</h5>
-		{/if}
-	</div>
-</section>
+<div class="subscribe-form">
+	<!-- <h4>Grab our updates</h4> -->
+	<form action="/api/subscribe" method="post" on:submit|preventDefault={handleSubmit}>
+		<label for="email">
+			<input
+				type="email"
+				name="email"
+				id="email"
+				placeholder="enter email"
+				on:change={handleChange}
+				bind:value={$form.email}
+			/>
+		</label>
+		<button type="submit">subscribe</button>
+	</form>
+	{#if isSubmitted}
+		<h5 transition:slide>{message}</h5>
+	{/if}
+</div>
 
 <style>
-	section {
+	/* section {
 		max-width: 100%;
 		display: grid;
 		place-content: center;
@@ -68,12 +63,10 @@
 		background-color: lavender;
 		color: var(--background);
 		padding: 4rem 2rem;
-	}
+	} */
 	.subscribe-form {
 		max-width: 50rem;
 		/* border: 2px solid var(--background); */
-		padding: 2rem;
-		box-shadow: var(--level-4);
 		--width: 65%;
 	}
 	form {
@@ -101,17 +94,18 @@
 		outline: none;
 	}
 	button {
-		background-color: var(--yellow);
+		background-color: var(--textColor);
 		font-family: var(--headingFont);
 		padding: 1rem 1.5rem;
 		border-radius: 0;
 		width: calc(100% - var(--width));
+		text-align: center;
 	}
-	h2,
+	h4,
 	h5 {
 		margin-top: 0;
 		margin-bottom: 0.5rem;
-		text-align: center;
+		color: var(--background);
 	}
 	@media screen and (max-width: 600px) {
 		h3 {
