@@ -1,6 +1,7 @@
 <script lang="ts">
 	import SvelteSeo from 'svelte-seo';
 	import imageBuilder from '../utils/imageUrlBuilder';
+
 	import { page } from '$app/stores';
 	const host = 'https://skeletonflowersandwater.com';
 	const SEO_IMAGE_WIDTH = 1200;
@@ -31,8 +32,8 @@
 			},
 			images: [
 				{
-					// url: imageBuilder(image).width(SEO_IMAGE_WIDTH).height(SEO_IMAGE_HEIGHT),
-					url: image,
+					url: imageBuilder(image).width(SEO_IMAGE_WIDTH).height(SEO_IMAGE_HEIGHT).url(),
+					// url: image,
 					width: SEO_IMAGE_WIDTH,
 					height: SEO_IMAGE_HEIGHT,
 					alt
@@ -42,8 +43,7 @@
 		twitter={{
 			title,
 			description,
-			// image: imageBuilder(image).width(SEO_IMAGE_WIDTH).height(TWITTER_IMAGE_HEIGHT),
-			image,
+			image: imageBuilder(image).width(SEO_IMAGE_WIDTH).height(TWITTER_IMAGE_HEIGHT).url(),
 			imageAlt: alt
 		}}
 	/>
@@ -58,8 +58,7 @@
 			type: 'website',
 			images: [
 				{
-					// url: imageBuilder(image).width(SEO_IMAGE_WIDTH).height(SEO_IMAGE_HEIGHT),
-					url: image,
+					url: imageBuilder(image).width(SEO_IMAGE_WIDTH).height(SEO_IMAGE_HEIGHT).url(),
 					width: SEO_IMAGE_WIDTH,
 					height: SEO_IMAGE_HEIGHT,
 					alt
@@ -69,8 +68,7 @@
 		twitter={{
 			title,
 			description,
-			// image: imageBuilder(image).width(SEO_IMAGE_WIDTH).height(TWITTER_IMAGE_HEIGHT),
-			image,
+			image: imageBuilder(image).width(SEO_IMAGE_WIDTH).height(TWITTER_IMAGE_HEIGHT).url(),
 			imageAlt: alt
 		}}
 	/>

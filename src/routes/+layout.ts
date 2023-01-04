@@ -14,10 +14,9 @@ export async function load({ params }) {
     "alt": image.alt
   }`)
   
-  console.log('data', data);
   if (data) {
     return {
-      data
+      ...data
     }
   }
   return {

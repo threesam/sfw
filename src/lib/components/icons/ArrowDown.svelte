@@ -1,6 +1,6 @@
 <script>
-	export let width = '';
-	export let height = '';
+	export let width = 20;
+	export let height = 20;
 	export let color = 'var(--textColor)';
 </script>
 

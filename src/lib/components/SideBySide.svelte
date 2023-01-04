@@ -9,7 +9,8 @@
 	export let slug = '';
 	export let buttonText = 'learn more';
 
-	const href = path + slug.current;
+	const handle = slug?.current;
+	const href = path + handle;
 </script>
 
 <section>
@@ -34,10 +35,6 @@
 
 	section:nth-child(odd) {
 		flex-direction: row-reverse;
-	}
-
-	.frame {
-		border: 1rem solid lavender;
 	}
 
 	section:nth-child(odd) .content {

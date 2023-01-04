@@ -8,16 +8,19 @@ const client = sanityClient({
 })
 
 export async function load({ params }) {
-  const data = await client.fetch(`*[_type == "project"]{
-    ...,
+  const projects = await client.fetch(`*[_type == "project"]{
+    title,
+    description,
+    "slug": slug.current,
     "src": mainImage.asset->url,
     "alt": mainImage.alt,
     "imagePalette": mainImage.asset->metadata.palette,
   }`)
 
-  if (data) {
+  if (projects) {
+    console.log('data in call', projects);
     return {
-      data
+      projects
     }
   }
   return {

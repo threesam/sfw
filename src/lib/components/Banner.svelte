@@ -28,7 +28,7 @@
 		</div>
 	{/if}
 	<div class="arrow">
-		<ArrowDown color="var(--primary)" />
+		<ArrowDown width={40} height={40} color="var(--primary)" />
 	</div>
 </section>
 
@@ -72,6 +72,7 @@
 	@media (max-width: 768px) {
 		section {
 			flex-direction: column;
+			align-items: flex-start;
 			gap: 0;
 		}
 		.content {

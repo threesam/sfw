@@ -8,9 +8,7 @@ const client = sanityClient({
 })
 
 export async function load({ params }) {
-  console.log('params', params);
   const {slug} = params
-  console.log('slug', slug);
   const data = await client.fetch(`*[_type == "project" && slug.current == "${slug}"][0]{
     ...,
     "src": mainImage.asset->url,

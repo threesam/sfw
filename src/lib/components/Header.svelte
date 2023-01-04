@@ -2,7 +2,7 @@
 	import Pencil from './Pencil.svelte';
 	import Nav from './Nav.svelte';
 
-	let w;
+	let w = 0;
 </script>
 
 <svelte:window bind:innerWidth={w} />
@@ -17,10 +17,6 @@
 				<h3>SF+W</h3>
 			{/if}
 		</a>
-		<!-- <img
-			src="https://cdn.discordapp.com/attachments/1039738613606395925/1053866314655072266/sfw.png"
-			alt="abstract skeleton flowers and water"
-		/> -->
 		<Nav />
 	</div>
 </header>

@@ -1,6 +1,6 @@
 <script>
 	export let data = {};
-	import { sanityData } from '$lib/stores/sanity.ts';
+	import { sanityData } from '$lib/stores/sanity';
 	sanityData.set(data);
 
 	import { page } from '$app/stores';
