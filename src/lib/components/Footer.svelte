@@ -4,27 +4,23 @@
 </script>
 
 <footer>
-	<section>
-		<SocialLinks />
-		<SubscribeForm />
-	</section>
+	<SocialLinks />
+	<SubscribeForm />
 </footer>
 
 <style>
 	footer {
 		background-color: #f9c84c;
-		height: 8rem;
 		display: flex;
-		justify-content: center;
-		align-items: center;
-	}
-	section {
-		width: 100%;
-		max-width: 100rem;
-		display: flex;
+		flex-direction: row;
 		justify-content: space-between;
 		align-items: center;
-		gap: 4rem;
-		padding: 0 2rem;
+		gap: 2rem;
+		padding: 2rem;
+	}
+	@media (max-width: 768px) {
+		footer {
+			flex-direction: column;
+		}
 	}
 </style>
