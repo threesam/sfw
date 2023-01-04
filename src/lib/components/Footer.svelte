@@ -11,6 +11,7 @@
 <style>
 	footer {
 		background-color: #f9c84c;
+		margin-top: 3rem;
 		display: flex;
 		flex-direction: row;
 		justify-content: space-between;

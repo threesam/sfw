@@ -4,7 +4,7 @@
   /* define colors as colors */
   --green: #14dd90;
   --red: #ff5470;
-  --yellow: #fde24f;
+  --yellow: #f9c84c;
   --black: #161f2b;
   --trueBlack: #000;
   --darkBlue: #00214d;
@@ -14,7 +14,7 @@
   --white: #fff;
 
   /* define colors' intentions */
-  --primary: var(--grey);
+  --primary: var(--yellow);
   --danger: var(--red);
   --background: var(--lightGrey);
   --textColor: var(--black);
@@ -114,11 +114,11 @@ li a,
 blockquote a {
   color: var(--textColor);
   text-decoration: none;
-  border-bottom: 2px solid var(--primary);
+  border-bottom: 2px solid var(--textColor);
 }
 
 .link:hover  {
-  color: var(--yellow);
+  border-bottom: 2px solid var(--primary);
   transition: 0.4s all ease-in;
 }
 
@@ -307,7 +307,7 @@ button.small {
 .dark {
   --cardBg: var(--darkGrey);
   --background: var(--trueBlack);
-  --textColor: var(--lightGrey);
+  --textColor: lavender;
   --buttonTextColor: var(--trueBlack);
   --headerBackground: var(--darkGrey);
   --headerTextColor: var(--white);

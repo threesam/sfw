@@ -80,4 +80,30 @@
 	section figure {
 		width: 50%;
 	}
+
+	@media (max-width: 768px) {
+		section {
+			flex-direction: column;
+			padding-top: 5rem;
+		}
+		section:nth-child(odd) {
+			flex-direction: column;
+		}
+		section:nth-child(odd) .content {
+			align-items: flex-start;
+			text-align: left;
+		}
+
+		section .content {
+			padding: 1rem;
+		}
+		section .content,
+		section figure {
+			width: unset;
+		}
+
+		h3 {
+			text-align: left;
+		}
+	}
 </style>
