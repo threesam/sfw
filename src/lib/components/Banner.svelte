@@ -83,6 +83,7 @@
 		.arrow {
 			right: 0.5rem;
 			bottom: 1.5rem;
+			display: none;
 		}
 	}
 </style>
