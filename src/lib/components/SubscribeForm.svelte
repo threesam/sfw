@@ -1,4 +1,5 @@
 <script>
+	export let endpoint = '/api/subscribe';
 	import { slide } from 'svelte/transition';
 	import { createForm } from 'svelte-forms-lib';
 	$: isSubmitted = false;
@@ -9,7 +10,7 @@
 		},
 		onSubmit: async (values) => {
 			try {
-				const response = await fetch('/api/subscribe', {
+				const response = await fetch(endpoint, {
 					method: 'POST',
 					body: JSON.stringify({ email: values.email })
 				});
@@ -35,7 +36,7 @@
 
 <div class="subscribe-form">
 	<!-- <h4>Grab our updates</h4> -->
-	<form action="/api/subscribe" method="post" on:submit|preventDefault={handleSubmit}>
+	<form action={endpoint} method="post" on:submit|preventDefault={handleSubmit}>
 		<label for="email">
 			<input
 				type="email"
