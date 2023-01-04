@@ -62,7 +62,7 @@
 
 	h3 {
 		margin: 0;
-		text-align: right;
+		text-align: left;
 	}
 
 	.content {
