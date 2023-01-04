@@ -34,7 +34,9 @@
 	"type": "module",
 	"dependencies": {
 		"@sanity/client": "^3.4.1",
+		"@sanity/image-url": "^1.0.1",
 		"svelte-forms-lib": "^2.0.1",
+		"svelte-seo": "^1.4.1",
 		"swiper": "^8.4.5"
 	}
 }

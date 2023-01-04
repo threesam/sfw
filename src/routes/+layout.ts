@@ -8,13 +8,13 @@ const client = sanityClient({
 })
 
 export async function load({ params }) {
-  const data = await client.fetch(`*[_type == "project"]{
+  const data = await client.fetch(`*[_type == "siteSettings" && hostname == 'skeletonflowersandwater'][0]{
     ...,
-    "src": mainImage.asset->url,
-    "alt": mainImage.alt,
-    "imagePalette": mainImage.asset->metadata.palette,
+    "src": image.asset->url,
+    "alt": image.alt
   }`)
-
+  
+  console.log('data', data);
   if (data) {
     return {
       data

@@ -3,6 +3,7 @@ lockfileVersion: 5.4
 specifiers:
   '@playwright/test': ^1.28.1
   '@sanity/client': ^3.4.1
+  '@sanity/image-url': ^1.0.1
   '@sveltejs/adapter-auto': ^1.0.0
   '@sveltejs/kit': ^1.0.0
   '@typescript-eslint/eslint-plugin': ^5.45.0
@@ -15,6 +16,7 @@ specifiers:
   svelte: ^3.54.0
   svelte-check: ^2.9.2
   svelte-forms-lib: ^2.0.1
+  svelte-seo: ^1.4.1
   swiper: ^8.4.5
   tslib: ^2.4.1
   typescript: ^4.9.3
@@ -23,7 +25,9 @@ specifiers:
 
 dependencies:
   '@sanity/client': 3.4.1
+  '@sanity/image-url': 1.0.1
   svelte-forms-lib: 2.0.1
+  svelte-seo: 1.4.1_typescript@4.9.4
   swiper: 8.4.5
 
 devDependencies:
@@ -349,6 +353,11 @@ packages:
     dependencies:
       event-source-polyfill: 1.0.25
       eventsource: 2.0.2
+    dev: false
+
+  /@sanity/image-url/1.0.1:
+    resolution: {integrity: sha512-AdKQ3zMk7WdoNwoJPrAvQhW+kUtBldBX0nHtnGy+rwmgsCQ0rAXasrgH43Fhmsp/yB6piiq+F2d5qEuBFsdQVg==}
+    engines: {node: '>=10.0.0'}
     dev: false
 
   /@sanity/timed-out/4.0.2:
@@ -1769,6 +1778,14 @@ packages:
       rimraf: 2.7.1
     dev: true
 
+  /schema-dts/0.8.3_typescript@4.9.4:
+    resolution: {integrity: sha512-GSLeVkUgEe8DzS8/FGWou1wlC8tQ1KXA5amCqCIH/psUzF74fWswtT0QFlSoJLT08CYyixnc3S/lkAm+RExoLQ==}
+    peerDependencies:
+      typescript: '>=3.4.0'
+    dependencies:
+      typescript: 4.9.4
+    dev: false
+
   /semver/7.3.8:
     resolution: {integrity: sha512-NB1ctGL5rlHrPJtFDVIVzTyQylMLu9N9VICA6HSFJo8MCGVTMW6gfpicwKmmK/dAjTOrqu5l63JJOpDSrAis3A==}
     engines: {node: '>=10'}
@@ -1986,6 +2003,14 @@ packages:
       typescript: 4.9.4
     dev: true
 
+  /svelte-seo/1.4.1_typescript@4.9.4:
+    resolution: {integrity: sha512-ud0vdQrAVvZHLFsYznimlKdxWC47GqYWgOBBTr3mYDPouBPQHYDazEFredmwUm5boVoMRffu/aOJ5Yj1xQQibA==}
+    dependencies:
+      schema-dts: 0.8.3_typescript@4.9.4
+    transitivePeerDependencies:
+      - typescript
+    dev: false
+
   /svelte/3.55.0:
     resolution: {integrity: sha512-uGu2FVMlOuey4JoKHKrpZFkoYyj0VLjJdz47zX5+gVK5odxHM40RVhar9/iK2YFRVxvfg9FkhfVlR0sjeIrOiA==}
     engines: {node: '>= 8'}
@@ -2088,7 +2113,6 @@ packages:
     resolution: {integrity: sha512-Uz+dTXYzxXXbsFpM86Wh3dKCxrQqUcVMxwU54orwlJjOpO3ao8L7j5lH+dWfTwgCwIuM9GQ2kvVotzYJMXTBZg==}
     engines: {node: '>=4.2.0'}
     hasBin: true
-    dev: true
 
   /undici/5.14.0:
     resolution: {integrity: sha512-yJlHYw6yXPPsuOH0x2Ib1Km61vu4hLiRRQoafs+WUgX1vO64vgnxiCEN9dpIrhZyHFsai3F0AEj4P9zy19enEQ==}
