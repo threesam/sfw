@@ -1,14 +1,13 @@
 <script>
 	export let src = '';
 	export let alt = '';
-	export let imagePalette = '';
-	export let eyebrow = 'Upcoming';
-	export let title = 'Skeleton Flowers & Water';
-	export let description =
-		'Proident sunt quis culpa veniam nulla officia ullamco et reprehenderit do incididunt irure sit. Cillum do proident laborum est. Pariatur tempor elit elit excepteur sit reprehenderit quis.';
+	export let imagePalette = {};
+	export let eyebrow = '';
+	export let title = '';
+	export let description = '';
 	export let slug = '';
 	export let path = '/';
-	const handle = path + slug.current;
+	const handle = path + slug;
 
 	import { fly } from 'svelte/transition';
 

@@ -2,15 +2,12 @@
 	export let src = '';
 	export let alt = '';
 	export let caption = '';
-	export let imagePalette = '';
+	export let imagePalette = {};
 	export let title = '';
 	export let description = '';
 	export let path = '/';
 	export let slug = '';
 	export let buttonText = 'learn more';
-
-	const handle = slug?.current;
-	const href = path + handle;
 </script>
 
 <section>
@@ -21,7 +18,10 @@
 	<div class="content">
 		<h3 style={imagePalette && `color: ${imagePalette.lightVibrant.background}`}>{title}</h3>
 		<p>{description}</p>
-		<a class="link" {href}>{buttonText}</a>
+
+		{#if slug}
+			<a class="link" href={path + slug}>{buttonText}</a>
+		{/if}
 	</div>
 </section>
 

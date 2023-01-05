@@ -2,7 +2,22 @@
 	export let data;
 	const project = data.data;
 
-	import Banner from '$lib/components/Banner.svelte';
+	import SideBySide from '$lib/components/SideBySide.svelte';
+	import { PortableText } from '@portabletext/svelte';
 </script>
 
-<Banner {...project} />
+<SideBySide {...project} path="/projects/" />
+
+<section class="portable-text">
+	<h3>synopsis</h3>
+	<PortableText value={project.body} />
+
+	<h3>cast + crew</h3>
+</section>
+
+<style>
+	section {
+		max-width: 60rem;
+		margin: 0 auto;
+	}
+</style>

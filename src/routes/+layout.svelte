@@ -23,7 +23,7 @@
 	<Footer />
 {/if}
 
-<style>
+<style lang="scss">
 	main {
 		max-width: 100%;
 		width: 100%;
