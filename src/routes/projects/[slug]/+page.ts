@@ -18,7 +18,7 @@ export async function load({ params }) {
 
   if (data) {
     return {
-      data
+      ...data
     }
   }
   return {

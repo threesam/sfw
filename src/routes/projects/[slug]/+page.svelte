@@ -1,16 +1,15 @@
 <script>
 	export let data;
-	const project = data.data;
 
 	import SideBySide from '$lib/components/SideBySide.svelte';
 	import { PortableText } from '@portabletext/svelte';
 </script>
 
-<SideBySide {...project} path="/projects/" />
+<SideBySide title={data.title} src={data.src} alt={data.alt} path="/projects/" />
 
 <section class="portable-text">
 	<h3>synopsis</h3>
-	<PortableText value={project.body} />
+	<PortableText value={data.body} />
 
 	<h3>cast + crew</h3>
 	<p>coming soon</p>

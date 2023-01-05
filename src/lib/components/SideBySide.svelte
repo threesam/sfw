@@ -2,7 +2,7 @@
 	export let src = '';
 	export let alt = '';
 	export let caption = '';
-	export let imagePalette = {};
+	export let imagePalette = null;
 	export let title = '';
 	export let description = '';
 	export let path = '/';
