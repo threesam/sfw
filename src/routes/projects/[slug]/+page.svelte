@@ -13,6 +13,7 @@
 	<PortableText value={project.body} />
 
 	<h3>cast + crew</h3>
+	<p>coming soon</p>
 </section>
 
 <style>
