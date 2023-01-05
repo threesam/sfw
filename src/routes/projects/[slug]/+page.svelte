@@ -1,11 +1,11 @@
 <script>
 	export let data;
 
-	import SideBySide from '$lib/components/SideBySide.svelte';
+	import Banner from '$lib/components/Banner.svelte';
 	import { PortableText } from '@portabletext/svelte';
 </script>
 
-<SideBySide title={data.title} src={data.src} alt={data.alt} path="/projects/" />
+<Banner title={data.title} src={data.src} alt={data.alt} path="/projects/" />
 
 <section class="portable-text">
 	<h3>synopsis</h3>

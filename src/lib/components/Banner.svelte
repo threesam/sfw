@@ -23,7 +23,9 @@
 			<span>{eyebrow}</span>
 			<h2>{title}</h2>
 			<p>{description}</p>
-			<a href={handle} class="link">learn more</a>
+			{#if slug}
+				<a href={handle} class="link">learn more</a>
+			{/if}
 		</div>
 	{/if}
 	<div class="arrow">
