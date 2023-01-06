@@ -32,8 +32,8 @@
 	import { PortableText } from '@portabletext/svelte';
 </script>
 
-<Banner title={data.title} src={data.src} alt={data.alt} path="/projects/" />
-<Carousel slides={data.posters} />
+<Banner height="30vh" src={data.src} alt={data.alt} />
+<h1>{data.title}</h1>
 
 <section class="portable-text">
 	<h3>synopsis</h3>
@@ -64,11 +64,20 @@
 	{/if}
 </section>
 
+{#if data.posters}
+	<Carousel slides={data.posters} />
+{/if}
+
 <style lang="scss">
 	section {
 		max-width: 60rem;
 		margin: 0 auto;
 		padding: 1rem;
+	}
+	h1 {
+		text-align: center;
+		max-width: 60rem;
+		margin: 1rem auto 0 auto;
 	}
 
 	h3,

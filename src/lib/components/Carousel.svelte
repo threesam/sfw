@@ -44,7 +44,7 @@
 	section {
 		width: 100%;
 		padding: 2rem;
-		height: 30rem;
+		height: 50vh;
 	}
 	h2 {
 		margin-top: 0;
@@ -52,6 +52,7 @@
 	.slides {
 		width: 100%;
 		height: 100%;
+		max-height: 100%;
 		display: flex;
 		gap: 2rem;
 		justify-content: center;

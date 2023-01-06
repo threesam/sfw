@@ -1,6 +1,7 @@
 <script>
 	export let src = '';
 	export let alt = '';
+	export let height = '';
 	export let imagePalette = {};
 	export let eyebrow = '';
 	export let title = '';
@@ -14,7 +15,7 @@
 	import ArrowDown from './icons/ArrowDown.svelte';
 </script>
 
-<section>
+<section style={height && `height: ${height};`}>
 	{#if src}
 		<img {src} {alt} />
 	{/if}
@@ -28,12 +29,14 @@
 			{/if}
 		</div>
 	{/if}
-	<div class="arrow">
-		<ArrowDown width={40} height={40} color="var(--primary)" />
-	</div>
+	{#if !height}
+		<div class="arrow">
+			<ArrowDown width={40} height={40} color="var(--primary)" />
+		</div>
+	{/if}
 </section>
 
-<style>
+<style lang="scss">
 	section {
 		display: flex;
 		justify-content: flex-start;
@@ -44,15 +47,18 @@
 	}
 
 	.content {
+		position: absolute;
 		max-width: 30rem;
 		padding: 3rem 2rem;
+		bottom: 0;
+		left: 0;
 	}
 
 	img {
 		width: 100%;
 		height: 100%;
-		object-fit: contain;
-		position: absolute;
+		object-fit: cover;
+		position: relative;
 		z-index: -1;
 	}
 	p {
