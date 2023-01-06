@@ -13,6 +13,7 @@ export async function load({ params }) {
     ...,
     "src": mainImage.asset->url,
     "alt": mainImage.alt,
+    "caption": mainImage.caption,
     "imagePalette": mainImage.asset->metadata.palette,
     "cast": cast[]{
       castname,
@@ -21,6 +22,11 @@ export async function load({ params }) {
     "crew": crew[]{
       "role": role->title,
       "name": person->name
+    },
+    "posters": posters[]{
+      "src": asset->url,
+      "alt": alt,
+      "caption": caption,
     }
   }`)
 

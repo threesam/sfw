@@ -36,11 +36,6 @@
 			{#each slides as slide}
 				<Slide {...slide} />
 			{/each}
-			<div class="title-slide">
-				<a href="/projects">
-					<h3>all projects</h3>
-				</a>
-			</div>
 		</div>
 	</section>
 {/if}
@@ -49,19 +44,16 @@
 	section {
 		width: 100%;
 		padding: 2rem;
+		height: 30rem;
 	}
 	h2 {
 		margin-top: 0;
 	}
 	.slides {
 		width: 100%;
-		display: grid;
+		height: 100%;
+		display: flex;
 		gap: 2rem;
-		grid-template-columns: repeat(4, 1fr);
-	}
-	.title-slide {
-		display: grid;
-		place-content: center;
-		border: 2px solid lavender;
+		justify-content: center;
 	}
 </style>

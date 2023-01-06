@@ -2,6 +2,7 @@
 	export let title = '';
 	export let src = '';
 	export let alt = '';
+	export let caption = '';
 	export let description = '';
 </script>
 
@@ -13,6 +14,9 @@
 
 <style>
 	.slide {
+		height: 100%;
+	}
+	img {
 		height: 100%;
 	}
 	h5 {

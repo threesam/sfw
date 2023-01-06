@@ -8,22 +8,32 @@
 		role: string;
 		name: string;
 	}
+
+	interface Image {
+		src: string;
+		alt: string;
+		captiom: string;
+	}
 	interface projectData {
 		title: string;
 		src: string;
 		alt: string;
+		caption: string;
 		body: [];
 		cast: castMember[];
 		crew: crewMember[];
+		posters: Image[];
 	}
 	export let data: projectData;
 	console.log('data', data);
 
 	import Banner from '$lib/components/Banner.svelte';
+	import Carousel from '$lib/components/Carousel.svelte';
 	import { PortableText } from '@portabletext/svelte';
 </script>
 
 <Banner title={data.title} src={data.src} alt={data.alt} path="/projects/" />
+<Carousel slides={data.posters} />
 
 <section class="portable-text">
 	<h3>synopsis</h3>
@@ -34,7 +44,7 @@
 		<ul>
 			{#each data.cast as castMember}
 				<li>
-					<span>{castMember.castname}</span>
+					<span class="shimmer">{castMember.castname}</span>
 					<span>{castMember.name}</span>
 				</li>
 			{/each}
@@ -46,7 +56,7 @@
 		<ul>
 			{#each data.crew as crewMember}
 				<li>
-					<span>{crewMember.role}</span>
+					<span class="shimmer">{crewMember.role}</span>
 					<span>{crewMember.name || 'anonymous'}</span>
 				</li>
 			{/each}
@@ -80,7 +90,16 @@
 		gap: 1rem;
 
 		span {
+			text-transform: lowercase;
+		}
+
+		.shimmer {
+			text-shadow: 1px 1px 1px var(--primary);
+		}
+
+		span:nth-child(1) {
 			text-align: right;
+			font-weight: 900;
 		}
 
 		span:nth-child(2) {
