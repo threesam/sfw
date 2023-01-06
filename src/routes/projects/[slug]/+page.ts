@@ -14,6 +14,14 @@ export async function load({ params }) {
     "src": mainImage.asset->url,
     "alt": mainImage.alt,
     "imagePalette": mainImage.asset->metadata.palette,
+    "cast": cast[]{
+      castname,
+      "name": person->name
+    },
+    "crew": crew[]{
+      "role": role->title,
+      "name": person->name
+    }
   }`)
 
   if (data) {
