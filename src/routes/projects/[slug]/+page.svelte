@@ -1,5 +1,22 @@
-<script>
-	export let data;
+<script lang="ts">
+	interface castMember {
+		castname: string;
+		name: string;
+	}
+
+	interface crewMember {
+		role: string;
+		name: string;
+	}
+	interface projectData {
+		title: string;
+		src: string;
+		alt: string;
+		body: [];
+		cast: castMember[];
+		crew: crewMember[];
+	}
+	export let data: projectData;
 	console.log('data', data);
 
 	import Banner from '$lib/components/Banner.svelte';
