@@ -18,13 +18,13 @@
 			p5.createCanvas(p5.windowWidth, p5.windowHeight);
 
 			for (let i = 0; i < 2000; i++) {
-				const size = p5.random(10, 30);
+				const size = p5.random(5, 25);
 				const x = p5.random(p5.windowWidth - size);
 				const y = p5.random(p5.windowHeight);
 
 				let collision;
 				points.forEach((point) => {
-					if (p5.dist(x, y, point.x, point.y) < 35) {
+					if (p5.dist(x, y, point.x, point.y) < 25) {
 						collision = true;
 					}
 				});
