@@ -87,7 +87,7 @@
 	.content {
 		background: rgba(249, 200, 76, 0.9);
 		padding: 2rem;
-		border: 0.25rem solid var(--textColor);
+		/* border: 0.25rem solid var(--textColor); */
 	}
 
 	h2 {
