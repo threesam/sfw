@@ -1,5 +1,5 @@
 <script>
-	export let endpoint = '/api/subscribe';
+	export let endpoint = '/subscribe.js';
 	import { slide } from 'svelte/transition';
 	import { createForm } from 'svelte-forms-lib';
 	$: isSubmitted = false;
@@ -10,17 +10,20 @@
 		},
 		onSubmit: async (values) => {
 			try {
-				const response = await fetch(endpoint, {
-					method: 'POST',
-					body: JSON.stringify({ email: values.email })
-				});
-				console.log('response', response);
-				if (response.status == 400) {
-					message = 'Already Subscribed!';
-				}
-				if (response.status == 200) {
-					message = 'Thanks for Subscribing!';
-				}
+				// const response = await fetch(endpoint, {
+				// 	method: 'POST',
+				// 	body: JSON.stringify({ email: values.email })
+				// });
+				// console.log('response', response);
+				// if (response.status == 400) {
+				// 	message = 'Already Subscribed!';
+				// }
+				// if (response.status == 200) {
+				// 	message = 'Thanks for Subscribing!';
+				// }
+
+				message = 'This absolutely does not work yet';
+
 				// const json = await response.json()
 				isSubmitted = true;
 				setTimeout(() => {
@@ -106,7 +109,7 @@
 	h5 {
 		margin-top: 0;
 		margin-bottom: 0.5rem;
-		color: var(--background);
+		color: var(--red);
 	}
 	@media screen and (max-width: 600px) {
 		h3 {
