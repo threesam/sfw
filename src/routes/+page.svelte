@@ -17,6 +17,6 @@
 		</h3>
 		<p>{project.description}</p>
 
-		<a href={'/projects/' + project.slug}>learn more</a>
+		<a sveltekit:prefetch href={'/projects/' + project.slug}>learn more</a>
 	</SideBySide>
 {/each}

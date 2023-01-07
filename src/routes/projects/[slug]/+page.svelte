@@ -2,6 +2,7 @@
 	interface castMember {
 		castname: string;
 		name: string;
+		link: string;
 	}
 
 	interface crewMember {
@@ -32,7 +33,7 @@
 	import { PortableText } from '@portabletext/svelte';
 </script>
 
-<Banner height="30vh" src={data.src} alt={data.alt} />
+<Banner height="40vh" src={data.src} alt={data.alt} />
 <h1>{data.title}</h1>
 
 <section class="portable-text">
@@ -45,7 +46,7 @@
 			{#each data.cast as castMember}
 				<li>
 					<span class="shimmer">{castMember.castname}</span>
-					<span>{castMember.name}</span>
+					<a href={castMember.link}>{castMember.name}</a>
 				</li>
 			{/each}
 		</ul>
@@ -97,6 +98,11 @@
 		display: grid;
 		grid-template-columns: 1fr 1fr;
 		gap: 1rem;
+
+		a {
+			width: max-content;
+			border-bottom: 1px solid var(--primary);
+		}
 
 		span {
 			text-transform: lowercase;

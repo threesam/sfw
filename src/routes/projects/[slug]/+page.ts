@@ -17,7 +17,8 @@ export async function load({ params }) {
     "imagePalette": mainImage.asset->metadata.palette,
     "cast": cast[]{
       castname,
-      "name": person->name
+      "name": person->name,
+      "link": person->link
     },
     "crew": crew[]{
       "role": role->title,
