@@ -18,9 +18,9 @@
 			p5.createCanvas(p5.windowWidth, p5.windowHeight);
 
 			for (let i = 0; i < 1000; i++) {
-				const x = p5.random(p5.windowWidth);
-				const y = p5.random(p5.windowHeight);
 				const size = p5.random(10, 30);
+				const x = p5.random(p5.windowWidth - size);
+				const y = p5.random(p5.windowHeight);
 
 				let collision;
 				points.forEach((point) => {
