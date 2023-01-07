@@ -40,10 +40,10 @@
 			p5.background(249, 200, 76);
 
 			points.forEach(({ x, y, size }, i) => {
-				if (y > p5.windowHeight) {
-					points[i].y = -20;
+				if (y < -size) {
+					points[i].y = p5.windowHeight + size;
 				} else {
-					points[i].y += 1;
+					points[i].y -= 1;
 				}
 
 				// p5.tint(255, 100);
