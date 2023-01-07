@@ -1,7 +1,7 @@
 <script>
 	import { scale } from 'svelte/transition';
 
-	export let size = 50;
+	export let size = 69;
 	export let links = [
 		{
 			title: 'Facebook',

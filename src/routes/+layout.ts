@@ -11,7 +11,12 @@ export async function load({ params }) {
   const data = await client.fetch(`*[_type == "siteSettings" && hostname == 'skeletonflowersandwater'][0]{
     ...,
     "src": image.asset->url,
-    "alt": image.alt
+    "alt": image.alt,
+    "icons": icons[].asset->{
+      "src": url,
+      alt,
+      caption
+    }
   }`)
   
   if (data) {
