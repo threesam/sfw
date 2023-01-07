@@ -46,7 +46,11 @@
 			{#each data.cast as castMember}
 				<li>
 					<span class="shimmer">{castMember.castname}</span>
-					<a href={castMember.link}>{castMember.name}</a>
+					{#if castMember.name}
+						<a href={castMember.link}>{castMember.name}</a>
+					{:else}
+						<span>{castMember.name}</span>
+					{/if}
 				</li>
 			{/each}
 		</ul>
