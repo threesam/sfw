@@ -1,6 +1,6 @@
 <script>
 	export let data = {};
-	const skull = data.icons[0].src;
+	const icons = data.icons;
 
 	import SubscribeForm from '$lib/components/SubscribeForm.svelte';
 	import SocialLinks from '$lib/components/SocialLinks.svelte';
@@ -9,15 +9,15 @@
 	let points = [];
 
 	const sketch = (p5) => {
-		var mapimg;
+		var mapimgs;
 
 		p5.preload = () => {
-			mapimg = p5.loadImage(skull);
+			mapimgs = icons.map((icon) => p5.loadImage(icon.src));
 		};
 		p5.setup = () => {
 			p5.createCanvas(p5.windowWidth, p5.windowHeight);
 
-			for (let i = 0; i < 1000; i++) {
+			for (let i = 0; i < 2000; i++) {
 				const size = p5.random(10, 30);
 				const x = p5.random(p5.windowWidth - size);
 				const y = p5.random(p5.windowHeight);
@@ -30,7 +30,7 @@
 				});
 
 				if (!collision) {
-					points.push({ x, y, size });
+					points.push({ x, y, size, icon: Math.floor(p5.random(mapimgs.length)) });
 				}
 			}
 		};
@@ -39,15 +39,14 @@
 			p5.frameRate(24);
 			p5.background(249, 200, 76);
 
-			points.forEach(({ x, y, size }, i) => {
+			points.forEach(({ x, y, size, icon }, i) => {
 				if (y < -size) {
 					points[i].y = p5.windowHeight + size;
 				} else {
 					points[i].y -= 1;
 				}
 
-				// p5.tint(255, 100);
-				p5.image(mapimg, x, y, size, size);
+				p5.image(mapimgs[icon], x, y, size, size);
 			});
 		};
 	};
