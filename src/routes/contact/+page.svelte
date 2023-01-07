@@ -4,9 +4,10 @@
 </script>
 
 <section>
-	<h2>Follow Us</h2>
-	<SocialLinks />
+	<h2>Subscribe</h2>
 	<SubscribeForm />
+	<h2>Follow</h2>
+	<SocialLinks />
 </section>
 
 <style>
