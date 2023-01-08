@@ -63,7 +63,7 @@
 
 <section>
 	{#if show}
-		<div in:fade={{ duration: 5000 }} class="container">
+		<div in:fade={{ duration: 3000 }} class="container">
 			<P5 {sketch} />
 		</div>
 	{/if}
@@ -96,7 +96,7 @@
 	}
 
 	.content {
-		background: rgba(249, 200, 76, 0.99);
+		background: var(--primary);
 		padding: 2rem;
 		/* border: 0.25rem solid var(--textColor); */
 	}
