@@ -2,9 +2,18 @@
 	export let data = {};
 	const icons = data.icons;
 
+	import { fade } from 'svelte/transition';
+	import { onMount } from 'svelte';
 	import SubscribeForm from '$lib/components/SubscribeForm.svelte';
 	import SocialLinks from '$lib/components/SocialLinks.svelte';
 
+	let show;
+
+	onMount(() => {
+		show = true;
+	});
+
+	// SKETCH
 	import P5 from 'p5-svelte';
 	let points = [];
 
@@ -53,9 +62,11 @@
 </script>
 
 <section>
-	<div class="container">
-		<P5 {sketch} />
-	</div>
+	{#if show}
+		<div in:fade={{ duration: 5000 }} class="container">
+			<P5 {sketch} />
+		</div>
+	{/if}
 	<div class="content">
 		<h2>Subscribe</h2>
 		<SubscribeForm />
@@ -85,7 +96,7 @@
 	}
 
 	.content {
-		background: rgba(249, 200, 76, 0.9);
+		background: rgba(249, 200, 76, 0.99);
 		padding: 2rem;
 		/* border: 0.25rem solid var(--textColor); */
 	}
