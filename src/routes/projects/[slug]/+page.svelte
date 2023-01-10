@@ -26,7 +26,6 @@
 		posters: Image[];
 	}
 	export let data: projectData;
-	console.log('data', data);
 
 	import Banner from '$lib/components/Banner.svelte';
 	import Carousel from '$lib/components/Carousel.svelte';
@@ -108,7 +107,8 @@
 			border-bottom: 1px solid var(--primary);
 		}
 
-		span {
+		span,
+		a {
 			text-transform: lowercase;
 		}
 
