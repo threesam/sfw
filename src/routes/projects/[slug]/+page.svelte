@@ -32,7 +32,7 @@
 	import { PortableText } from '@portabletext/svelte';
 </script>
 
-<Banner height="40vh" src={data.src} alt={data.alt} />
+<Banner height="40vh" src={data.src} alt={data.alt} mainImage={data.mainImage} />
 <h1>{data.title}</h1>
 
 <section class="portable-text">

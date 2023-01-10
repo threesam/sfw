@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	export let src = '';
 	export let alt = '';
 	export let height = '';
@@ -8,16 +8,20 @@
 	export let description = '';
 	export let slug = '';
 	export let path = '/';
+	export let mainImage;
 	const handle = path + slug;
 
 	import { fly } from 'svelte/transition';
+	let h: number;
+	let w: number;
 
 	import ArrowDown from './icons/ArrowDown.svelte';
+	import Image from './Image.svelte';
 </script>
 
-<section style={height && `height: ${height};`}>
-	{#if src}
-		<img {src} {alt} />
+<section bind:clientWidth={w} bind:clientHeight={h} style={height && `height: ${height};`}>
+	{#if src && w && h}
+		<Image {w} {h} {src} {alt} {mainImage} />
 	{/if}
 	{#if title || description}
 		<div in:fly={{ x: -50, duration: 400 }} class="content">

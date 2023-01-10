@@ -32,6 +32,7 @@ export async function load({ params }) {
   }`)
 
   if (data) {
+    console.log('data', data);
     return {
       ...data
     }

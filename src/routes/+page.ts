@@ -18,7 +18,6 @@ export async function load({ params }) {
   }`)
 
   if (projects) {
-    console.log('data in call', projects);
     return {
       projects
     }
