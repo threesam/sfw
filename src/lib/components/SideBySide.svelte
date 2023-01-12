@@ -25,21 +25,26 @@
 	</div>
 </section>
 
-<style>
+<style lang="scss">
 	section {
 		width: 100%;
 		height: auto;
+		max-height: 100vh;
 		display: flex;
 		flex-direction: row;
 	}
 
 	section:nth-child(odd) {
 		flex-direction: row-reverse;
-	}
 
-	section:nth-child(odd) .content {
-		align-items: flex-end;
-		text-align: right;
+		.content {
+			align-items: flex-end;
+			text-align: right;
+		}
+
+		h3 {
+			text-align: right;
+		}
 	}
 
 	figure {

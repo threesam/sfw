@@ -48,6 +48,7 @@
 		align-items: flex-end;
 		height: calc(100vh - 3rem);
 		background: linear-gradient(rgba(0, 0, 0, 0), black);
+		overflow: hidden;
 	}
 
 	.content {
