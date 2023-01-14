@@ -22,12 +22,12 @@
 		<Image {w} {h} {src} {alt} {hotspot} {crop} />
 	{/if}
 	{#if title || description}
-		<div in:fly={{ x: -50, duration: 400 }} class="content">
+		<div style={color && `--primary: ${color}`} in:fly={{ x: -50, duration: 400 }} class="content">
 			<span>{eyebrow}</span>
-			<h2 style={color && `color: ${color}`}>{title}</h2>
+			<h2 style="color: var(--primary);">{title}</h2>
 			<p>{description}</p>
 			{#if slug}
-				<a href={handle} class="link">learn more</a>
+				<a href={handle} class="link" style="color: var(--primary);">learn more</a>
 			{/if}
 		</div>
 	{/if}
