@@ -47,21 +47,19 @@
 		height: calc(100vh - var(--headerHeight));
 		background: linear-gradient(rgba(0, 0, 0, 0), black);
 		overflow: hidden;
-	}
 
-	.content {
-		position: absolute;
-		max-width: 30rem;
-		padding: 3rem var(--containerPadding);
-		bottom: 0;
-		left: 0;
-	}
-	p {
-		margin-bottom: 0;
-	}
-	h2 {
-		margin: 0;
-		margin-top: 0.5rem;
+		.content {
+			position: absolute;
+			max-width: 30rem;
+			padding: 3rem var(--containerPadding);
+			bottom: 0;
+			left: 0;
+
+			h2 {
+				margin: 0;
+				margin-top: 0.5rem;
+			}
+		}
 	}
 
 	.arrow {
@@ -76,13 +74,12 @@
 			flex-direction: column;
 			align-items: flex-start;
 			gap: 0;
+
+			.content {
+				padding: 0 1rem 3rem 1rem;
+			}
 		}
-		.content {
-			padding: 0 1rem 3rem 1rem;
-		}
-		img {
-			position: inherit;
-		}
+
 		.arrow {
 			right: 0.5rem;
 			bottom: 1.5rem;
