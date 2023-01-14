@@ -1,4 +1,5 @@
 import sanityClient from "@sanity/client"
+import {singleProject} from "$lib/groq/queries"
 
 const client = sanityClient({
   projectId: "4yxngtwt",
@@ -9,30 +10,9 @@ const client = sanityClient({
 
 export async function load({ params }) {
   const {slug} = params
-  const data = await client.fetch(`*[_type == "project" && slug.current == "${slug}"][0]{
-    ...,
-    "src": mainImage.asset->url,
-    "alt": mainImage.alt,
-    "caption": mainImage.caption,
-    "imagePalette": mainImage.asset->metadata.palette,
-    "cast": cast[]{
-      castname,
-      "name": person->name,
-      "link": person->link
-    },
-    "crew": crew[]{
-      "role": role->title,
-      "name": person->name
-    },
-    "posters": posters[]{
-      "src": asset->url,
-      "alt": alt,
-      "caption": caption,
-    }
-  }`)
+  const data = await client.fetch(singleProject(slug))
 
   if (data) {
-    console.log('data', data);
     return {
       ...data
     }

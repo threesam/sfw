@@ -20,6 +20,7 @@
 		src: string;
 		alt: string;
 		caption: string;
+		image: Image;
 		body: [];
 		cast: castMember[];
 		crew: crewMember[];
@@ -32,7 +33,7 @@
 	import { PortableText } from '@portabletext/svelte';
 </script>
 
-<Banner height="40vh" src={data.src} alt={data.alt} mainImage={data.mainImage} />
+<Banner height="40vh" src={data.src} alt={data.alt} image={data.image} />
 <h1>{data.title}</h1>
 
 <section class="portable-text">

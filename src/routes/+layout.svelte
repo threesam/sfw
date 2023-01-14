@@ -27,7 +27,7 @@
 	main {
 		max-width: 100%;
 		width: 100%;
-		min-height: calc(100vh - 3rem);
+		min-height: calc(100vh - var(--headerHeight));
 		display: flex;
 		flex-direction: column;
 	}

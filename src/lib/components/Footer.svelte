@@ -11,13 +11,13 @@
 <style>
 	footer {
 		background-color: #f9c84c;
-		margin-top: 3rem;
+		margin-top: var(--headerHeight);
 		display: flex;
 		flex-direction: row;
 		justify-content: space-between;
 		align-items: center;
 		gap: 2rem;
-		padding: 2rem;
+		padding: var(--containerPadding);
 	}
 	@media (max-width: 768px) {
 		footer {

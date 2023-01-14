@@ -1,22 +1,20 @@
 <script>
-	export let src = '';
-	export let alt = '';
-	export let caption = '';
-	export let imagePalette = null;
 	export let title = '';
 	export let description = '';
 	export let path = '/';
 	export let slug = '';
 	export let buttonText = 'learn more';
+	export let mirrored = true;
+	export let image = {};
+	const { src, alt, caption, color, hotspot, crop } = image;
+
+	import Image from './Image.svelte';
 </script>
 
-<section>
-	<figure>
-		<img {src} {alt} />
-		<figcaption>{caption}</figcaption>
-	</figure>
+<section class:mirrored>
+	<Image {src} {alt} {caption} {hotspot} {crop} />
 	<div class="content">
-		<h3 style={imagePalette && `color: ${imagePalette.lightVibrant.background}`}>{title}</h3>
+		<h3 style={color && `color: ${color}`}>{title}</h3>
 		<p>{description}</p>
 
 		{#if slug}
@@ -32,9 +30,45 @@
 		max-height: 100vh;
 		display: flex;
 		flex-direction: row;
+
+		h3 {
+			margin: 0;
+			text-align: left;
+		}
+		.content {
+			max-height: 100%;
+			min-width: 50%;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: flex-start;
+			gap: 0;
+			padding: var(--containerPadding);
+			text-align: left;
+		}
+
+		.content,
+		figure {
+			width: 50%;
+		}
+
+		figure {
+			margin: 0;
+			overflow: hidden;
+
+			img {
+				height: 100%;
+				object-fit: cover;
+			}
+
+			img:hover {
+				transform: scale(1.02);
+				transition: 0.4s all ease-in;
+			}
+		}
 	}
 
-	section:nth-child(odd) {
+	.mirrored:nth-child(odd) {
 		flex-direction: row-reverse;
 
 		.content {
@@ -47,65 +81,30 @@
 		}
 	}
 
-	figure {
-		margin: 0;
-		overflow: hidden;
-	}
-
-	img {
-		height: 100%;
-		object-fit: cover;
-	}
-
-	img:hover {
-		transform: scale(1.02);
-		transition: 0.4s all ease-in;
-	}
-
-	h3 {
-		margin: 0;
-		text-align: left;
-	}
-
-	.content {
-		max-height: 100%;
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: flex-start;
-		gap: 0;
-		padding: 2rem;
-		text-align: left;
-	}
-
-	section .content,
-	section figure {
-		width: 50%;
-	}
-
 	@media (max-width: 768px) {
 		section {
 			flex-direction: column;
 			padding-top: 5rem;
+
+			.content {
+				padding: 1rem;
+			}
+			.content,
+			figure {
+				width: unset;
+			}
+
+			h3 {
+				text-align: left;
+			}
 		}
-		section:nth-child(odd) {
+		.mirrored:nth-child(odd) {
 			flex-direction: column;
-		}
-		section:nth-child(odd) .content {
-			align-items: flex-start;
-			text-align: left;
-		}
 
-		section .content {
-			padding: 1rem;
-		}
-		section .content,
-		section figure {
-			width: unset;
-		}
-
-		h3 {
-			text-align: left;
+			.content {
+				align-items: flex-start;
+				text-align: left;
+			}
 		}
 	}
 </style>

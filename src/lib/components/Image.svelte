@@ -2,16 +2,17 @@
 	import imageBuilder from '../utils/imageUrlBuilder';
 	export let src = '';
 	export let alt: '';
+	export let caption = '';
+	export let hotspot = null;
+	export let crop = null;
 	export let h: number;
 	export let w: number;
-	export let mainImage;
-	console.log('mainImage', mainImage);
 
 	import { fade } from 'svelte/transition';
 </script>
 
 <figure>
-	{#if mainImage?.hasOwnProperty('hotspot')}
+	{#if hotspot}
 		<img
 			in:fade
 			height={h}
@@ -20,7 +21,7 @@
 				.size(w, h)
 				.fit('crop')
 				.crop('focalpoint')
-				.focalPoint(mainImage.hotspot.x, mainImage.hotspot.y)
+				.focalPoint(hotspot.x, hotspot.y)
 				.url()}
 			{alt}
 		/>
@@ -33,18 +34,25 @@
 			{alt}
 		/>
 	{/if}
+	{#if caption}
+		<figcaption>{caption}</figcaption>
+	{/if}
 </figure>
 
-<style>
+<style lang="scss">
 	figure {
 		margin: 0;
-	}
 
-	img {
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-		position: relative;
-		z-index: -10;
+		img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			position: relative;
+			z-index: -10;
+		}
+
+		figcaption {
+			color: transparent;
+		}
 	}
 </style>

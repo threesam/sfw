@@ -1,4 +1,5 @@
 import sanityClient from "@sanity/client"
+import { siteSettings } from "$lib/groq/queries"
 
 const client = sanityClient({
   projectId: "4yxngtwt",
@@ -8,16 +9,7 @@ const client = sanityClient({
 })
 
 export async function load({ params }) {
-  const data = await client.fetch(`*[_type == "siteSettings" && hostname == 'skeletonflowersandwater'][0]{
-    ...,
-    "src": image.asset->url,
-    "alt": image.alt,
-    "icons": icons[].asset->{
-      "src": url,
-      alt,
-      caption
-    }
-  }`)
+  const data = await client.fetch(siteSettings('skeletonflowersandwater'))
   
   if (data) {
     return {

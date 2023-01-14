@@ -78,7 +78,7 @@
 <style>
 	section {
 		/* background-color: #f9c84c; */
-		height: calc(100vh - 3rem);
+		height: calc(100vh - var(--headerHeight));
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
@@ -97,7 +97,7 @@
 
 	.content {
 		background: var(--primary);
-		padding: 2rem;
+		padding: var(--containerPadding);
 		/* border: 0.25rem solid var(--textColor); */
 	}
 

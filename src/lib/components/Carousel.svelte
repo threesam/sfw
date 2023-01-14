@@ -43,7 +43,7 @@
 <style>
 	section {
 		width: 100%;
-		padding: 2rem;
+		padding: var(--containerPadding);
 		height: 50vh;
 	}
 	h2 {
