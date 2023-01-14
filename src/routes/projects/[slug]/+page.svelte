@@ -30,13 +30,18 @@
 
 	import Banner from '$lib/components/Banner.svelte';
 	import Carousel from '$lib/components/Carousel.svelte';
+	import SocialLinks from '$lib/components/SocialLinks.svelte';
 	import { PortableText } from '@portabletext/svelte';
 </script>
 
-<Banner height="40vh" src={data.src} alt={data.alt} image={data.image} />
+<Banner height="40vh" image={data.image} />
 <h1>{data.title}</h1>
 
-<section class="portable-text">
+<section>
+	<SocialLinks size="50" color={data.image.color} />
+</section>
+
+<section class="portable-text" style={`--primary: ${data.image.color}`}>
 	<h3>synopsis</h3>
 	<PortableText value={data.body} />
 
@@ -46,7 +51,7 @@
 			{#each data.cast as castMember}
 				<li>
 					<span class="shimmer">{castMember.castname}</span>
-					{#if castMember.name}
+					{#if castMember.name && castMember.link}
 						<a href={castMember.link}>{castMember.name}</a>
 					{:else}
 						<span>{castMember.name}</span>

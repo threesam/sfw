@@ -1,7 +1,8 @@
 <script>
 	import { scale } from 'svelte/transition';
 
-	export let size = 69;
+	export let color = 'var(--background)';
+	export let size = '69';
 	export let links = [
 		{
 			title: 'Facebook',
@@ -45,8 +46,11 @@
 
 <div>
 	{#each links as { href, title, svg }, i}
-		<a in:scale={{ delay: (i + 1) * 100 + 500, start: 0 }} {href} aria-label={title}
-			>{@html svg.code}</a
+		<a
+			style={`color: ${color};`}
+			in:scale={{ delay: (i + 1) * 100 + 500, start: 0 }}
+			{href}
+			aria-label={title}>{@html svg.code}</a
 		>
 	{/each}
 </div>
@@ -59,7 +63,7 @@
 		gap: 2rem;
 	}
 	a {
-		color: var(--background);
+		color: var(--textColor);
 		transition: all 0.4s;
 		margin: 0;
 		display: flex;
