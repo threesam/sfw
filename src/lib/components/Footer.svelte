@@ -1,10 +1,12 @@
 <script>
+	export let data;
+	console.log('footer data', data);
 	import SubscribeForm from './SubscribeForm.svelte';
 	import SocialLinks from './SocialLinks.svelte';
 </script>
 
 <footer>
-	<SocialLinks />
+	<SocialLinks links={data.links} size="69" />
 	<SubscribeForm />
 </footer>
 

@@ -27,6 +27,7 @@
 		posters: Image[];
 	}
 	export let data: projectData;
+	console.log('data', data);
 
 	import Banner from '$lib/components/Banner.svelte';
 	import Carousel from '$lib/components/Carousel.svelte';
@@ -38,12 +39,14 @@
 <h1>{data.title}</h1>
 
 <section>
-	<SocialLinks size="50" color={data.image.color} />
+	<SocialLinks size="40" links={data.links} color={data.image.color} />
 </section>
 
-<section class="portable-text" style={`--primary: ${data.image.color}`}>
-	<h3>synopsis</h3>
-	<PortableText value={data.body} />
+<section style={`--primary: ${data.image.color}`}>
+	<h3>abstract</h3>
+	<div class="portable-text">
+		<PortableText value={data.body} />
+	</div>
 
 	{#if data.cast}
 		<h4>cast</h4>
@@ -98,37 +101,37 @@
 
 	ul {
 		padding: 0;
-	}
 
-	li {
-		list-style: none;
-		width: 100%;
+		li {
+			list-style: none;
+			width: 100%;
 
-		display: grid;
-		grid-template-columns: 1fr 1fr;
-		gap: 1rem;
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 1rem;
 
-		a {
-			width: max-content;
-			border-bottom: 1px solid var(--primary);
-		}
+			a {
+				width: max-content;
+				border-bottom: 1px solid var(--primary);
+			}
 
-		span,
-		a {
-			text-transform: lowercase;
-		}
+			span,
+			a {
+				text-transform: lowercase;
+			}
 
-		.shimmer {
-			text-shadow: 1px 1px 1px var(--primary);
-		}
+			.shimmer {
+				text-shadow: 1px 1px 1px var(--primary);
+			}
 
-		span:nth-child(1) {
-			text-align: right;
-			font-weight: 900;
-		}
+			span:nth-child(1) {
+				text-align: right;
+				font-weight: 900;
+			}
 
-		span:nth-child(2) {
-			text-align: left;
+			span:nth-child(2) {
+				text-align: left;
+			}
 		}
 	}
 </style>

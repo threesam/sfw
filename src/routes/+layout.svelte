@@ -20,7 +20,7 @@
 </main>
 
 {#if route !== '/contact'}
-	<Footer />
+	<Footer {data} />
 {/if}
 
 <style lang="scss">

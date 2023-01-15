@@ -302,6 +302,11 @@ button.small {
   margin-bottom: 0;
 }
 
+.portable-text {
+  max-width: 40rem;
+  margin: 0 auto;
+}
+
 
 
 .dark {

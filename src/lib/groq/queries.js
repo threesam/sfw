@@ -11,6 +11,10 @@ export const singleProject = (slug) => {
       "caption": mainImage.caption,
       "color": mainImage.asset->metadata.palette.lightVibrant.background,
     },
+    "links": links[]{
+      title,
+      href
+    },
     "color": mainImage.asset->metadata.palette.lightVibrant.background,
     "cast": cast[]{
       castname,
@@ -46,6 +50,10 @@ export const allProjects = `*[_type == "project"]{
 export const siteSettings = (hostname) => {
   return `*[_type == "siteSettings" && hostname == "${hostname}"][0]{
     ...,
+    "links": links[]{
+      title,
+      href
+    },
     "src": image.asset->url,
     "alt": image.alt,
     "icons": icons[].asset->{
