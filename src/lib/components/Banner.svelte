@@ -18,7 +18,7 @@
 </script>
 
 <section bind:clientWidth={w} bind:clientHeight={h} style={height && `height: ${height};`}>
-	{#if src && w && h}
+	{#if w && h}
 		<Image {w} {h} {src} {alt} {hotspot} {crop} />
 	{/if}
 	{#if title || description}

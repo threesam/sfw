@@ -1,6 +1,5 @@
 <script>
 	export let data;
-	console.log('footer data', data);
 	import SubscribeForm from './SubscribeForm.svelte';
 	import SocialLinks from './SocialLinks.svelte';
 </script>

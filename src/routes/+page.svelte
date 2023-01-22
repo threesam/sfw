@@ -1,5 +1,6 @@
 <script>
 	export let data = {};
+	console.log('data', data);
 
 	const { projects } = data;
 

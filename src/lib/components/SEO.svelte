@@ -30,20 +30,24 @@
 				authors: [host + '/about'],
 				tags
 			},
-			images: [
-				{
-					url: imageBuilder(image).width(SEO_IMAGE_WIDTH).height(SEO_IMAGE_HEIGHT).url(),
-					// url: image,
-					width: SEO_IMAGE_WIDTH,
-					height: SEO_IMAGE_HEIGHT,
-					alt
-				}
-			]
+			images: image
+				? [
+						{
+							url: imageBuilder(image).width(SEO_IMAGE_WIDTH).height(SEO_IMAGE_HEIGHT).url(),
+							// url: image,
+							width: SEO_IMAGE_WIDTH,
+							height: SEO_IMAGE_HEIGHT,
+							alt
+						}
+				  ]
+				: []
 		}}
 		twitter={{
 			title,
 			description,
-			image: imageBuilder(image).width(SEO_IMAGE_WIDTH).height(TWITTER_IMAGE_HEIGHT).url(),
+			image: image
+				? imageBuilder(image).width(SEO_IMAGE_WIDTH).height(TWITTER_IMAGE_HEIGHT).url()
+				: '',
 			imageAlt: alt
 		}}
 	/>
@@ -56,19 +60,23 @@
 			description,
 			url: host + $page.route.id,
 			type: 'website',
-			images: [
-				{
-					url: imageBuilder(image).width(SEO_IMAGE_WIDTH).height(SEO_IMAGE_HEIGHT).url(),
-					width: SEO_IMAGE_WIDTH,
-					height: SEO_IMAGE_HEIGHT,
-					alt
-				}
-			]
+			images: image
+				? [
+						{
+							url: imageBuilder(image).width(SEO_IMAGE_WIDTH).height(SEO_IMAGE_HEIGHT).url(),
+							width: SEO_IMAGE_WIDTH,
+							height: SEO_IMAGE_HEIGHT,
+							alt
+						}
+				  ]
+				: []
 		}}
 		twitter={{
 			title,
 			description,
-			image: imageBuilder(image).width(SEO_IMAGE_WIDTH).height(TWITTER_IMAGE_HEIGHT).url(),
+			image: image
+				? imageBuilder(image).width(SEO_IMAGE_WIDTH).height(TWITTER_IMAGE_HEIGHT).url()
+				: '',
 			imageAlt: alt
 		}}
 	/>
