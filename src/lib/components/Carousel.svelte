@@ -14,7 +14,7 @@
 	import 'swiper/css/scrollbar';
 </script>
 
-{#if slides.length}
+{#if slides?.length}
 	<!-- content here
 	<Swiper
 		modules={[Navigation, Pagination, Scrollbar, A11y]}

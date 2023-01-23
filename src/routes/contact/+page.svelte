@@ -38,7 +38,7 @@
 					}
 				});
 
-				if (!collision) {
+				if (!collision && mapimgs.length) {
 					points.push({ x, y, size, icon: Math.floor(p5.random(mapimgs.length)) });
 				}
 			}

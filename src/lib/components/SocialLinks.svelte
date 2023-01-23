@@ -32,18 +32,20 @@
 		options.find((option) => option.title === title)?.component;
 </script>
 
-<div>
-	{#each links as { href, title }, i}
-		<a
-			style={`color: ${color};`}
-			in:scale={{ delay: (i + 1) * 100 + 500, start: 0 }}
-			{href}
-			aria-label={title}
-		>
-			<svelte:component this={getIconComponent(title)} {color} width={size} height={size} />
-		</a>
-	{/each}
-</div>
+{#if links?.length}
+	<div>
+		{#each links as { href, title }, i}
+			<a
+				style={`color: ${color};`}
+				in:scale={{ delay: (i + 1) * 100 + 500, start: 0 }}
+				{href}
+				aria-label={title}
+			>
+				<svelte:component this={getIconComponent(title)} {color} width={size} height={size} />
+			</a>
+		{/each}
+	</div>
+{/if}
 
 <style>
 	div {
