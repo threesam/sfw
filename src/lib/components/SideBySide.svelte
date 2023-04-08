@@ -12,7 +12,9 @@
 </script>
 
 <section class:mirrored>
-	<Image {src} {alt} {caption} {hotspot} {crop} />
+	<div class="image-container">
+		<Image {src} {alt} {caption} {hotspot} {crop} />
+	</div>
 	<div class="content">
 		<h3 style={color && `color: ${color}`}>{title}</h3>
 		<p>{description}</p>

@@ -11,6 +11,8 @@
 </script>
 
 <Banner {...first} path="/projects/" />
-{#each projects.reverse() as project}
-	<SideBySide {...project} path="/projects/" />
-{/each}
+<div class="max-w-5xl mx-auto">
+	{#each projects.reverse() as project}
+		<SideBySide {...project} path="/projects/" />
+	{/each}
+</div>

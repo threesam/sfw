@@ -42,10 +42,12 @@
 </section>
 
 <section style={`--primary: ${data.image.color}`}>
-	<h3>abstract</h3>
-	<div class="portable-text">
-		<PortableText value={data.body} />
-	</div>
+	{#if data.body}
+		<h3>abstract</h3>
+		<div class="portable-text">
+			<PortableText value={data.body} />
+		</div>
+	{/if}
 
 	{#if data.cast}
 		<h4>cast</h4>

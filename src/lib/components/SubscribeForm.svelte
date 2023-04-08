@@ -10,17 +10,17 @@
 		},
 		onSubmit: async (values) => {
 			try {
-				// const response = await fetch(endpoint, {
-				// 	method: 'POST',
-				// 	body: JSON.stringify({ email: values.email })
-				// });
-				// console.log('response', response);
-				// if (response.status == 400) {
-				// 	message = 'Already Subscribed!';
-				// }
-				// if (response.status == 200) {
-				// 	message = 'Thanks for Subscribing!';
-				// }
+				const response = await fetch(endpoint, {
+					method: 'POST',
+					body: JSON.stringify({ email: values.email })
+				});
+				console.log('response', response);
+				if (response.status == 400) {
+					message = 'Already Subscribed!';
+				}
+				if (response.status == 200) {
+					message = 'Thanks for Subscribing!';
+				}
 
 				message = 'This absolutely does not work yet';
 
