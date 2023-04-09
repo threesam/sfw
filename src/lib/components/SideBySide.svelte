@@ -28,8 +28,7 @@
 <style lang="scss">
 	section {
 		width: 100%;
-		height: auto;
-		max-height: 100vh;
+		height: 80vh;
 		display: flex;
 		flex-direction: row;
 
@@ -37,8 +36,9 @@
 			margin: 0;
 			text-align: left;
 		}
-		.content {
-			max-height: 100%;
+		.content,
+		.image-container {
+			height: 100%;
 			min-width: 50%;
 			display: flex;
 			flex-direction: column;
@@ -47,6 +47,11 @@
 			gap: 0;
 			padding: var(--containerPadding);
 			text-align: left;
+		}
+
+		.image-container {
+			display: flex;
+			align-items: flex-end;
 		}
 
 		.content,
@@ -72,6 +77,11 @@
 
 	.mirrored:nth-child(odd) {
 		flex-direction: row-reverse;
+
+		.image-container {
+			display: flex;
+			align-items: flex-start;
+		}
 
 		.content {
 			align-items: flex-end;

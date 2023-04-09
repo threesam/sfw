@@ -53,6 +53,7 @@
 <style lang="scss">
 	figure {
 		margin: 0;
+		height: 100%;
 
 		img {
 			width: 100%;
