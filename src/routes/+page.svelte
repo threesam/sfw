@@ -1,6 +1,5 @@
 <script>
 	export let data = {};
-	console.log('data', data);
 
 	const { projects } = data;
 
@@ -11,8 +10,8 @@
 </script>
 
 <Banner {...first} path="/projects/" />
-<div class="max-w-4xl mx-auto">
-	{#each projects.reverse() as project}
+<div class="flex flex-col">
+	{#each projects as project}
 		<SideBySide {...project} path="/projects/" />
 	{/each}
 </div>
