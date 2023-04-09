@@ -16,18 +16,10 @@
 
 <Header />
 
-<main>
+<main class="pb-16 max-w-full w-full min-h-screen">
 	<slot />
 </main>
 
 {#if route !== '/contact'}
 	<Footer {data} />
 {/if}
-
-<style lang="scss">
-	main {
-		max-width: 100%;
-		width: 100%;
-		min-height: calc(100vh - var(--headerHeight));
-	}
-</style>

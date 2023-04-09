@@ -35,22 +35,22 @@
 </script>
 
 <Banner height="40vh" image={data.image} />
-<h1>{data.title}</h1>
+<h1 class="text-5xl pb-3">{data.title}</h1>
 
-<section>
+<section class="mx-auto w-max">
 	<SocialLinks size="40" links={data.links} color={data.image.color} />
 </section>
 
 <section style={`--primary: ${data.image.color}`}>
 	{#if data.body}
-		<h3>abstract</h3>
+		<h3 class="text-3xl">abstract</h3>
 		<div class="portable-text">
 			<PortableText value={data.body} />
 		</div>
 	{/if}
 
 	{#if data.cast}
-		<h4>cast</h4>
+		<h4 class="text-2xl pt-3">cast</h4>
 		<ul>
 			{#each data.cast as castMember}
 				<li>
@@ -66,7 +66,7 @@
 	{/if}
 
 	{#if data.crew}
-		<h4>crew</h4>
+		<h4 class="text-2xl pt-3">crew</h4>
 		<ul>
 			{#each data.crew as crewMember}
 				<li>

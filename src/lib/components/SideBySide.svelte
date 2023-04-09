@@ -16,8 +16,8 @@
 		<Image {src} {alt} {caption} {hotspot} {crop} />
 	</div>
 	<div class="content">
-		<h3 style={color && `color: ${color}`}>{title}</h3>
-		<p>{description}</p>
+		<h3 class="text-3xl" style={color && `color: ${color}`}>{title}</h3>
+		<p class="py-3">{description}</p>
 
 		{#if slug}
 			<a class="link" href={path + slug}>{buttonText}</a>

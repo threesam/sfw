@@ -50,7 +50,7 @@
 				bind:value={$form.email}
 			/>
 		</label>
-		<button type="submit">subscribe</button>
+		<button class="text-black" type="submit">subscribe</button>
 	</form>
 	{#if isSubmitted}
 		<h5 transition:slide>{message}</h5>
