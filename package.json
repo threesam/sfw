@@ -39,6 +39,7 @@
 	"dependencies": {
 		"@sanity/client": "^3.4.1",
 		"@sanity/image-url": "^1.0.1",
+		"@sveltejs/adapter-vercel": "1.0.0-next.88",
 		"@types/p5": "^1.4.2",
 		"p5-svelte": "^3.1.2",
 		"svelte-forms-lib": "^2.0.1",
