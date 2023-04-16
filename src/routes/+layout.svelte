@@ -16,7 +16,7 @@
 
 <Header />
 
-<main class="min-h-screen">
+<main class="min-h-screen pt-16">
 	<slot />
 </main>
 
