@@ -7,6 +7,9 @@ export default {
         'display': "'Fredericka the Great', cursive",
         'sans': "'Montserrat', sans-serif"
       },
+      colors: {
+        'primary': 'var(--primary)'
+      },
       backgroundImage: {
         'gradient-fade': 'linear-gradient(180deg, transparent 60%, black)'
       }

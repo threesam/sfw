@@ -24,11 +24,11 @@
 	{/if}
 	{#if title || description}
 		<div style={color && `--primary: ${color}`} in:fly={{ x: -50, duration: 400 }} class="content">
-			<span>{eyebrow}</span>
-			<h2 class="text-2xl lg:text-4xl" style="color: var(--primary);">{title}</h2>
-			<p>{description}</p>
+			<span class="pb-0">{eyebrow}</span>
+			<h2 class="text-3xl pb-3 lg:text-4xl" style="color: var(--primary);">{title}</h2>
+			<p class="pb-1">{description}</p>
 			{#if slug}
-				<a href={handle} class="link" style="color: var(--primary);">learn more</a>
+				<a href={handle} class="transition-all duration-300 underline underline-offset-4 hover:underline-offset-1 hover:text-primary">learn more</a>
 			{/if}
 		</div>
 	{/if}
