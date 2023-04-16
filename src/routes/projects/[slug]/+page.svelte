@@ -35,52 +35,54 @@
 </script>
 
 <Banner height="40vh" image={data.image} />
-<h1 class="text-5xl pb-3">{data.title}</h1>
+<section class="px-5">
+	<h1 class="text-3xl lg:text-5xl pb-10">{data.title}</h1>
 
-<section class="mx-auto w-max">
-	<SocialLinks size="40" links={data.links} color={data.image.color} />
+	<div class="mx-auto w-max pb-10">
+		<SocialLinks size="40" links={data.links} color={data.image.color} />
+	</div>
+
+	<div style={`--primary: ${data.image.color}`}>
+		{#if data.body}
+			<h3 class="font-sans font-normal text-2xl">abstract</h3>
+			<div class="portable-text font-extralight text-center mb-5">
+				<PortableText value={data.body} />
+			</div>
+		{/if}
+
+		{#if data.cast}
+			<h4 class="text-2xl font-sans pt-3">cast</h4>
+			<ul class="mb-5">
+				{#each data.cast as castMember}
+					<li>
+						<span class="shimmer">{castMember.castname}</span>
+						{#if castMember.name && castMember.link}
+							<a href={castMember.link}>{castMember.name}</a>
+						{:else}
+							<span>{castMember.name}</span>
+						{/if}
+					</li>
+				{/each}
+			</ul>
+		{/if}
+
+		{#if data.crew}
+			<h4 class="text-2xl pt-3 font-sans">crew</h4>
+			<ul>
+				{#each data.crew as crewMember}
+					<li>
+						<span class="shimmer">{crewMember.role}</span>
+						<span>{crewMember.name || 'anonymous'}</span>
+					</li>
+				{/each}
+			</ul>
+		{/if}
+	</div>
+
+	{#if data.posters}
+		<Carousel slides={data.posters} />
+	{/if}
 </section>
-
-<section style={`--primary: ${data.image.color}`}>
-	{#if data.body}
-		<h3 class="text-3xl">abstract</h3>
-		<div class="portable-text">
-			<PortableText value={data.body} />
-		</div>
-	{/if}
-
-	{#if data.cast}
-		<h4 class="text-2xl pt-3">cast</h4>
-		<ul>
-			{#each data.cast as castMember}
-				<li>
-					<span class="shimmer">{castMember.castname}</span>
-					{#if castMember.name && castMember.link}
-						<a href={castMember.link}>{castMember.name}</a>
-					{:else}
-						<span>{castMember.name}</span>
-					{/if}
-				</li>
-			{/each}
-		</ul>
-	{/if}
-
-	{#if data.crew}
-		<h4 class="text-2xl pt-3">crew</h4>
-		<ul>
-			{#each data.crew as crewMember}
-				<li>
-					<span class="shimmer">{crewMember.role}</span>
-					<span>{crewMember.name || 'anonymous'}</span>
-				</li>
-			{/each}
-		</ul>
-	{/if}
-</section>
-
-{#if data.posters}
-	<Carousel slides={data.posters} />
-{/if}
 
 <style lang="scss">
 	section {
