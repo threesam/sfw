@@ -4,119 +4,23 @@
 	export let path = '/';
 	export let slug = '';
 	export let buttonText = 'learn more';
-	export let mirrored = true;
+	export let index = 0;
 	export let image = {};
 	const { src, alt, caption, color, hotspot, crop } = image;
 
 	import Image from './Image.svelte';
 </script>
 
-<section class:mirrored>
-	<div class="image-container">
-		<Image {src} {alt} {caption} {hotspot} {crop} />
+<section class="flex flex-col lg:grid lg:grid-cols-2 max-w-5xl mx-auto items-center my-5 lg:mb-0">
+	<div class={`lg:border-2 lg:border-white ${index % 2 === 0 ? 'lg:order-last' : ''}`}>
+		<Image {src} {alt} {caption} {crop} />
 	</div>
-	<div class="content">
-		<h3 class="text-3xl" style={color && `color: ${color}`}>{title}</h3>
-		<p class="py-3">{description}</p>
+	<div class={`p-5 ${index % 2 === 0 ? 'lg:text-end' : ''}`}>
+		<h3 class="hidden lg:block lg:text-3xl" style={color && `color: ${color}`}>{title}</h3>
+		<p class="pb-3 lg:py-3">{description}</p>
 
 		{#if slug}
 			<a class="link" href={path + slug}>{buttonText}</a>
 		{/if}
 	</div>
 </section>
-
-<style lang="scss">
-	section {
-		width: 100%;
-		height: 80vh;
-		display: flex;
-		flex-direction: row;
-
-		h3 {
-			margin: 0;
-			text-align: left;
-		}
-		.content,
-		.image-container {
-			height: 100%;
-			min-width: 50%;
-			display: flex;
-			flex-direction: column;
-			justify-content: center;
-			align-items: flex-start;
-			gap: 0;
-			padding: var(--containerPadding);
-			text-align: left;
-		}
-
-		.image-container {
-			display: flex;
-			align-items: flex-end;
-		}
-
-		.content,
-		figure {
-			width: 50%;
-		}
-
-		figure {
-			margin: 0;
-			overflow: hidden;
-
-			img {
-				height: 100%;
-				object-fit: cover;
-			}
-
-			img:hover {
-				transform: scale(1.02);
-				transition: 0.4s all ease-in;
-			}
-		}
-	}
-
-	.mirrored:nth-child(odd) {
-		flex-direction: row-reverse;
-
-		.image-container {
-			display: flex;
-			align-items: flex-start;
-		}
-
-		.content {
-			align-items: flex-end;
-			text-align: right;
-		}
-
-		h3 {
-			text-align: right;
-		}
-	}
-
-	@media (max-width: 768px) {
-		section {
-			flex-direction: column;
-			padding-top: 5rem;
-
-			.content {
-				padding: 1rem;
-			}
-			.content,
-			figure {
-				width: unset;
-			}
-
-			h3 {
-				text-align: left;
-			}
-		}
-		.mirrored:nth-child(odd) {
-			flex-direction: column;
-
-			.content {
-				align-items: flex-start;
-				text-align: left;
-			}
-		}
-	}
-</style>

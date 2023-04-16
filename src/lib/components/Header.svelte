@@ -12,9 +12,9 @@
 	<div class="container">
 		<a href="/">
 			{#if w > 768}
-				<h3>Skeleton Flowers & Water</h3>
+				<h3 class="text-2xl">Skeleton Flowers & Water</h3>
 			{:else}
-				<h3>SF+W</h3>
+				<h3 class="text-xl">SF+W</h3>
 			{/if}
 		</a>
 		<Nav />

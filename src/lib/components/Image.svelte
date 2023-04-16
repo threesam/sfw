@@ -14,32 +14,17 @@
 	import { fade } from 'svelte/transition';
 </script>
 
-<figure>
+<figure class="max-h-min object-contain">
 	{#if src}
-		{#if hotspot}
-			<img
-				in:fade
-				height={h}
-				width={w}
-				src={imageBuilder(src)
-					.size(w, h)
-					.fit('crop')
-					.crop('focalpoint')
-					.focalPoint(hotspot.x, hotspot.y)
-					.url()}
-				{alt}
-			/>
-		{:else}
-			<img
-				in:fade
-				height={h}
-				width={w}
-				src={imageBuilder(src).size(w, h).fit('crop').crop('entropy').url()}
-				{alt}
-			/>
-		{/if}
+		<img
+			in:fade
+			height={h}
+			width={w}
+			src={imageBuilder(src).size(w, h).fit('crop').crop('entropy').url()}
+			{alt}
+		/>
 		{#if caption}
-			<figcaption>{caption}</figcaption>
+			<figcaption class="hidden">{caption}</figcaption>
 		{/if}
 	{:else}
 		<!-- DEFAULT IMAGE -->
@@ -49,22 +34,3 @@
 		/>
 	{/if}
 </figure>
-
-<style lang="scss">
-	figure {
-		margin: 0;
-		height: 100%;
-
-		img {
-			width: 100%;
-			height: 100%;
-			object-fit: cover;
-			position: relative;
-			z-index: -10;
-		}
-
-		figcaption {
-			color: transparent;
-		}
-	}
-</style>

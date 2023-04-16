@@ -16,7 +16,7 @@
 
 <Header />
 
-<main class="pb-16 max-w-full w-full min-h-screen">
+<main class="min-h-screen">
 	<slot />
 </main>
 
