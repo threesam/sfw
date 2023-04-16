@@ -1,34 +1,6 @@
 <script lang="ts">
 	export let data: projectData;
 
-	interface castMember {
-		castname: string;
-		name: string;
-		link: string;
-	}
-
-	interface crewMember {
-		role: string;
-		name: string;
-	}
-
-	interface Image {
-		src: string;
-		alt: string;
-		captiom: string;
-	}
-	interface projectData {
-		title: string;
-		src: string;
-		alt: string;
-		caption: string;
-		image: Image;
-		body: [];
-		cast: castMember[];
-		crew: crewMember[];
-		posters: Image[];
-	}
-
 	import Banner from '$lib/components/Banner.svelte';
 	import Swiper from '$lib/components/Swiper.svelte';
 	import SocialLinks from '$lib/components/SocialLinks.svelte';

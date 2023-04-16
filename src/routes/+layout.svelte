@@ -5,7 +5,6 @@
 
 	import { page } from '$app/stores';
 	const route = $page?.route?.id || '';
-	console.log('route', route);
 
 	import '../app.css';
 	import Header from '$lib/components/Header.svelte';
@@ -13,7 +12,7 @@
 	import SEO from '$lib/components/SEO.svelte';
 </script>
 
-<SEO title={data.title} image={data.src} alt={data.alt} />
+<!-- <SEO title={data.title} image={data.src} alt={data.alt} /> -->
 
 <Header />
 

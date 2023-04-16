@@ -6,4 +6,31 @@ declare namespace App {
 	// interface Locals {}
 	// interface PageData {}
 	// interface Platform {}
+	export type castMember = {
+		castname: string;
+		name: string;
+		link: string;
+	}
+
+	export type crewMember = {
+		role: string;
+		name: string;
+	}
+
+	export type Image = {
+		src: string;
+		alt: string;
+		captiom: string;
+	}
+	export type projectData = {
+		title: string;
+		src: string;
+		alt: string;
+		caption: string;
+		image: Image;
+		body: [];
+		cast: castMember[];
+		crew: crewMember[];
+		posters: Image[];
+	}
 }

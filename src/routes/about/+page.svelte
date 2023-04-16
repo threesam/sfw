@@ -1,11 +1,12 @@
-<!-- <h1>About</h1> -->
-<img
-	src="https://cdn.discordapp.com/attachments/1039738613606395925/1053866314655072266/sfw.png"
-	alt="abstract skeleton flowers and water"
-/>
+<script>
+	export let data
+	console.log('data', data);
+	import Image from '$components/Image.svelte';
+	import PortableText from '$components/PortableText.svelte';
+</script>
 
-<style>
-	img {
-		max-width: 100%;
-	}
-</style>
+<div class="mx-auto max-w-3xl">
+	<Image src={data.image.asset.url} alt="" />
+</div>
+
+<PortableText blocks={data.body} />

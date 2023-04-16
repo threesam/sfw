@@ -1,6 +1,4 @@
 <script>
-	export const prerender = true
-
 	export let data = {};
 
 	const { projects } = data;

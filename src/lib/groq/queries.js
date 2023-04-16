@@ -4,18 +4,16 @@ export const singleProject = (slug) => {
     description,
     body,
     "image": {
-      "hotspot": mainImage.hotspot,
-      "crop": mainImage.crop,
-      "src": mainImage.asset->url,
-      "alt": mainImage.alt,
-      "caption": mainImage.caption,
-      "color": mainImage.asset->metadata.palette.lightVibrant.background,
+      "src": image.asset->url,
+      "alt": image.alt,
+      "caption": image.caption,
+      "color": image.asset->metadata.palette.lightVibrant.background,
     },
     "links": links[]{
       title,
       href
     },
-    "color": mainImage.asset->metadata.palette.lightVibrant.background,
+    "color": image.asset->metadata.palette.lightVibrant.background,
     "cast": cast[]{
       castname,
       "name": person->name,
@@ -38,13 +36,11 @@ export const allProjects = `*[_type == "project"]{
   description,
   "slug": slug.current,
   "image": {
-    "hotspot": mainImage.hotspot,
-    "crop": mainImage.crop,
-    "src": mainImage.asset->url,
-    "alt": mainImage.alt,
-    "caption": mainImage.caption,
-    "color": mainImage.asset->metadata.palette.lightVibrant.background,
-  }
+    "src": image.asset->url,
+    "alt": image.alt,
+    "caption": image.caption,
+    "color": image.asset->metadata.palette.lightVibrant.background,
+  },
 }`
 
 export const siteSettings = (hostname) => {
@@ -54,8 +50,9 @@ export const siteSettings = (hostname) => {
       title,
       href
     },
-    "src": image.asset->url,
-    "alt": image.alt,
+    image{
+      asset->
+    },
     "icons": icons[].asset->{
       "src": url,
       alt,

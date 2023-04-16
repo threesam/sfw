@@ -1,6 +1,8 @@
 import sanityClient from "@sanity/client"
 import {allProjects} from '$lib/groq/queries'
 
+export const prerender = true
+
 const client = sanityClient({
   projectId: "4yxngtwt",
   dataset: "production",
