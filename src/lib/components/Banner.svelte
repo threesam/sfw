@@ -17,14 +17,15 @@
 	import Image from './Image.svelte';
 </script>
 
-<section bind:clientWidth={w} bind:clientHeight={h} style={height && `height: ${height};`}>
+<section bind:clientWidth={w} bind:clientHeight={h} class="relative" style={height && `height: ${height};`}>
 	{#if w && h}
-		<Image {w} {h} {src} {alt} {hotspot} {crop} />
+	<Image {w} {h} {src} {alt} {hotspot} {crop} />
+	<div class="absolute inset-0 bg-gradient-fade"/>
 	{/if}
 	{#if title || description}
 		<div style={color && `--primary: ${color}`} in:fly={{ x: -50, duration: 400 }} class="content">
 			<span>{eyebrow}</span>
-			<h2 style="color: var(--primary);">{title}</h2>
+			<h2 class="text-2xl lg:text-4xl" style="color: var(--primary);">{title}</h2>
 			<p>{description}</p>
 			{#if slug}
 				<a href={handle} class="link" style="color: var(--primary);">learn more</a>
