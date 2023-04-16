@@ -2,24 +2,19 @@
 	export let title = '';
 	export let src = '';
 	export let alt = '';
-	export let caption = '';
 	export let description = '';
 </script>
 
-<div class="slide">
-	<img {src} {alt} />
-	<h5>{title}</h5>
-	<p>{description}</p>
-</div>
+<div class="h-96">
+	{#if src}
+		<img class="h-96 w-auto" {src} {alt} />
+	{/if}
 
-<style>
-	.slide {
-		height: 100%;
-	}
-	img {
-		height: 100%;
-	}
-	h5 {
-		margin-top: 0.5rem;
-	}
-</style>
+	{#if title}
+		<h5>{title}</h5>
+	{/if}
+
+	{#if description}
+		<p>{description}</p>
+	{/if}
+</div>
