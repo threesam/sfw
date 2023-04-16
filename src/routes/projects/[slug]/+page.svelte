@@ -1,4 +1,5 @@
 <script lang="ts">
+	export const prerender = true
 	interface castMember {
 		castname: string;
 		name: string;

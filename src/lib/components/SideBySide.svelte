@@ -11,7 +11,7 @@
 	import Image from './Image.svelte';
 </script>
 
-<section class="flex flex-col lg:grid lg:grid-cols-2 max-w-5xl mx-auto items-start my-5 lg:mb-0">
+<section class="flex flex-col lg:grid lg:grid-cols-2 max-w-5xl mx-auto items-center my-5 lg:mb-0">
 	<div class={`lg:border-2 lg:border-white ${index % 2 === 0 ? 'lg:order-last' : ''}`}>
 		<Image {src} {alt} {caption} {crop} />
 	</div>
