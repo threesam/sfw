@@ -1,4 +1,5 @@
 <script>
+	export let prerender = true
 	export let data = {};
 	const icons = data.icons;
 
