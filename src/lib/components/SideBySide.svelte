@@ -6,16 +6,16 @@
 	export let buttonText = 'learn more';
 	export let index = 0;
 	export let image = {};
-	const { src, alt, caption, color, hotspot, crop } = image;
+	const { src, alt, caption, color} = image;
 
 	import Image from './Image.svelte';
 </script>
 
 <section class="flex flex-col lg:grid lg:grid-cols-2 max-w-5xl mx-auto items-center my-5 lg:my-0">
 	<div class={`lg:border-2 lg:border-white ${index % 2 === 0 ? 'lg:order-last' : ''}`}>
-		<Image {src} {alt} {caption} {crop} />
+		<Image {src} {alt} {caption} />
 	</div>
-	<div class={`p-5 ${index % 2 === 0 ? 'lg:text-end' : ''}`} style="--primary: {color}">
+	<div class={`px-10 ${index % 2 === 0 ? 'lg:text-end' : ''}`} style="--primary: {color}">
 		<h3 class="hidden sm:block sm:text-2xl sm:mb-3 lg:text-3xl" style={color && `color: ${color}`}>{title}</h3>
 		<p class="pb-3 lg:py-3">{description}</p>
 

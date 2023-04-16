@@ -3,8 +3,6 @@
 	export let src = '';
 	export let alt: '';
 	export let caption = '';
-	export let hotspot = null;
-	export let crop = null;
 	export let h: number;
 	export let w: number;
 	export let defaultSrc =
