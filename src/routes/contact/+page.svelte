@@ -1,5 +1,5 @@
 <script>
-	export let prerender = true
+	export const prerender = true
 	export let data = {};
 	console.log('data', data);
 	const icons = data.icons;
@@ -9,7 +9,7 @@
 	import SubscribeForm from '$lib/components/SubscribeForm.svelte';
 	import SocialLinks from '$lib/components/SocialLinks.svelte';
 
-	let show;
+	let show = false;
 
 	onMount(() => {
 		show = true;
