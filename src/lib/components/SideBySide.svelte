@@ -15,7 +15,7 @@
 	<div class={`lg:border-2 lg:border-primary ${index % 2 === 0 ? 'lg:order-last' : ''}`}>
 		<Image {src} {alt} {caption} />
 	</div>
-	<div class={`px-10 ${index % 2 === 0 ? 'lg:text-end' : ''}`} >
+	<div class={`px-5 pt-5 pb-10 ${index % 2 === 0 ? 'lg:text-end' : ''}`} >
 		<h3 class="hidden sm:block sm:text-2xl sm:mb-3 lg:text-3xl text-primary">{title}</h3>
 		<p class="pb-3 lg:py-3">{description}</p>
 

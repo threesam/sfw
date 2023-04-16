@@ -9,7 +9,7 @@
 
 <header>
 	<Pencil />
-	<div class="container">
+	<div class="container px-5 lg:px-10">
 		<a href="/">
 			{#if w > 768}
 				<h3 class="text-2xl">Skeleton Flowers & Water</h3>
@@ -34,7 +34,6 @@
 		width: 100%;
 		max-width: 100%;
 		height: var(--headerHeight);
-		padding: 1rem 2rem;
 		display: flex;
 		flex-direction: row;
 		align-items: center;
@@ -46,10 +45,5 @@
 	}
 	a {
 		text-decoration: none;
-	}
-	@media (max-width: 768px) {
-		.container {
-			padding: 1rem;
-		}
 	}
 </style>
