@@ -1,6 +1,7 @@
 <script>
 	export let prerender = true
 	export let data = {};
+	console.log('data', data);
 	const icons = data.icons;
 
 	import { fade } from 'svelte/transition';
@@ -69,10 +70,10 @@
 		</div>
 	{/if}
 	<div class="content">
-		<h2>Subscribe</h2>
+		<h2 class="font-sans text-2xl">Subscribe</h2>
 		<SubscribeForm />
-		<h2>Follow</h2>
-		<SocialLinks />
+		<h2 class="font-sans text-2xl">Follow</h2>
+		<SocialLinks links={data.links} size={60} />
 	</div>
 </section>
 
