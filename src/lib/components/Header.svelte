@@ -1,6 +1,16 @@
 <script>
 	import Pencil from './Pencil.svelte';
-	import Nav from './Nav.svelte';
+	
+	export let links = [
+		{
+			title: 'about',
+			href: '/about'
+		},
+		{
+			title: 'contact',
+			href: '/contact'
+		}
+	];
 
 	let w = 0;
 </script>
@@ -17,6 +27,10 @@
 				<h3 class="text-light text-xl">SF+W</h3>
 			{/if}
 		</a>
-		<Nav />
+		{#each links as { href, title }}
+			<a class="text-base lg:text-lg hover:text-primary transition duration-300 border-b-2 border-transparent hover:border-primary" {href}>{title}</a>
+		{:else}
+			<p>no links!</p>
+		{/each}
 	</div>
 </header>
