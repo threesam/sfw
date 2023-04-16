@@ -11,7 +11,7 @@ import imageUrlBuilder from '@sanity/image-url'
 
 const builder = imageUrlBuilder(client)
 
-function urlFor(source) {
+function urlFor(source: string) {
   return builder.image(source)
 }
 

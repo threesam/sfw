@@ -5,6 +5,7 @@
 
 	import { page } from '$app/stores';
 	const route = $page?.route?.id || '';
+	console.log('route', route);
 
 	import '../app.css';
 	import Header from '$lib/components/Header.svelte';

@@ -12,7 +12,6 @@
 <style>
 	footer {
 		background-color: #f9c84c;
-		margin-top: var(--headerHeight);
 		display: flex;
 		flex-direction: row;
 		justify-content: space-between;

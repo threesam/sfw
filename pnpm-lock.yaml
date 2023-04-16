@@ -2,7 +2,7 @@ lockfileVersion: 5.4
 
 specifiers:
   '@playwright/test': ^1.32.3
-  '@portabletext/svelte': ^1.0.1
+  '@portabletext/svelte': 2.0.0
   '@sanity/client': ^3.4.1
   '@sanity/image-url': ^1.0.2
   '@sanity/types': ^3.8.3
@@ -27,7 +27,7 @@ specifiers:
   svelte-forms-lib: ^2.0.1
   svelte-preprocess: ^5.0.3
   svelte-seo: ^1.5.3
-  swiper: ^8.4.7
+  swiper: ^9.1.1
   tailwindcss: ^3.3.1
   tslib: ^2.5.0
   typescript: ^4.9.5
@@ -42,11 +42,11 @@ dependencies:
   p5-svelte: 3.1.2_@types+p5@1.6.0
   svelte-forms-lib: 2.0.1
   svelte-seo: 1.5.3
-  swiper: 8.4.7
+  swiper: 9.2.2
 
 devDependencies:
   '@playwright/test': 1.32.3
-  '@portabletext/svelte': 1.0.1_svelte@3.58.0
+  '@portabletext/svelte': 2.0.0_svelte@3.58.0
   '@sanity/types': 3.8.3
   '@sveltejs/kit': 1.15.5_svelte@3.58.0+vite@4.2.1
   '@typescript-eslint/eslint-plugin': 5.58.0_hzv37tkb63et4viajosjuuyxgi
@@ -589,17 +589,17 @@ packages:
   /@polka/url/1.0.0-next.21:
     resolution: {integrity: sha512-a5Sab1C4/icpTZVzZc5Ghpz88yQtGOyNqYXcZgOssB2uuAr+wF/MvN6bgtW32q7HHrvBki+BsZ0OuNv6EV3K9g==}
 
-  /@portabletext/svelte/1.0.1_svelte@3.58.0:
-    resolution: {integrity: sha512-37nyWavAl/MykqN5mrCmog9rYy+Bj6v64qn5oO2aj5GLF/BVz+zJThhdO2Ks70B6gkJXjVHDrcNs3qeIdZ53EA==}
+  /@portabletext/svelte/2.0.0_svelte@3.58.0:
+    resolution: {integrity: sha512-fyA2BFC4c/16PJxu1QpI8PC1W32TJjEPHRh69aW19OFYv5m4+7Gd4J4+Oq9C1FTKycNfcUTNaEik07KqhrLPfQ==}
     peerDependencies:
       svelte: ^3.47.0
     dependencies:
-      '@portabletext/toolkit': 1.0.8
+      '@portabletext/toolkit': 2.0.1
       svelte: 3.58.0
     dev: true
 
-  /@portabletext/toolkit/1.0.8:
-    resolution: {integrity: sha512-SNO8at5crqySCeYa19/mdcZoZvGCINGc/eAX4FwYt02cEzb48hf013BuA9LbEQuTOgpMKxnyeRGpEzxmowmEug==}
+  /@portabletext/toolkit/2.0.1:
+    resolution: {integrity: sha512-vr2SeDFUFV+VmRIyYsHBMimZLiiN0S7qIridt/YLJs3Wm1dI4jsfUam82AQwheSMjvWdBiBZ+Wsjq5HZBG4htw==}
     engines: {node: ^14.13.1 || >=16.0.0}
     dependencies:
       '@portabletext/types': 2.0.2
@@ -1325,12 +1325,6 @@ packages:
     dependencies:
       esutils: 2.0.3
     dev: true
-
-  /dom7/4.0.6:
-    resolution: {integrity: sha512-emjdpPLhpNubapLFdjNL9tP06Sr+GZkrIHEXLWvOGsytACUrkbeIdjO5g77m00BrHTznnlcNqgmn7pCN192TBA==}
-    dependencies:
-      ssr-window: 4.0.2
-    dev: false
 
   /electron-to-chromium/1.4.365:
     resolution: {integrity: sha512-FRHZO+1tUNO4TOPXmlxetkoaIY8uwHzd1kKopK/Gx2SKn1L47wJXWD44wxP5CGRyyP98z/c8e1eBzJrgPeiBOg==}
@@ -2976,12 +2970,10 @@ packages:
     resolution: {integrity: sha512-brIBNNB76mXFmU/Kerm4wFnkskBbluBDCjx/8TcpYRb298Yh2dztS2kQ6bhtjMcvUhd5ynClfwpz5h2gnzdQ1A==}
     engines: {node: '>= 8'}
 
-  /swiper/8.4.7:
-    resolution: {integrity: sha512-VwO/KU3i9IV2Sf+W2NqyzwWob4yX9Qdedq6vBtS0rFqJ6Fa5iLUJwxQkuD4I38w0WDJwmFl8ojkdcRFPHWD+2g==}
+  /swiper/9.2.2:
+    resolution: {integrity: sha512-rXicgpm8XRziyZ6TZ4NnZNb6FrhDH0M7X16WoHyzDp5HNHqXGe2BMXBQhfDDGUfhWcSIqeGSvPL9bQzK7Qr+dw==}
     engines: {node: '>= 4.7.0'}
-    requiresBuild: true
     dependencies:
-      dom7: 4.0.6
       ssr-window: 4.0.2
     dev: false
 

@@ -1,5 +1,6 @@
 <script lang="ts">
-	export const prerender = true
+	export let data: projectData;
+
 	interface castMember {
 		castname: string;
 		name: string;
@@ -27,10 +28,9 @@
 		crew: crewMember[];
 		posters: Image[];
 	}
-	export let data: projectData;
 
 	import Banner from '$lib/components/Banner.svelte';
-	import Carousel from '$lib/components/Carousel.svelte';
+	import Swiper from '$lib/components/Swiper.svelte';
 	import SocialLinks from '$lib/components/SocialLinks.svelte';
 	import { PortableText } from '@portabletext/svelte';
 </script>
@@ -81,7 +81,7 @@
 	</div>
 
 	{#if data.posters}
-		<Carousel slides={data.posters} />
+		<Swiper slides={data.posters} />
 	{/if}
 </section>
 

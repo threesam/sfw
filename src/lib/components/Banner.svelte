@@ -5,8 +5,8 @@
 	export let description = '';
 	export let slug = '';
 	export let path = '/';
-	export let image = {};
-	const { src, alt, color, hotspot, crop } = image;
+	export let image: any = {};
+	const { src, alt, color } = image;
 	const handle = path + slug;
 
 	import { fly } from 'svelte/transition';
@@ -19,7 +19,7 @@
 
 <section bind:clientWidth={w} bind:clientHeight={h} class="relative" style={height && `height: ${height};`}>
 	{#if w && h}
-	<Image {w} {h} {src} {alt} {hotspot} {crop} />
+	<Image {w} {h} {src} {alt} />
 	<div class="absolute inset-0 bg-gradient-fade"/>
 	{/if}
 	{#if title || description}

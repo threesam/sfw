@@ -3,11 +3,13 @@
 	export let src = '';
 	export let alt = '';
 	export let description = '';
+
+	import Image from "./Image.svelte";
 </script>
 
-<div class="h-96">
+<div>
 	{#if src}
-		<img class="h-96 w-auto" {src} {alt} />
+		<Image {src} {alt} />
 	{/if}
 
 	{#if title}
