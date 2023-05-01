@@ -1,5 +1,5 @@
 <script lang="ts">
-	import imageBuilder from '../utils/imageUrlBuilder';
+	import imageBuilder from '../utils/sanity';
 	import { fade } from 'svelte/transition';
 
 	export let src = '';

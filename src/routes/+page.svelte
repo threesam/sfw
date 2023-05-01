@@ -10,7 +10,7 @@
 </script>
 
 <Banner {...first} path="/projects/" />
-<div class="flex flex-col pt-10">
+<div class="flex flex-col pt-10 last:mb-20">
 	{#each projects as project, i}
 		<SideBySide {...project} index={i} path="/projects/" />
 	{/each}
