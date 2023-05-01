@@ -1,6 +1,6 @@
 <script lang="ts">
 	import SvelteSeo from 'svelte-seo';
-	import imageBuilder from '../utils/imageUrlBuilder';
+	import imageBuilder from '../utils/sanity';
 
 	import { page } from '$app/stores';
 	const host = 'https://skeletonflowersandwater.com';

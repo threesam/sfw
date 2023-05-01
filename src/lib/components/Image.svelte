@@ -1,5 +1,5 @@
 <script lang="ts">
-	import imageBuilder from '../utils/sanity';
+	import {urlFor} from '../utils/sanity';
 	import { fade } from 'svelte/transition';
 
 	export let src = '';
@@ -19,7 +19,7 @@
 	{#if src}
 		<img
 			in:fade
-			src={imageBuilder(src).auto('format').fit('crop').crop('entropy').url()}
+			src={urlFor(src).auto('format').fit('crop').crop('entropy').url()}
 			{alt}
 		/>
 		{#if caption}

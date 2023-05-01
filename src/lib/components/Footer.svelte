@@ -1,11 +1,14 @@
 <script>
-	export let data;
 	import SubscribeForm from './SubscribeForm.svelte';
 	import SocialLinks from './SocialLinks.svelte';
+
+	export let data;
+
+	const {settings} = data.body
 </script>
 
 <footer>
-	<SocialLinks links={data.links} size="69" />
+	<SocialLinks links={settings.links} size={69} />
 	<SubscribeForm />
 </footer>
 

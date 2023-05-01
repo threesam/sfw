@@ -1,19 +1,13 @@
-import sanityClient from "@sanity/client"
-import { siteSettings } from "$lib/groq/queries"
+import { getSettings } from "$utils/sanity"
 
-const client = sanityClient({
-  projectId: "4yxngtwt",
-  dataset: "production",
-  apiVersion: "2021-10-21",
-  useCdn: false
-})
-
-export async function load({ params }) {
-  const data = await client.fetch(siteSettings('skeletonflowersandwater'))
+export async function load() {
+  const settings = await getSettings({hostname: 'skeletonflowersandwater'})
   
-  if (data) {
+  if (settings) {
     return {
-      ...data
+      body: {
+        settings
+      }
     }
   }
   return {
