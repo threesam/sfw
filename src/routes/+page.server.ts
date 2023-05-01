@@ -1,4 +1,5 @@
 import { getAllProjects } from '$utils/sanity'
+import { error } from '@sveltejs/kit'
 
 export async function load() {
   const projects = await getAllProjects()
@@ -10,8 +11,6 @@ export async function load() {
       }
     }
   }
-  return {
-    status: 500,
-    body: new Error("Internal Server Error")
-  }
+
+  throw error(404)
 }

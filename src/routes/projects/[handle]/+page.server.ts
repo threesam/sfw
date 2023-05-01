@@ -1,4 +1,5 @@
 import { getProject } from '$utils/sanity.js'
+import { error } from '@sveltejs/kit'
 
 export async function load({ params }) {
   const {handle} = params
@@ -11,8 +12,6 @@ export async function load({ params }) {
       }
     }
   }
-  return {
-    status: 500,
-    body: new Error("Internal Server Error")
-  }
+
+  throw error(404)
 }
