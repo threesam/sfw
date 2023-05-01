@@ -1,27 +1,23 @@
 <script lang="ts">
-	export let height = '';
+	import { fly } from 'svelte/transition';
+	import ArrowDown from './icons/ArrowDown.svelte';
+	import Image from './Image.svelte';
+
+	export let height = 'calc(100vh - var(--headerHeight))';
 	export let eyebrow = '';
 	export let title = '';
 	export let description = '';
 	export let slug = '';
 	export let path = '/';
 	export let image: any = {};
+
 	const { src, alt, color } = image;
 	const handle = path + slug;
-
-	import { fly } from 'svelte/transition';
-	let h: number;
-	let w: number;
-
-	import ArrowDown from './icons/ArrowDown.svelte';
-	import Image from './Image.svelte';
 </script>
 
-<section bind:clientWidth={w} bind:clientHeight={h} class="relative" style={height && `height: ${height};`}>
-	{#if w && h}
-	<Image {w} {h} {src} {alt} />
+<section class="relative" style={height && `height: ${height};`}>
+	<Image {src} {alt} />
 	<div class="absolute inset-0 bg-gradient-fade"/>
-	{/if}
 	{#if title || description}
 		<div style={color && `--primary: ${color}`} in:fly={{ x: -50, duration: 400 }} class="content">
 			<span class="pb-0">{eyebrow}</span>
