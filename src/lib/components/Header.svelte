@@ -27,10 +27,12 @@
 				<h3 class="text-light text-xl">SF+W</h3>
 			{/if}
 		</a>
-		{#each links as { href, title }}
-			<a class="text-base lg:text-lg hover:text-primary transition duration-300 border-b-2 border-transparent hover:border-primary" {href}>{title}</a>
-		{:else}
-			<p>no links!</p>
-		{/each}
+		<div class="gap-5 flex">
+			{#each links as { href, title }}
+				<a class="text-base lg:text-lg hover:text-primary transition duration-300 border-b-2 border-transparent hover:border-primary" {href}>{title}</a>
+			{:else}
+				<p>no links!</p>
+			{/each}
+		</div>
 	</div>
 </header>
