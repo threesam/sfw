@@ -33,7 +33,7 @@
 </script>
 
 {#if links?.length}
-	<div>
+	<div class="flex justify-start gap-5">
 		{#each links as { href, title }, i}
 			<a
 				style={`color: ${color};`}
@@ -46,24 +46,3 @@
 		{/each}
 	</div>
 {/if}
-
-<style>
-	div {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		gap: 2rem;
-	}
-	a {
-		color: var(--textColor);
-		transition: all 0.4s;
-		margin: 0;
-		display: flex;
-		align-items: center;
-	}
-	a:hover {
-		/* color: var(--primary); */
-		/* color: var(--yellow); */
-		transform: scale(0.9);
-	}
-</style>

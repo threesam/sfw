@@ -63,53 +63,16 @@
 	};
 </script>
 
-<section>
+<section class="flex flex-col justify-center items-center relative" style="height: calc(100vh - var(--headerHeight));">
 	{#if show}
-		<div in:fade={{ duration: 3000 }} class="container">
+		<div in:fade={{ duration: 3000 }} class="absolute inset-0 w-full h-full overflow-hidden">
 			<P5 {sketch} />
 		</div>
 	{/if}
-	<div class="content">
-		<h2 class="font-sans text-2xl">Subscribe</h2>
+	<div class="relative bg-primary p-5 text-black font-bold border-2 border-black">
+		<h2 class="font-sans text-2xl mb-2">Subscribe</h2>
 		<SubscribeForm />
-		<h2 class="font-sans text-2xl">Follow</h2>
+		<h2 class="font-sans text-2xl mb-2 mt-8">Follow</h2>
 		<SocialLinks links={data.links} size={60} />
 	</div>
 </section>
-
-<style>
-	section {
-		/* background-color: #f9c84c; */
-		height: calc(100vh - var(--headerHeight));
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		/* padding: 2rem; */
-		position: relative;
-	}
-
-	.container {
-		position: absolute;
-		z-index: -1;
-		width: 100%;
-		height: 100%;
-		overflow: hidden;
-	}
-
-	.content {
-		background: var(--primary);
-		padding: var(--containerPadding);
-		/* border: 0.25rem solid var(--textColor); */
-	}
-
-	h2 {
-		margin: 0;
-		margin-bottom: 0.5rem;
-		color: var(--background);
-	}
-
-	h2:nth-of-type(2) {
-		margin-top: 2rem;
-	}
-</style>
