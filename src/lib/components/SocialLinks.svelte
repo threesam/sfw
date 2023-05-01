@@ -36,8 +36,9 @@
 	<div class="flex justify-start gap-5">
 		{#each links as { href, title }, i}
 			<a
+			class="hover:scale-95 transition-all duration-300"
 				style={`color: ${color};`}
-				in:scale={{ delay: (i + 1) * 100 + 500, start: 0 }}
+				in:scale={{ delay: (i + 1) * 100, start: 0 }}
 				{href}
 				aria-label={title}
 			>
