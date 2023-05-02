@@ -1,9 +1,10 @@
 import sanityClient from "@sanity/client"
 import imageUrlBuilder from '@sanity/image-url'
+import {env} from '$env'
 
 const client = sanityClient({
-  projectId: "4yxngtwt",
-  dataset: "production",
+  projectId: env.SANITY_PROJECT_ID,
+  dataset: env.SANITY_DATASET,
   apiVersion: "2021-10-21",
   useCdn: false
 })
