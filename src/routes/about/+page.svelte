@@ -1,6 +1,6 @@
 <script>
-	import Image from '$components/Image.svelte';
-	import PortableText from '$components/PortableText.svelte';
+	import Image from '$components/Image.svelte'
+	import PortableText from '$components/PortableText.svelte'
 
 	export let data
 	const { settings } = data.body

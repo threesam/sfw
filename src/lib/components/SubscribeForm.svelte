@@ -1,9 +1,9 @@
 <script>
-	export let endpoint = '/subscribe.js';
-	import { slide } from 'svelte/transition';
-	import { createForm } from 'svelte-forms-lib';
-	$: isSubmitted = false;
-	$: message = '';
+	export let endpoint = '/subscribe.js'
+	import { slide } from 'svelte/transition'
+	import { createForm } from 'svelte-forms-lib'
+	$: isSubmitted = false
+	$: message = ''
 	const { form, handleChange, handleSubmit } = createForm({
 		initialValues: {
 			email: ''
@@ -13,28 +13,28 @@
 				const response = await fetch(endpoint, {
 					method: 'POST',
 					body: JSON.stringify({ email: values.email })
-				});
-				console.log('response', response);
+				})
+				console.log('response', response)
 				if (response.status == 400) {
-					message = 'Already Subscribed!';
+					message = 'Already Subscribed!'
 				}
 				if (response.status == 200) {
-					message = 'Thanks for Subscribing!';
+					message = 'Thanks for Subscribing!'
 				}
 
-				message = 'This absolutely does not work yet';
+				message = 'This absolutely does not work yet'
 
 				// const json = await response.json()
-				isSubmitted = true;
+				isSubmitted = true
 				setTimeout(() => {
-					$form.email = '';
-					isSubmitted = false;
-				}, 3000);
+					$form.email = ''
+					isSubmitted = false
+				}, 3000)
 			} catch (error) {
-				console.error(error);
+				console.error(error)
 			}
 		}
-	});
+	})
 </script>
 
 <div class="subscribe-form">

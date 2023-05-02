@@ -1,10 +1,10 @@
 <script>
-	import SubscribeForm from './SubscribeForm.svelte';
-	import SocialLinks from './SocialLinks.svelte';
+	import SubscribeForm from './SubscribeForm.svelte'
+	import SocialLinks from './SocialLinks.svelte'
 
-	export let data;
+	export let data
 
-	const {settings} = data.body
+	const { settings } = data.body
 </script>
 
 <footer>

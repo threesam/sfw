@@ -1,5 +1,5 @@
 <script>
-	export let text = 'Sign up for newsletter';
+	export let text = 'Sign up for newsletter'
 </script>
 
 <!-- <section>

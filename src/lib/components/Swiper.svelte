@@ -4,7 +4,7 @@
 
 	import Slide from '$components/SwiperSlide.svelte'
 	import Icons from '$components/Icons.svelte'
-  import { register } from 'swiper/element/bundle'
+	import { register } from 'swiper/element/bundle'
 
 	function getSlides(clientWidth: number) {
 		if (clientWidth > 1024) {
@@ -36,7 +36,7 @@
 	}
 </script>
 
-<section class="py-10 px-5 lg:px-0" bind:clientWidth>
+<section class="px-5 py-10 lg:px-0" bind:clientWidth>
 	{#if clientWidth}
 		<div class="relative mx-auto h-max max-w-6xl">
 			<div class="flex justify-between">
@@ -69,7 +69,7 @@
 				{#each slides as slide}
 					<swiper-slide class="mb-10" bind:clientWidth={slideWidth}>
 						{#if slideWidth}
-            	<Slide {...slide} />
+							<Slide {...slide} />
 						{/if}
 					</swiper-slide>
 				{:else}

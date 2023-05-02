@@ -1,10 +1,10 @@
 <script>
-	export let title = '';
-	export let src = '';
-	export let alt = '';
-	export let description = '';
+	export let title = ''
+	export let src = ''
+	export let alt = ''
+	export let description = ''
 
-	import Image from "./Image.svelte";
+	import Image from './Image.svelte'
 </script>
 
 <div>

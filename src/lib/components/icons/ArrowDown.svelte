@@ -1,7 +1,7 @@
 <script>
-	export let width = 20;
-	export let height = 20;
-	export let color = 'var(--textColor)';
+	export let width = 20
+	export let height = 20
+	export let color = 'var(--textColor)'
 </script>
 
 <svg

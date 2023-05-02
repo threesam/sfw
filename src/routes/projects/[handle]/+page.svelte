@@ -1,18 +1,18 @@
 <script lang="ts">
-	import type {PageData} from './$types'
-	import Banner from '$lib/components/Banner.svelte';
-	import Swiper from '$lib/components/Swiper.svelte';
-	import SocialLinks from '$lib/components/SocialLinks.svelte';
-	import { PortableText } from '@portabletext/svelte';
+	import type { PageData } from './$types'
+	import Banner from '$lib/components/Banner.svelte'
+	import Swiper from '$lib/components/Swiper.svelte'
+	import SocialLinks from '$lib/components/SocialLinks.svelte'
+	import { PortableText } from '@portabletext/svelte'
 
-	export let data: PageData;
+	export let data: PageData
 
 	const { project } = data.body
 </script>
 
 <Banner height="40vh" image={project.image} />
 <section class="px-5">
-	<h1 class="text-3xl lg:text-5xl pb-10">{project.title}</h1>
+	<h1 class="pb-10 text-3xl lg:text-5xl">{project.title}</h1>
 
 	<div class="mx-auto w-max pb-10">
 		<SocialLinks size={40} links={project.links} color={project.image.color} />
@@ -20,14 +20,14 @@
 
 	<div style={`--primary: ${project.image.color}`}>
 		{#if project.body}
-			<h3 class="font-sans font-normal text-2xl">abstract</h3>
-			<div class="portable-text font-extralight text-center mb-5">
+			<h3 class="font-sans text-2xl font-normal">abstract</h3>
+			<div class="portable-text mb-5 text-center font-extralight">
 				<PortableText value={project.body} />
 			</div>
 		{/if}
 
 		{#if project.cast}
-			<h4 class="text-2xl font-sans pt-3">cast</h4>
+			<h4 class="pt-3 font-sans text-2xl">cast</h4>
 			<ul class="mb-5">
 				{#each project.cast as castMember}
 					<li>
@@ -43,7 +43,7 @@
 		{/if}
 
 		{#if project.crew}
-			<h4 class="text-2xl pt-3 font-sans">crew</h4>
+			<h4 class="pt-3 font-sans text-2xl">crew</h4>
 			<ul>
 				{#each project.crew as crewMember}
 					<li>

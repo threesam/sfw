@@ -1,22 +1,22 @@
 <script lang="ts">
 	interface Link {
-		title: string;
-		href: string;
+		title: string
+		href: string
 	}
 
-	import { scale } from 'svelte/transition';
+	import { scale } from 'svelte/transition'
 
-	export let color = 'var(--background)';
-	export let size = 69;
-	export let links: Link[] = [];
+	export let color = 'var(--background)'
+	export let size = 69
+	export let links: Link[] = []
 
-	import Facebook from './icons/Facebook.svelte';
-	import Imdb from './icons/Imdb.svelte';
-	import Instagram from './icons/Instagram.svelte';
-	import LinkedIn from './icons/LinkedIn.svelte';
-	import TikTok from './icons/TikTok.svelte';
-	import Website from './icons/Website.svelte';
-	import Youtube from './icons/Youtube.svelte';
+	import Facebook from './icons/Facebook.svelte'
+	import Imdb from './icons/Imdb.svelte'
+	import Instagram from './icons/Instagram.svelte'
+	import LinkedIn from './icons/LinkedIn.svelte'
+	import TikTok from './icons/TikTok.svelte'
+	import Website from './icons/Website.svelte'
+	import Youtube from './icons/Youtube.svelte'
 
 	const options = [
 		{ title: 'facebook', component: Facebook },
@@ -26,17 +26,17 @@
 		{ title: 'tiktok', component: TikTok },
 		{ title: 'website', component: Website },
 		{ title: 'youtube', component: Youtube }
-	];
+	]
 
 	const getIconComponent = (title: string) =>
-		options.find((option) => option.title === title)?.component;
+		options.find((option) => option.title === title)?.component
 </script>
 
 {#if links?.length}
 	<div class="flex justify-start gap-5">
 		{#each links as { href, title }, i}
 			<a
-			class="hover:scale-95 transition-all duration-300"
+				class="transition-all duration-300 hover:scale-95"
 				style={`color: ${color};`}
 				in:scale={{ delay: (i + 1) * 100, start: 0 }}
 				{href}

@@ -1,7 +1,7 @@
 <script>
-	export let width = 30;
-	export let height = 30;
-	export let color = '#000000';
+	export let width = 30
+	export let height = 30
+	export let color = '#000000'
 </script>
 
 <svg xmlns="http://www.w3.org/2000/svg" {width} {height} viewBox="0 0 30 30" fill={color}>
