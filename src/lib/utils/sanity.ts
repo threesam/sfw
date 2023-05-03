@@ -39,7 +39,8 @@ export async function getProject({ handle }: { handle: string }) {
     },
     "crew": crew[]{
       "role": role->title,
-      "name": person->name
+      "name": person->name,
+      "link": person->link
     },
     "posters": posters[]{
       "src": asset->url,

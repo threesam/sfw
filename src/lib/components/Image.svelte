@@ -17,7 +17,7 @@
 
 <figure class="max-h-min w-full object-contain">
 	{#if src}
-		<img in:fade src={urlFor(src).auto('format').fit('crop').crop('entropy').url()} {alt} />
+		<img class="w-full" in:fade src={urlFor(src).auto('format').url()} {alt} />
 		{#if caption}
 			<figcaption class="hidden">{caption}</figcaption>
 		{/if}
