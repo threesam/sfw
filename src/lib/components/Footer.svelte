@@ -1,30 +1,22 @@
-<script>
+<script lang="ts">
 	import SubscribeForm from './SubscribeForm.svelte'
 	import SocialLinks from './SocialLinks.svelte'
 
-	export let data
+	export let data = {} as {
+		body: {
+			settings: {
+				links: {
+					title: string
+					href: string
+				}[]
+			}
+		}
+	}
 
 	const { settings } = data.body
 </script>
 
-<footer>
+<footer class="flex flex-col items-center justify-between gap-10 bg-primary p-10 lg:flex-row">
 	<SocialLinks links={settings.links} size={69} />
 	<SubscribeForm />
 </footer>
-
-<style>
-	footer {
-		background-color: #f9c84c;
-		display: flex;
-		flex-direction: row;
-		justify-content: space-between;
-		align-items: center;
-		gap: 2rem;
-		padding: var(--containerPadding);
-	}
-	@media (max-width: 768px) {
-		footer {
-			flex-direction: column;
-		}
-	}
-</style>

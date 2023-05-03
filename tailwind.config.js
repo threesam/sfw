@@ -12,10 +12,6 @@ export default {
 			},
 			colors: {
 				primary: 'var(--primary)',
-				svelteOrange: '#FF3E00',
-				svelteDark: '#F03A00',
-				beige: '#d2b097',
-				hotPink: '#FF1966',
 				dark: '#111111',
 				light: '#FAFAFA'
 			}

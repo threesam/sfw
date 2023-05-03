@@ -1,5 +1,5 @@
 <script lang="ts">
-	interface Link {
+	type Link = {
 		title: string
 		href: string
 	}
