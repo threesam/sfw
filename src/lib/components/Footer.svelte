@@ -16,9 +16,7 @@
 	const { settings } = data.body
 </script>
 
-<footer
-	class="flex flex-col-reverse items-center justify-between gap-10 bg-primary p-10 lg:flex-row"
->
-	<SocialLinks links={settings.links} size={69} />
+<footer class="flex flex-col items-center justify-between gap-10 bg-primary p-10 lg:flex-row">
 	<SubscribeForm />
+	<SocialLinks links={settings.links} size={69} />
 </footer>

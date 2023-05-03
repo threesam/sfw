@@ -37,83 +37,31 @@
 	})
 </script>
 
-<div class="subscribe-form">
-	<!-- <h4>Grab our updates</h4> -->
-	<form action={endpoint} method="post" on:submit|preventDefault={handleSubmit}>
-		<label for="email">
-			<input
-				type="email"
-				name="email"
-				id="email"
-				placeholder="enter email"
-				on:change={handleChange}
-				bind:value={$form.email}
-			/>
-		</label>
-		<button class="text-black" type="submit">subscribe</button>
-	</form>
-	{#if isSubmitted}
-		<h5 transition:slide>{message}</h5>
-	{/if}
-</div>
-
-<style>
-	/* section {
-		max-width: 100%;
-		display: grid;
-		place-content: center;
-		gap: 2rem;
-		position: relative;
-		background-color: lavender;
-		color: var(--background);
-		padding: 4rem 2rem;
-	} */
-	.subscribe-form {
-		max-width: 50rem;
-		/* border: 2px solid var(--background); */
-		--width: 65%;
-	}
-	form {
-		display: flex;
-		margin: 0;
-		padding: 0;
-		min-width: 100%;
-		justify-content: stretch;
-	}
-	label {
-		width: var(--width);
-	}
-	input {
-		height: 100%;
-		border: 0.125rem solid var(--background);
-		font-size: 1rem;
-		border-radius: 0;
-		background: var(--background);
-		color: var(--textColor);
-		padding: 0.28rem 1rem;
-	}
-	/* magic number to match svg search icon */
-	input:focus {
-		border: 0.125rem solid transparent;
-		outline: none;
-	}
-	button {
-		background-color: var(--textColor);
-		font-family: var(--headingFont);
-		padding: 1rem 1.5rem;
-		border-radius: 0;
-		width: calc(100% - var(--width));
-		text-align: center;
-	}
-	h4,
-	h5 {
-		margin-top: 0;
-		margin-bottom: 0.5rem;
-		color: var(--red);
-	}
-	@media screen and (max-width: 600px) {
-		h3 {
-			font-size: var(--h4);
-		}
-	}
-</style>
+<form
+	class="flex w-full flex-grow flex-col justify-start lg:flex-row lg:gap-0"
+	action={endpoint}
+	method="post"
+	on:submit|preventDefault={handleSubmit}
+>
+	<label for="email">
+		<input
+			type="email"
+			name="email"
+			id="email"
+			placeholder="enter email"
+			class="w-full rounded-none border-2 border-dark bg-dark p-5 text-white placeholder:text-light
+			focus:border-light focus:outline-none focus:placeholder:text-light/60"
+			on:change={handleChange}
+			bind:value={$form.email}
+		/>
+	</label>
+	<button
+		class="rounded-none border-2 border-light bg-light p-5 text-dark lg:border-none lg:pl-5"
+		type="submit"
+	>
+		subscribe
+	</button>
+</form>
+{#if isSubmitted}
+	<h5 transition:slide>{message}</h5>
+{/if}
