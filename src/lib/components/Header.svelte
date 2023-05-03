@@ -1,6 +1,4 @@
 <script>
-	import Pencil from './Pencil.svelte'
-
 	export let links = [
 		{
 			title: 'about',
@@ -11,21 +9,15 @@
 			href: '/contact'
 		}
 	]
-
-	let w = 0
 </script>
 
-<svelte:window bind:innerWidth={w} />
-
 <header class="fixed z-10 flex w-full flex-col items-center bg-black">
-	<Pencil />
 	<div class="flex h-16 w-full max-w-full items-center justify-between px-5 lg:px-10">
 		<a href="/">
-			{#if w > 768}
-				<h3 class="text-2xl text-light">Skeleton Flowers & Water</h3>
-			{:else}
-				<h3 class="text-xl text-light">SF+W</h3>
-			{/if}
+			<h3>
+				<span class="hidden text-2xl text-light lg:block">Skeleton Flowers & Water</span>
+				<span class="block text-xl text-light lg:hidden">SF+W</span>
+			</h3>
 		</a>
 		<div class="flex gap-5">
 			{#each links as { href, title }}
