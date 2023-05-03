@@ -3,6 +3,7 @@
 	import { fade } from 'svelte/transition'
 	import { onMount } from 'svelte'
 	import P5 from 'p5-svelte'
+	import type { Sketch } from 'p5-svelte'
 	import SubscribeForm from '$lib/components/SubscribeForm.svelte'
 	import SocialLinks from '$lib/components/SocialLinks.svelte'
 
@@ -10,7 +11,7 @@
 	export let data: PageData
 
 	const { settings } = data.body
-	const icons = settings.icons
+	const icons = settings.icons as { src: string }[]
 	let show = false
 
 	onMount(() => {
@@ -18,10 +19,16 @@
 	})
 
 	// SKETCH
-	let points = []
+	type Point = {
+		x: number
+		y: number
+		size: number
+		icon: number
+	}
+	let points = [] as Point[]
 
-	const sketch = (p5) => {
-		var mapimgs
+	const sketch: Sketch = (p5) => {
+		let mapimgs = [] as any[]
 
 		p5.preload = () => {
 			mapimgs = icons.map((icon) => p5.loadImage(icon.src))
