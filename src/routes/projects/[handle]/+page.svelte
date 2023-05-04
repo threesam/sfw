@@ -11,7 +11,7 @@
 </script>
 
 <Banner height="40vh" image={project.image} />
-<section class="px-5">
+<section class="p-5">
 	<h1 class="pb-10 text-center text-3xl lg:text-5xl">{project.title}</h1>
 
 	<div class="mx-auto w-max pb-10">
