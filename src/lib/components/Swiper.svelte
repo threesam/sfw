@@ -8,11 +8,11 @@
 
 	function getSlides(clientWidth: number) {
 		if (clientWidth > 1024) {
-			return 4
+			return 3.3
 		} else if (clientWidth > 640) {
-			return 3
+			return 2.3
 		} else {
-			return 2
+			return 1.3
 		}
 	}
 
@@ -20,13 +20,12 @@
 
 	let clientWidth: number
 	let swiperEl: any
-	const spaceBetween = 20
+	const spaceBetween = 0
 
 	let slideWidth
 
 	$: isBeginning = false
 	$: isEnd = true
-
 	$: slidesPerView = getSlides(clientWidth)
 
 	const onProgress = (e) => {
@@ -36,26 +35,31 @@
 	}
 </script>
 
-<section class="px-5 py-10 lg:px-0" bind:clientWidth>
+<section class="bg-dark relative py-10" bind:clientWidth>
 	{#if clientWidth}
-		<div class="relative mx-auto h-max max-w-6xl">
-			<div class="flex justify-between">
+		<div class="lg:px-10">
+			<div class="flex justify-between px-5 lg:px-0">
 				{#if title}
-					<h2 class="pb-5 font-display">{title}</h2>
+					<h2 class="font-display pb-5">{title}</h2>
 				{/if}
+				<a
+					class="underline underline-offset-4 transition-all duration-300 hover:underline-offset-2"
+					href="/projects">view all</a
+				>
 			</div>
 
 			{#if !isBeginning}
 				<button
-					class="absolute left-[-2rem] top-[42%] hidden rotate-180 lg:block"
+					class="bg-dark absolute left-0 top-0 z-10 hidden h-full w-10 rotate-180 items-center justify-center lg:flex"
 					on:click={() => swiperEl.swiper.slidePrev()}
-					><Icons type="caretRight" />
+				>
+					<Icons type="caretRight" strokeColor="var(--primary)" />
 					<span class="sr-only">next</span>
 				</button>
 			{/if}
 
 			<swiper-container
-				style="--swiper-pagination-color: #FF1966; --swiper-pagination-bullet-border-radius: 0"
+				style="--swiper-pagination-color: var(--primary); --swiper-pagination-bullet-inactive-color: #fff; --swiper-pagination-bullet-border-radius: 0"
 				bind:this={swiperEl}
 				pagination={{
 					type: 'bullets',
@@ -63,13 +67,13 @@
 				}}
 				slides-per-view={slidesPerView}
 				space-between={spaceBetween}
-				centered-slides={true}
+				centered-slides={false}
 				on:progress={onProgress}
 			>
 				{#each slides as slide}
 					<swiper-slide class="mb-10" bind:clientWidth={slideWidth}>
 						{#if slideWidth}
-							<Slide {...slide} />
+							<Slide title={slide.title} src={slide.image?.src} href={`/projects/${slide.slug}`} />
 						{/if}
 					</swiper-slide>
 				{:else}
@@ -79,9 +83,10 @@
 
 			{#if !isEnd}
 				<button
-					class="absolute right-[-2rem] top-[42%] hidden lg:block"
+					class="bg-dark absolute right-0 top-0 z-10 hidden h-full w-10 items-center justify-center lg:flex"
 					on:click={() => swiperEl.swiper.slideNext()}
-					><Icons type="caretRight" />
+				>
+					<Icons type="caretRight" strokeColor="var(--primary)" />
 					<span class="sr-only">previous</span>
 				</button>
 			{/if}
