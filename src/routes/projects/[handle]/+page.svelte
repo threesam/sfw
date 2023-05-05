@@ -1,13 +1,14 @@
 <script lang="ts">
 	import type { PageData } from './$types'
 	import Banner from '$lib/components/Banner.svelte'
-	import Swiper from '$lib/components/Swiper.svelte'
+	import Image from '$lib/components/Image.svelte'
 	import SocialLinks from '$lib/components/SocialLinks.svelte'
 	import { PortableText } from '@portabletext/svelte'
 
 	export let data: PageData
 
 	const { project } = data.body
+	console.log('project: ', project)
 </script>
 
 <Banner height="40vh" image={project.image} />
@@ -60,6 +61,12 @@
 	</div>
 
 	{#if project.posters}
-		<Swiper slides={project.posters} />
+		<figure class=" w-max-content flex w-full justify-center p-5 lg:max-h-[50vh]">
+			<img
+				class="lg:max-h-[50vh]"
+				src={project.posters[0].src}
+				alt={'poster for ' + project.title}
+			/>
+		</figure>
 	{/if}
 </section>
