@@ -4,6 +4,7 @@
 	import Swiper from '$components/Swiper.svelte'
 
 	export let data: PageData
+	console.log('data: ', data)
 
 	const { projects, products } = data.body
 	console.log('products: ', products[0].variants)
@@ -11,9 +12,21 @@
 
 <Banner {...projects[0]} path="/projects/" />
 
+<section class="grid h-96 w-full place-content-center bg-gradient-to-tl from-gray-700 to-gray-900">
+	<div class="flex max-w-3xl flex-col items-center gap-5 p-5 lg:grid lg:grid-cols-2">
+		<h2 class="bg-dark flex h-full w-full items-center justify-center p-5 text-3xl font-bold">
+			Mission Statement
+		</h2>
+		<p class="text-center lg:text-left">
+			Magna eiusmod qui in voluptate eu proident dolor magna officia esse nostrud do. Id cupidatat
+			amet eiusmod ad. Minim do nisi fugiat labore sit cillum cupidatat anim esse excepteur sint.
+		</p>
+	</div>
+</section>
+
 <Swiper title="Films" slides={projects.slice(1)} />
 
-<div class="bg-dark mb-10 grid gap-10 p-5 lg:grid-cols-3 lg:gap-2">
+<div class="bg-dark mb-10 grid gap-10 p-5 lg:grid-cols-3 lg:gap-2 lg:p-10">
 	{#each products as product}
 		<div class="">
 			<img class="max-w-full bg-gradient-to-tr from-slate-100" src={product.thumbnail_url} alt="" />

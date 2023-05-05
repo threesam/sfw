@@ -38,9 +38,9 @@
 <section class="bg-dark relative py-10" bind:clientWidth>
 	{#if clientWidth}
 		<div class="lg:px-10">
-			<div class="flex justify-between px-5 lg:px-0">
+			<div class="flex justify-between p-5 lg:px-0">
 				{#if title}
-					<h2 class="font-display pb-5">{title}</h2>
+					<h2 class="font-display">{title}</h2>
 				{/if}
 				<a
 					class="underline underline-offset-4 transition-all duration-300 hover:underline-offset-2"
