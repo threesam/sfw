@@ -20,7 +20,7 @@
 	style={height && `height: ${height};`}
 >
 	<Image {src} {alt} />
-	<div class="absolute inset-0 bg-gradient-fade" />
+	<div class="bg-gradient-fade absolute inset-0" />
 	{#if title || description}
 		<div
 			style={color && `--primary: ${color}`}
@@ -28,12 +28,12 @@
 			class="absolute bottom-0 left-0 max-w-lg p-5 lg:p-10"
 		>
 			<span class="pb-0">{eyebrow}</span>
-			<h2 class="pb-3 text-3xl lg:text-4xl" style="color: var(--primary);">{title}</h2>
+			<h2 class="font-display pb-3 text-3xl lg:text-4xl" style="color: var(--primary);">{title}</h2>
 			<p class="pb-1">{description}</p>
 			{#if slug}
 				<a
 					href={handle}
-					class="underline underline-offset-4 transition-all duration-300 hover:text-primary hover:underline-offset-1"
+					class="hover:text-primary underline underline-offset-4 transition-all duration-300 hover:underline-offset-1"
 					>learn more</a
 				>
 			{/if}
