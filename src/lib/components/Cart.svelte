@@ -49,7 +49,7 @@
 	async function checkout() {
 		// const checkoutUrl = localStorage.getItem('cartUrl')
 		// window.open(JSON.parse(checkoutUrl ?? ''), '_blank')
-		checkoutText = '🖕coming soon🖕'
+		checkoutText = '...coming soon'
 		setTimeout(() => {
 			checkoutText = 'checkout'
 		}, 3000)
