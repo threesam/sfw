@@ -98,7 +98,7 @@
 				<!-- ADD TO CART -->
 				<button
 					on:click={addToCart({ variant: selectedVariant })}
-					class="hover:bg-light hover:text-dark flex w-full items-center justify-center border p-4 text-white opacity-90 transition-all duration-300 hover:font-bold"
+					class="hover:bg-light hover:text-dark mb-12 flex w-full items-center justify-center border p-4 text-white opacity-90 transition-all duration-300 hover:font-bold"
 				>
 					<span class="text-sm uppercase">Add To Cart</span>
 				</button>
