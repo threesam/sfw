@@ -55,7 +55,7 @@
 	})
 </script>
 
-<section class="mx-auto max-w-full p-5 lg:p-10">
+<section class="mx-auto max-w-7xl p-5 lg:p-10">
 	{#if product && selectedVariant}
 		<div class="flex flex-col gap-10 md:flex-row">
 			<!-- IMAGE GALLERY -->
