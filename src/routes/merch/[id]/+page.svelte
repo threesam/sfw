@@ -1,8 +1,7 @@
 <script lang="ts">
 	import SEO from '$components/SEO.svelte'
 	import DescriptionToggle from '$components/DescriptionToggle.svelte'
-	import { fade } from 'svelte/transition'
-	import { cartItems, cartQuantity, showCart } from '$store'
+	import { cartItems, showCart } from '$store'
 	import type { PageData } from './$types'
 	import { page } from '$app/stores'
 	import { goto } from '$app/navigation'
@@ -11,37 +10,10 @@
 	export let data: PageData
 
 	const { product } = data.body
+	const { variants } = product
 
 	const { searchParams } = new URL($page.url)
 	const selectedVariantId = searchParams.get('v')
-
-	let selectedOptions = {}
-	let cartLoading = false
-
-	// product?.variants.forEach(({ sku }) => {
-	// 	selectedOptions = { ...selectedOptions, [option.name]: option.values[0] }
-	// })
-
-	// selected variant
-	type Variant = {
-		id: string
-		name: string
-		price: string
-		currency: string
-		image: string
-	}
-
-	const variants = product?.variants?.reduce((array, v) => {
-		array.push({
-			currency: v.currency,
-			id: v.id,
-			image: product.thumbnail_url,
-			title: product.name,
-			name: v.name.split(' - ').pop(),
-			price: v.retail_price
-		})
-		return array
-	}, [])
 
 	$: selectedVariant = null
 
@@ -51,7 +23,7 @@
 			searchParams.set('v', String(variants[0].id))
 			goto('?' + searchParams.toString())
 		} else {
-			selectedVariant = variants.find((variant: Variant) => variant.id === id)
+			selectedVariant = variants.find((variant) => variant.id === id)
 			searchParams.set('v', String(id))
 			goto('?' + searchParams.toString())
 		}
@@ -83,8 +55,6 @@
 	})
 </script>
 
-<!-- <SEO data={data.body} pageType="product" /> -->
-
 <section class="mx-auto max-w-7xl p-5 lg:p-10">
 	{#if product && selectedVariant}
 		<div class="flex flex-col gap-10 md:flex-row">
@@ -99,7 +69,7 @@
 
 				<!-- PRICE -->
 				<p class="mb-3 text-lg">
-					<b>{selectedVariant.price}</b>
+					<b>{selectedVariant.retail_price}</b>
 					{selectedVariant.currency}
 				</p>
 
@@ -117,7 +87,7 @@
 									selectedVariant?.id === variant.id ? 'text-red-500' : ''
 								} mr-3 flex h-12 items-center justify-center border-2 border-black transition duration-300 ease-in-out hover:scale-95 hover:opacity-100`}
 							>
-								{variant.name}
+								{variant.name.split(' - ').pop()}
 							</button>
 						{/each}
 					</div>

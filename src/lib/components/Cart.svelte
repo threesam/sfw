@@ -95,16 +95,16 @@
 						alt={item.name}
 						decoding="async"
 						loading="lazy"
-						class="h-24 w-24 flex-none border bg-gray-200"
-						src={item.image}
+						class="h-24 w-24 flex-none bg-gradient-to-tr from-slate-100 to-gray-700"
+						src={item.product.thumbnail_url}
 					/>
 					<div class="ml-4 flex w-full flex-col justify-between">
 						<div class="flex w-full justify-between">
-							<di>
-								<p class="text-lg font-medium">{item.title}</p>
-								<p class="text-sm">{item.name}</p>
-							</di>
-							<p class="font-medium">${item.price}</p>
+							<div>
+								<p class="text-lg font-medium">{item.name.split(' - ')[0]}</p>
+								<p class="text-sm">{item.name.split(' - ')[1]}</p>
+							</div>
+							<p class="font-medium">${item.retail_price}</p>
 						</div>
 					</div>
 				</div>

@@ -19,9 +19,12 @@ export async function getProducts() {
 
 export async function getProduct({ id }: { id: string | number }) {
 	const { result } = await fetchPrintful(`/store/products/${id}`)
+	const { sync_product, sync_variants } = result
+
+	sync_variants.forEach((v) => (v.product.thumbnail_url = sync_product.thumbnail_url))
 
 	return {
-		...result.sync_product,
-		variants: result.sync_variants
+		...sync_product,
+		variants: sync_variants
 	}
 }
