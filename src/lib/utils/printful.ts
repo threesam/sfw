@@ -12,17 +12,16 @@ export async function fetchPrintful(endpoint: string) {
 }
 
 export async function getProducts() {
-	const productEndpoint = '/store/products'
-	const products = await fetchPrintful(productEndpoint)
+	const products = await fetchPrintful('/store/products')
 
-	const syncProducts = await Promise.all(
-		products.result.map((product: any) => fetchPrintful(`${productEndpoint}/${product.id}`))
-	)
+	return await Promise.all(products.result.map((product: any) => getProduct({ id: product.id })))
+}
 
-	return syncProducts.map(({ result }) => {
-		return {
-			...result.sync_product,
-			variants: result.sync_variants
-		}
-	})
+export async function getProduct({ id }: { id: string | number }) {
+	const { result } = await fetchPrintful(`/store/products/${id}`)
+
+	return {
+		...result.sync_product,
+		variants: result.sync_variants
+	}
 }
