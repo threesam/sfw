@@ -89,6 +89,6 @@
 
 	<!-- MOBILE MENU -->
 	{#if $showMenu}
-		<HeaderMenu tabs={links} />
+		<HeaderMenu {links} />
 	{/if}
 </header>

@@ -8,7 +8,6 @@
 	export let data: PageData
 
 	const { project } = data.body
-	console.log('project: ', project)
 </script>
 
 <Banner height="40vh" image={project.image} />

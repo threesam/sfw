@@ -146,61 +146,14 @@
 
 		<!-- CHECKOUT BUTTON -->
 		{#if $cartItems.length !== 0}
-			<div class="overflow-hidden bg-slate-100 p-6">
+			<div class="p-5">
 				<button
 					on:click={checkout}
-					class="flex w-full items-center justify-center bg-black p-4 text-sm font-medium text-white opacity-90 hover:opacity-100"
+					class="hover:bg-light hover:text-dark flex w-full items-center justify-center border p-4 text-white opacity-90 transition-all duration-300 hover:font-bold"
 				>
-					{#if !loading}
-						<span class="font-display h-8 text-xl">Checkout</span>
-					{:else}
-						<div class="lds-ring h-8 text-white">
-							<div />
-							<div />
-							<div />
-							<div />
-						</div>
-					{/if}
+					<span class="text-lg uppercase">Checkout</span>
 				</button>
 			</div>
 		{/if}
 	</div>
 </div>
-
-<style>
-	.lds-ring {
-		display: inline-block;
-		position: relative;
-		width: 20px;
-		height: 2rem;
-	}
-	.lds-ring div {
-		box-sizing: border-box;
-		display: block;
-		position: absolute;
-		width: 1.75rem;
-		height: 1.75rem;
-		margin: 2px;
-		border: 2px solid #fff;
-		border-radius: 50%;
-		animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-		border-color: #fff transparent transparent transparent;
-	}
-	.lds-ring div:nth-child(1) {
-		animation-delay: -0.45s;
-	}
-	.lds-ring div:nth-child(2) {
-		animation-delay: -0.3s;
-	}
-	.lds-ring div:nth-child(3) {
-		animation-delay: -0.15s;
-	}
-	@keyframes lds-ring {
-		0% {
-			transform: rotate(0deg);
-		}
-		100% {
-			transform: rotate(360deg);
-		}
-	}
-</style>
