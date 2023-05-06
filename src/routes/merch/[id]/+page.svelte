@@ -84,8 +84,10 @@
 							<button
 								on:click={() => getSelectedVariant(variant.id)}
 								class={`${
-									selectedVariant?.id === variant.id ? 'text-red-500' : ''
-								} mr-3 flex h-12 items-center justify-center border-2 border-black transition duration-300 ease-in-out hover:scale-95 hover:opacity-100`}
+									selectedVariant?.id === variant.id
+										? 'bg-gradient-to-tr from-slate-100 to-gray-500 font-extrabold text-black'
+										: ''
+								} mr-3 flex h-12 w-24 items-center justify-center border transition duration-300 ease-in-out hover:scale-95 hover:opacity-100`}
 							>
 								{variant.name.split(' - ').pop()}
 							</button>
