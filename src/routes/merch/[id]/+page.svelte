@@ -1,6 +1,5 @@
 <script lang="ts">
-	import SEO from '$components/SEO.svelte'
-	import DescriptionToggle from '$components/DescriptionToggle.svelte'
+	// import DescriptionToggle from '$components/DescriptionToggle.svelte'
 	import { cartItems, showCart } from '$store'
 	import type { PageData } from './$types'
 	import { page } from '$app/stores'
@@ -13,17 +12,18 @@
 	const { variants } = product
 
 	const { searchParams } = new URL($page.url)
-	const selectedVariantId = searchParams.get('v')
+	$: selectedVariantId = searchParams.get('v')
 
 	$: selectedVariant = null
 
 	function getSelectedVariant(id?: number | null) {
+		console.log('id: ', id)
 		if (id === null) {
 			selectedVariant = variants[0]
 			searchParams.set('v', String(variants[0].id))
 			goto('?' + searchParams.toString())
 		} else {
-			selectedVariant = variants.find((variant) => variant.id === id)
+			selectedVariant = variants.find((variant) => String(variant.id) === String(id))
 			searchParams.set('v', String(id))
 			goto('?' + searchParams.toString())
 		}
