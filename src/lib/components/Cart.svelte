@@ -10,57 +10,31 @@
 	let clientWidth
 
 	async function addOneItem(item) {
-		loading = true
-		dispatch('addProduct', {
-			body: item.node.merchandise.id
+		$cartItems = $cartItems.map((variant) => {
+			if (variant.id === item.id) {
+				variant.quantity++
+			}
+			return variant
 		})
-
-		let variantId
-		let cartId
-
-		if (typeof window !== 'undefined') {
-			cartId = JSON.parse(localStorage.getItem('cartId') ?? '')
-		}
-
-		// data.product.variants.edges.forEach((variant) => {
-		// 	let result = variant.node.selectedOptions.every((option) => {
-		// 		return selectedOptions[option.name] === option.value
-		// 	})
-		// 	if (result) {
-		// 		variantId = variant.node.id
-		// 	}
-		// })
-
-		await fetch('/cart.json', {
-			method: 'PATCH',
-			body: JSON.stringify({ cartId: cartId, variantId: variantId })
-		})
-		// Wait for the API to finish before updating cart items
-
-		loading = false
 	}
 	function removeOneItem(item) {
-		loading = true
-		let quantity = item.node.quantity - 1
-		dispatch('removeProduct', {
-			body: {
-				variantId: item.node.merchandise.id,
-				quantity: quantity,
-				lineId: item.node.id
-			}
-		})
-		loading = false
+		$cartItems = $cartItems
+			.map((variant) => {
+				if (variant.id === item.id) {
+					if (variant.quantity === 1) {
+						removeEntireItem(variant)
+						return
+					} else {
+						variant.quantity--
+					}
+				}
+				return variant
+			})
+			.filter((variant) => variant)
 	}
 
 	function removeEntireItem(item) {
-		loading = true
-
-		loading = false
-
-		// trackCart({
-		// 	variant: item,
-		// 	type: 'remove-from-cart'
-		// })
+		$cartItems = $cartItems.filter((variant) => variant.id !== item.id)
 	}
 
 	async function checkout() {
@@ -118,20 +92,19 @@
 			{#each $cartItems as item, i (i)}
 				<div class="mb-1 flex w-full">
 					<img
-						alt={item.node.merchandise.product.title}
+						alt={item.name}
 						decoding="async"
 						loading="lazy"
 						class="h-24 w-24 flex-none border bg-gray-200"
-						src={item.node.merchandise.product.images.edges[0].node.originalSrc +
-							'&width=96&height=96'}
+						src={item.image}
 					/>
 					<div class="ml-4 flex w-full flex-col justify-between">
 						<div class="flex w-full justify-between">
 							<di>
-								<p class="text-lg font-medium">{item.node.merchandise.product.title}</p>
-								<p class="text-sm">{item.node.merchandise.title}</p>
+								<p class="text-lg font-medium">{item.title}</p>
+								<p class="text-sm">{item.name}</p>
 							</di>
-							<p class="font-medium">${item.node.estimatedCost.totalAmount.amount}</p>
+							<p class="font-medium">${item.price}</p>
 						</div>
 					</div>
 				</div>
@@ -142,31 +115,31 @@
 					>
 						<!-- <Icons type="close" strokeColor="#000" /> -->
 						<span
-							class="text-dark font-bold underline underline-offset-4 duration-300 hover:text-red-500 hover:underline-offset-2"
+							class="text-light font-bold underline underline-offset-4 duration-300 hover:text-red-500 hover:underline-offset-2"
 							>remove</span
 						>
 					</button>
-					<!-- <div class="flex h-8 w-full border border-white/40">
+					<div class="flex h-8 w-full">
 						<button
 							on:click={() => {
 								removeOneItem(item)
 							}}
-							class="ml-auto flex h-8 w-8 items-center justify-center hover:scale-125"
+							class="ml-auto flex h-8 w-8 items-center justify-center transition-all duration-300 hover:scale-125"
 						>
-							<Icons type="minus" strokeColor="#000" />
+							<Icons type="minus" strokeColor="#eee" />
 						</button>
 						<div class="flex h-full items-center px-2">
-							{item.node.quantity}
+							{item.quantity}
 						</div>
 						<button
 							on:click={() => {
 								addOneItem(item)
 							}}
-							class="flex h-8 w-8 items-center justify-center hover:scale-125"
+							class="flex h-8 w-8 items-center justify-center transition-all duration-300 hover:scale-125"
 						>
-							<Icons type="plus" strokeColor="#000" />
+							<Icons type="plus" strokeColor="#eee" />
 						</button>
-					</div> -->
+					</div>
 				</div>
 			{/each}
 		</div>
