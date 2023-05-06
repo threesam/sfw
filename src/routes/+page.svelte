@@ -4,10 +4,8 @@
 	import Swiper from '$components/Swiper.svelte'
 
 	export let data: PageData
-	console.log('data: ', data)
 
 	const { projects, products } = data.body
-	console.log('products: ', products[0].variants)
 </script>
 
 <Banner {...projects[0]} path="/projects/" />

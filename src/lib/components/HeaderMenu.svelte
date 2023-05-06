@@ -40,27 +40,6 @@
 							}`}>{tab.name}</a
 						>
 					</button>
-					{#if tab.path === '/collections'}
-						<ul class="flex flex-col items-start">
-							{#each $collectionHandles as handle}
-								<li>
-									<button
-										class:active={currentRoute === '/collections/' + handle}
-										on:click={() => {
-											$showMenu = false
-										}}
-									>
-										<a
-											href={'/collections/' + handle}
-											class={`rounded-lg text-lg text-black hover:opacity-100 ${
-												currentRoute === '/collections/' + handle ? 'opacity-100' : 'opacity-75'
-											}`}>{handle}</a
-										>
-									</button>
-								</li>
-							{/each}
-						</ul>
-					{/if}
 				</div>
 			{/each}
 		</div>
