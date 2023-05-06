@@ -115,7 +115,7 @@
 								<p class="text-lg font-medium">{item.name.split(' - ')[0]}</p>
 								<p class="text-sm">{item.name.split(' - ')[1]}</p>
 							</div>
-							<p class="font-medium">${item.retail_price}</p>
+							<p class="font-medium">{item.retail_price} {item.currency}</p>
 						</div>
 					</div>
 				</div>
@@ -158,6 +158,17 @@
 		<!-- CHECKOUT BUTTON -->
 		{#if $cartItems.length !== 0}
 			<div class="p-5">
+				<div class="text-ligh flex w-full justify-between pb-3">
+					<b>Subtotal</b>
+					<span
+						>{$cartItems.reduce((acc, curr) => {
+							acc += Number(curr.retail_price) * curr.quantity
+							return acc
+						}, 0) +
+							'.00 ' +
+							$cartItems[0]?.currency}</span
+					>
+				</div>
 				<button
 					on:click={checkout}
 					class="hover:bg-light hover:text-dark flex w-full items-center justify-center border p-4 text-white opacity-90 transition-all duration-300 hover:font-bold"
