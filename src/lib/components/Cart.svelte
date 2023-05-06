@@ -31,10 +31,18 @@
 				return variant
 			})
 			.filter((variant) => variant)
+
+		if ($cartItems.length === 0) {
+			$showCart = false
+		}
 	}
 
 	function removeEntireItem(item) {
 		$cartItems = $cartItems.filter((variant) => variant.id !== item.id)
+
+		if ($cartItems.length === 0) {
+			$showCart = false
+		}
 	}
 
 	async function checkout() {
