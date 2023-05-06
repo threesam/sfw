@@ -26,12 +26,12 @@
 	</div>
 </section>
 
-<Swiper title="Films" slides={projects.slice(1)} />
+<Swiper title="Projects" slides={projects.slice(1)} />
 
 <h4 class="font-display px-5 text-4xl lg:px-10">Merch</h4>
 <div class="bg-dark mb-10 grid gap-10 p-5 lg:grid-cols-3 lg:gap-2 lg:p-10">
 	{#each products as product}
-		<div class="">
+		<a href="/merch/{product.id}">
 			<img
 				class="mb-2 max-w-full bg-gradient-to-tr from-slate-100"
 				src={product.thumbnail_url}
@@ -39,6 +39,6 @@
 			/>
 			<h4>{product.name}</h4>
 			<p>{product.variants[0].retail_price} - <span>{product.variants[0].currency}</span></p>
-		</div>
+		</a>
 	{/each}
 </div>
