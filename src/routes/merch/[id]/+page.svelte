@@ -5,19 +5,19 @@
 	import { page } from '$app/stores'
 	import { goto } from '$app/navigation'
 	import { onMount } from 'svelte'
+	import { trackCart } from '$utils/umami'
 
 	export let data: PageData
 
 	const { product } = data.body
-	const { variants } = product
+	const { variants }: { variants: any[] } = product
 
 	const { searchParams } = new URL($page.url)
 	$: selectedVariantId = searchParams.get('v')
 
-	$: selectedVariant = null
+	$: selectedVariant = null as any
 
-	function getSelectedVariant(id?: number | null) {
-		console.log('id: ', id)
+	function getSelectedVariant(id?: number | string | null) {
 		if (id === null) {
 			selectedVariant = variants[0]
 			searchParams.set('v', String(variants[0].id))
@@ -29,9 +29,9 @@
 		}
 	}
 
-	function addToCart({ variant }) {
+	function addToCart({ variant }: { variant: any }) {
 		let isAlreadyAdded = false
-		const items = []
+		const items = [] as any[]
 		$cartItems.forEach((item) => {
 			if (variant.id === item.id) {
 				isAlreadyAdded = true
@@ -48,6 +48,8 @@
 		$cartItems = items
 
 		$showCart = true
+
+		trackCart({ variant, type: 'add-to-cart' })
 	}
 
 	onMount(() => {

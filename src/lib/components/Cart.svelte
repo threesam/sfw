@@ -3,7 +3,7 @@
 	import { showCart, cartItems } from '$store'
 	import { fly, fade } from 'svelte/transition'
 	import { quintInOut } from 'svelte/easing'
-	// import { trackCart } from '$lib/utils/umami'
+	import { trackCart } from '$lib/utils/umami'
 
 	let clientWidth
 
@@ -14,6 +14,8 @@
 			}
 			return variant
 		})
+
+		trackCart({ variant: item, type: 'add-to-cart' })
 	}
 	function removeOneItem(item) {
 		$cartItems = $cartItems
@@ -33,6 +35,8 @@
 		if ($cartItems.length === 0) {
 			$showCart = false
 		}
+
+		trackCart({ variant: item, type: 'remove-from-cart' })
 	}
 
 	function removeEntireItem(item) {
@@ -41,6 +45,8 @@
 		if ($cartItems.length === 0) {
 			$showCart = false
 		}
+
+		trackCart({ variant: item, type: 'remove-from-cart' })
 	}
 
 	$: checkoutText = 'checkout'
