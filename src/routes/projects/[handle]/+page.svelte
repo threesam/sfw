@@ -10,7 +10,7 @@
 	const { project } = data.body
 </script>
 
-<Banner height="40vh" image={project.image} />
+<Banner height="47vh" image={project.image} />
 <section class="p-5">
 	<h1 class="pb-10 text-center text-3xl lg:text-5xl">{project.title}</h1>
 

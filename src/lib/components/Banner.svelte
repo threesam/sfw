@@ -3,7 +3,7 @@
 	import ArrowDown from './icons/ArrowDown.svelte'
 	import Image from './Image.svelte'
 
-	export let height = 'calc(100vh - var(--headerHeight))'
+	export let height = ''
 	export let eyebrow = ''
 	export let title = ''
 	export let description = ''
@@ -17,6 +17,7 @@
 
 <section
 	class="relative flex max-h-[94vh] flex-col items-start justify-start gap-0 overflow-hidden lg:flex-row lg:items-end lg:gap-8"
+	style={height ? `height: ${height}` : ''}
 >
 	<Image {src} {alt} />
 	<div class="bg-gradient-fade absolute inset-0" />
