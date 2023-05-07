@@ -63,7 +63,7 @@
 			<img class="p-5 md:w-2/3" src={product.thumbnail_url} alt="product - {product.name}" />
 
 			<!-- DETAILS -->
-			<div class="h-full pl-10 md:w-1/3">
+			<div class="h-full md:w-1/3 lg:pl-10">
 				<!-- TITLE -->
 				<h1 class="font-display mb-3 pt-5 text-4xl">{product.name}</h1>
 
