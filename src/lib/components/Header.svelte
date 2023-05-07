@@ -34,7 +34,7 @@
 </script>
 
 <header class="fixed z-10 flex w-full flex-col items-center bg-black">
-	<div class="flex h-16 w-full max-w-full items-center justify-between px-5 lg:px-10">
+	<div class="flex h-16 w-full items-center justify-between px-5 lg:px-10">
 		<a class="relative z-10" href="/">
 			<h3 class="font-display text-light">
 				<span class="hidden text-2xl lg:block">Skeleton Flowers & Water</span>
@@ -51,8 +51,8 @@
 				<p>no links!</p>
 			{/each}
 		</div>
-		<div class="z-10 flex">
-			<button on:click={openCart} class="relative mx-4 my-2">
+		<div class="z-10 flex gap-3">
+			<button on:click={openCart} class="relative my-2">
 				<Icons strokeColor={Number($cartQuantity) > 0 ? '#777' : '#fff'} type="cart" />
 				{#if Number($cartQuantity) > 0}
 					<div

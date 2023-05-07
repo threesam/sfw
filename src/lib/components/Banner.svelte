@@ -16,8 +16,7 @@
 </script>
 
 <section
-	class="relative flex flex-col items-start justify-start gap-0 overflow-hidden lg:flex-row lg:items-end lg:gap-8"
-	style={height && `height: ${height};`}
+	class="relative flex max-h-[94vh] flex-col items-start justify-start gap-0 overflow-hidden lg:flex-row lg:items-end lg:gap-8"
 >
 	<Image {src} {alt} />
 	<div class="bg-gradient-fade absolute inset-0" />

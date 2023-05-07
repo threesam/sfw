@@ -55,15 +55,15 @@
 	})
 </script>
 
-<section class="mx-auto max-w-7xl p-5 lg:p-10">
+<section class="mx-auto max-w-7xl p-5">
 	{#if product && selectedVariant}
-		<div class="flex flex-col gap-10 md:flex-row">
+		<div class="flex max-w-full flex-col md:flex-row">
 			<!-- IMAGE GALLERY -->
 			<!-- <ProductDetailsImageGallery {product} /> -->
-			<img src={product.thumbnail_url} alt="product - {product.name}" />
+			<img class="p-5 md:w-2/3" src={product.thumbnail_url} alt="product - {product.name}" />
 
 			<!-- DETAILS -->
-			<div class="h-full px-6 md:w-1/3">
+			<div class="h-full pl-10 md:w-1/3">
 				<!-- TITLE -->
 				<h1 class="font-display mb-3 pt-5 text-4xl">{product.name}</h1>
 
@@ -79,7 +79,7 @@
 				<!-- PRODUCT OPTIONS -->
 				<div class="mb-8 pt-5">
 					<h4 class="mb-2 text-base font-semibold uppercase tracking-wide">Size</h4>
-					<div class="flex">
+					<div class="flex gap-3">
 						{#each variants as variant}
 							<button
 								on:click={() => getSelectedVariant(variant.id)}
@@ -87,7 +87,7 @@
 									selectedVariant?.id === variant.id
 										? 'bg-gradient-to-tr from-slate-100 to-gray-500 font-extrabold text-black'
 										: ''
-								} mr-3 flex h-12 w-24 items-center justify-center border transition duration-300 ease-in-out hover:scale-95 hover:opacity-100`}
+								} flex h-12 w-24 items-center justify-center border transition duration-300 ease-in-out hover:scale-95 hover:opacity-100`}
 							>
 								{variant.name.split(' - ').pop()}
 							</button>
@@ -98,7 +98,7 @@
 				<!-- ADD TO CART -->
 				<button
 					on:click={addToCart({ variant: selectedVariant })}
-					class="hover:bg-light hover:text-dark mb-10 flex w-full items-center justify-center border p-4 text-white opacity-90 transition-all duration-300 hover:font-bold"
+					class="hover:bg-primary hover:text-dark hover:border-primary mb-10 flex w-full items-center justify-center border p-4 text-white opacity-90 transition-all duration-300 hover:font-bold"
 				>
 					<span class="text-sm uppercase">Add To Cart</span>
 				</button>

@@ -171,7 +171,7 @@
 				</div>
 				<button
 					on:click={checkout}
-					class="hover:bg-light hover:text-dark flex w-full items-center justify-center border p-4 text-white opacity-90 transition-all duration-300 hover:font-bold"
+					class="hover:bg-primary hover:text-dark hover:border-primary flex w-full items-center justify-center border p-4 text-white opacity-90 transition-all duration-300 hover:font-bold"
 				>
 					<span class="text-lg uppercase">{checkoutText}</span>
 				</button>
