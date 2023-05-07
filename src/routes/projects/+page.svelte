@@ -8,7 +8,7 @@
 </script>
 
 <div class="flex flex-col pt-10 last:mb-20">
-	{#each projects.slice(1) as project, index}
+	{#each projects as project, index}
 		<SideBySide {...project} {index} path="/projects/" />
 	{/each}
 </div>
