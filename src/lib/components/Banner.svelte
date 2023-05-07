@@ -20,7 +20,7 @@
 	style={height ? `height: ${height}` : ''}
 >
 	<Image {src} {alt} />
-	<div class="bg-gradient-fade absolute inset-0" />
+	<div class={`bg-gradient-fade absolute inset-0 ${height ? 'hidden' : ''}`} />
 	{#if title || description}
 		<div
 			style={color && `--primary: ${color}`}

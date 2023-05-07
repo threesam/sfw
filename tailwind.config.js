@@ -8,7 +8,7 @@ export default {
 				sans: "'Montserrat', sans-serif"
 			},
 			backgroundImage: {
-				'gradient-fade': 'linear-gradient(180deg, transparent 60%, black)'
+				'gradient-fade': 'linear-gradient(180deg, transparent 40%, black)'
 			},
 			colors: {
 				primary: 'var(--primary)',
