@@ -18,7 +18,7 @@
 		<SocialLinks size={40} links={project.links} color={project.image.color} />
 	</div>
 
-	<div class="mx-auto max-w-2xl" style={`--primary: ${project.image.color}`}>
+	<div class="mx-auto max-w-2xl pb-10" style={`--primary: ${project.image.color}`}>
 		{#if project.body}
 			<h3 class="text-center font-sans text-2xl font-normal">abstract</h3>
 			<div class="portable-text mb-5 text-center font-extralight">
@@ -28,7 +28,7 @@
 
 		{#if project.cast}
 			<h4 class="pt-3 text-center font-sans text-2xl">cast</h4>
-			<ul class="mb-5">
+			<ul class="mb-10">
 				{#each project.cast as castMember}
 					<li class="grid grid-cols-2 gap-2 text-left">
 						<span class="text-right">{castMember.castname}</span>
@@ -60,7 +60,7 @@
 	</div>
 
 	{#if project.posters}
-		<figure class=" w-max-content flex w-full justify-center p-5 lg:max-h-[50vh]">
+		<figure class=" w-max-content flex w-full justify-center p-5 pb-10 lg:max-h-[50vh]">
 			<img
 				class="lg:max-h-[50vh]"
 				src={project.posters[0].src}

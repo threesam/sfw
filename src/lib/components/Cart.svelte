@@ -1,6 +1,4 @@
 <script>
-	export let loading = false
-
 	import Icons from './Icons.svelte'
 	import { showCart, cartItems } from '$store'
 	import { fly, fade } from 'svelte/transition'
