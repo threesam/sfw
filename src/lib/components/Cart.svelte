@@ -68,10 +68,6 @@
 		bind:clientWidth
 		transition:fly={{ x: clientWidth, opacity: 100, duration: 700, easing: quintInOut }}
 	>
-		{#if loading}
-			<div class="absolute inset-0 z-50" />
-		{/if}
-
 		<!-- HEADER -->
 		<div
 			class="flex h-16 w-full items-center justify-between border-b-2 border-black bg-gray-700 px-6 py-5"
