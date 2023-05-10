@@ -62,7 +62,7 @@ dependencies:
     specifier: 1.62.1
     version: 1.62.1
   stripe:
-    specifier: ^12.4.0
+    specifier: 12.4.0
     version: 12.4.0
   svelte:
     specifier: 3.58.0

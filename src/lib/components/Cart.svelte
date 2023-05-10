@@ -57,7 +57,7 @@
 			body: JSON.stringify($cartItems)
 		})
 		const url = await res.text()
-		window.open(url)
+		goto(url)
 	}
 </script>
 
