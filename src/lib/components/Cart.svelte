@@ -1,9 +1,10 @@
-<script>
+<script lang="ts">
 	import Icons from './Icons.svelte'
 	import { showCart, cartItems } from '$store'
 	import { fly, fade } from 'svelte/transition'
 	import { quintInOut } from 'svelte/easing'
 	import { trackCart } from '$lib/utils/umami'
+	import { goto } from '$app/navigation'
 
 	let clientWidth
 
@@ -50,13 +51,13 @@
 	}
 
 	$: checkoutText = 'checkout'
-	async function checkout() {
-		// const checkoutUrl = localStorage.getItem('cartUrl')
-		// window.open(JSON.parse(checkoutUrl ?? ''), '_blank')
-		checkoutText = '...coming soon'
-		setTimeout(() => {
-			checkoutText = 'checkout'
-		}, 3000)
+	async function handleCheckout() {
+		const res = await fetch('/checkout/payment-intent', {
+			method: 'POST',
+			body: JSON.stringify($cartItems)
+		})
+		const url = await res.text()
+		window.open(url)
 	}
 </script>
 
@@ -170,7 +171,7 @@
 					>
 				</div>
 				<button
-					on:click={checkout}
+					on:click={handleCheckout}
 					class="hover:bg-primary hover:text-dark hover:border-primary flex w-full items-center justify-center border p-4 text-white opacity-90 transition-all duration-300 hover:font-bold"
 				>
 					<span class="text-lg uppercase">{checkoutText}</span>
