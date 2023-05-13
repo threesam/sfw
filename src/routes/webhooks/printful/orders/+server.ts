@@ -89,7 +89,9 @@ export async function POST({ request }) {
 				city: customer.address.city,
 				state_code: customer.address.state,
 				country_code: customer.address.country,
-				zip: customer.address.postal_code
+				zip: customer.address.postal_code,
+				email: customer.email,
+				phone: customer.phone
 			},
 			items: items.map((item) => ({
 				external_variant_id: item.product.split('_').pop(),
