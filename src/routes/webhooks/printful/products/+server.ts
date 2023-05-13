@@ -35,7 +35,11 @@ export async function POST({ request }) {
 	})
 
 	const stripeProducts = await stripe.products.list()
-	console.log({ webhookData, product, stripeProducts: stripeProducts.data.map(({ id }) => id) })
+	console.log({
+		webhookData,
+		product,
+		stripeProducts: stripeProducts.data.map(({ id, name }) => ({ id, name }))
+	})
 
 	if (webhookData.type === 'product_updated') {
 		// loop through variants and upsert to stripe
