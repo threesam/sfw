@@ -28,13 +28,16 @@
 		{ title: 'youtube', component: Youtube }
 	]
 
-	const getIconComponent = (title: string) =>
-		options.find((option) => option.title === title)?.component
+	const validLinks = links.filter((link) => options.map(({ title }) => title).includes(link.title))
+
+	function getIconComponent(title: string) {
+		return options.find((option) => option.title === title)?.component
+	}
 </script>
 
 {#if links?.length}
 	<div class="flex justify-start gap-5">
-		{#each links as { href, title }, i}
+		{#each validLinks as { href, title }, i}
 			<a
 				class="transition-all duration-300 hover:scale-95"
 				style={`color: ${color};`}

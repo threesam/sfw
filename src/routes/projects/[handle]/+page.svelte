@@ -8,11 +8,26 @@
 	export let data: PageData
 
 	const { project } = data.body
+	console.log('project: ', project)
+
+	const backstageLink = project.links.find(({ title }) => title === 'backstage')
+	console.log('backstageLink: ', backstageLink)
 </script>
 
 <Banner height="47vh" image={project.image} />
 <section class="p-5">
-	<h1 class="pb-10 text-center text-3xl lg:text-5xl">{project.title}</h1>
+	<h1 class="pb-10 pt-5 text-center text-3xl lg:text-5xl">{project.title}</h1>
+
+	{#if project.status === 'pre-production' && backstageLink}
+		<div
+			class="shadow-primary text-light mx-auto mb-10 max-w-xl border border-slate-700 p-10 shadow-md"
+		>
+			This project is in active development, see available roles on <a
+				class="text-primary underline underline-offset-4 transition-all duration-300 hover:underline-offset-2"
+				href={backstageLink.href}>backstage</a
+			>
+		</div>
+	{/if}
 
 	<div class="mx-auto w-max pb-10">
 		<SocialLinks size={40} links={project.links} color={project.image.color} />
@@ -60,7 +75,7 @@
 	</div>
 
 	{#if project.posters}
-		<figure class=" w-max-content flex w-full justify-center p-5 pb-10 lg:max-h-[50vh]">
+		<figure class=" w-max-content flex w-full justify-center pb-10 lg:max-h-[50vh]">
 			<img
 				class="lg:max-h-[50vh]"
 				src={project.posters[0].src}

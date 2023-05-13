@@ -6,6 +6,7 @@
 	export let data: PageData
 
 	const { projects, products } = data.body
+	console.log('projects: ', projects)
 </script>
 
 <Banner {...projects[0]} path="/projects/" />
