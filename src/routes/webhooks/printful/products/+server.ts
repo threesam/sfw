@@ -27,7 +27,7 @@ function getId({ product, variant }) {
 export async function POST({ request }) {
 	// STRIPE UTILS
 	// @ts-expect-error it is what it is
-	const stripe = new Stripe(env.TEST_STRIPE_KEY)
+	const stripe = new Stripe(env.STRIPE_TEST_SECRET_KEY)
 
 	if (request.method === 'POST') {
 		const webhookData: PrintfulWebhook = await request.json()
