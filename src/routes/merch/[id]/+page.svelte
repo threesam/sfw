@@ -6,6 +6,7 @@
 	import { goto } from '$app/navigation'
 	import { onMount } from 'svelte'
 	import { trackCart } from '$utils/umami'
+	import DescriptionToggle from '$components/DescriptionToggle.svelte'
 
 	export let data: PageData
 
@@ -62,12 +63,12 @@
 		<div class="flex max-w-full flex-col md:flex-row">
 			<!-- IMAGE GALLERY -->
 			<!-- <ProductDetailsImageGallery {product} /> -->
-			<img class="p-5 md:w-2/3" src={product.thumbnail_url} alt="product - {product.name}" />
+			<img class="md:w-2/3" src={product.thumbnail_url} alt="product - {product.name}" />
 
 			<!-- DETAILS -->
 			<div class="h-full md:w-1/3 lg:pl-10">
 				<!-- TITLE -->
-				<h1 class="font-display mb-3 pt-5 text-4xl">{product.name}</h1>
+				<h1 class="font-display pt-5 text-4xl">{product.name}</h1>
 
 				<!-- PRICE -->
 				<p class="mb-3 text-lg">
@@ -97,17 +98,20 @@
 					</div>
 				</div>
 
-				<!-- ADD TO CART -->
-				<button
-					on:click={addToCart({ variant: selectedVariant })}
-					class="hover:bg-primary hover:text-dark hover:border-primary mb-10 flex w-full items-center justify-center border p-4 text-white opacity-90 transition-all duration-300 hover:font-bold"
-				>
-					<span class="text-sm uppercase">Add To Cart</span>
-				</button>
-
 				<!-- {#if shippingDetails}
 					<DescriptionToggle title="Shipping Details" description={shippingDetails} />
 				{/if} -->
+
+				<!-- ADD TO CART -->
+				<button
+					on:click={addToCart({ variant: selectedVariant })}
+					class="hover:bg-primary hover:text-dark hover:border-primary flex w-full items-center justify-center border p-4 text-white opacity-90 transition-all duration-300 hover:font-bold"
+				>
+					<span class="text-sm uppercase">Add To Cart</span>
+				</button>
+				<p class="py-3 text-xs italic text-red-500">
+					<b class="uppercase">final sale:</b> custom item not subject to returns.
+				</p>
 			</div>
 		</div>
 	{/if}

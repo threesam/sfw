@@ -21,6 +21,7 @@ export async function getProject({ handle }: { handle: string }) {
     title,
     description,
     body,
+    status,
     "image": {
       "src": image.asset->url,
       "alt": image.alt,
@@ -58,6 +59,7 @@ export async function getAllProjects() {
 	return await client.fetch(`*[_type == "project"]{
     title,
     description,
+    status,
     "slug": slug.current,
     "image": {
       "src": image.asset->url,
