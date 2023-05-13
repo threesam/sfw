@@ -26,7 +26,6 @@ function getId({ product, variant }) {
 
 export async function POST({ request }) {
 	const webhookData: PrintfulWebhook = await request.json()
-	console.log('webhookData: ', webhookData)
 
 	// @ts-expect-error init stripe
 	const stripe = new Stripe(env.STRIPE_TEST_SECRET_KEY)
@@ -36,6 +35,7 @@ export async function POST({ request }) {
 	})
 
 	const stripeProducts = await stripe.products.list()
+	console.log({ webhookData, product, stripeProducts })
 
 	if (webhookData.type === 'product_updated') {
 		// loop through variants and upsert to stripe
@@ -43,6 +43,7 @@ export async function POST({ request }) {
 			product?.variants?.map((variant) => {
 				// check if product already exists
 				const productExists = stripeProducts.data.find((p) => p.id === getId({ product, variant }))
+				console.log('productExists: ', productExists)
 
 				// if it exists, update it
 				if (productExists) {
