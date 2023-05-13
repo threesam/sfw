@@ -35,7 +35,7 @@
 		"prettier-plugin-svelte": "2.10.0",
 		"prettier-plugin-tailwindcss": "0.2.7",
 		"sass": "1.62.1",
-		"stripe": "12.4.0",
+		"stripe": "12.5.0",
 		"svelte": "3.58.0",
 		"svelte-check": "2.10.3",
 		"svelte-forms-lib": "2.0.1",
