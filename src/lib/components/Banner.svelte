@@ -26,7 +26,9 @@
 			in:fly={{ x: -50, duration: 400 }}
 			class="absolute bottom-0 left-0 max-w-lg p-5 lg:p-10"
 		>
-			<span class="bg-dark p-3">{status.replace(/-/g, ' ')}</span>
+			<span class="bg-dark shadow-primary p-3 text-sm tracking-wider text-gray-300 shadow-sm"
+				>{status.replace(/-/g, ' ')}</span
+			>
 			<h2 class="font-display py-3 text-3xl lg:text-4xl" style="color: var(--primary);">{title}</h2>
 			<p class="pb-1">{description}</p>
 			{#if slug}
