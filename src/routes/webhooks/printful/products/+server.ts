@@ -34,12 +34,7 @@ export async function POST({ request }) {
 		id: webhookData.data.sync_product.id
 	})
 
-	const stripeProducts = await stripe.products.list({ active: true })
-	console.log({
-		webhookData,
-		product,
-		stripeProducts: stripeProducts.data.map(({ id, name }) => ({ id, name }))
-	})
+	const stripeProducts = await stripe.products.list({ active: true, limit: 100 })
 
 	if (webhookData.type === 'product_updated') {
 		// loop through variants and upsert to stripe
@@ -47,7 +42,6 @@ export async function POST({ request }) {
 			product?.variants?.map((variant) => {
 				// check if product already exists
 				const productExists = stripeProducts.data.find((p) => p.id === getId({ product, variant }))
-				console.log('productExists: ', productExists, getId({ product, variant }))
 
 				// if it exists, update it
 				if (productExists) {
