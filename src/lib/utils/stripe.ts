@@ -9,10 +9,11 @@ export async function createCheckoutSession({ items = [], origin }) {
 
 	let lineItems = []
 	stripeProducts.forEach((p) => {
-		const lineItem = items.find((item) => 'printful_' + item.external_id === p.id)
+		const lineItem = items.find((item) => p.id.split('_')[2] === item.external_id)
 		if (lineItem) {
 			lineItems.push({
 				quantity: lineItem.quantity,
+				adjustable_quantity: { enabled: true },
 				price: p.default_price
 			})
 		}
@@ -22,6 +23,9 @@ export async function createCheckoutSession({ items = [], origin }) {
 		line_items: lineItems,
 		mode: 'payment',
 		success_url: `${origin}/checkout/success`,
-		cancel_url: `${origin}/`
+		cancel_url: `${origin}/`,
+		shipping_address_collection: {
+			allowed_countries: ['US']
+		}
 	})
 }
