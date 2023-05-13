@@ -34,7 +34,7 @@ export async function POST({ request }) {
 		id: webhookData.data.sync_product.id
 	})
 
-	const stripeProducts = await stripe.products.list()
+	const stripeProducts = await stripe.products.list({ active: true })
 	console.log({
 		webhookData,
 		product,
