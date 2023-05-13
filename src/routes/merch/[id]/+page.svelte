@@ -6,6 +6,7 @@
 	import { goto } from '$app/navigation'
 	import { onMount } from 'svelte'
 	import { trackCart } from '$utils/umami'
+	import DescriptionToggle from '$components/DescriptionToggle.svelte'
 
 	export let data: PageData
 
@@ -97,17 +98,20 @@
 					</div>
 				</div>
 
-				<!-- ADD TO CART -->
-				<button
-					on:click={addToCart({ variant: selectedVariant })}
-					class="hover:bg-primary hover:text-dark hover:border-primary mb-10 flex w-full items-center justify-center border p-4 text-white opacity-90 transition-all duration-300 hover:font-bold"
-				>
-					<span class="text-sm uppercase">Add To Cart</span>
-				</button>
-
 				<!-- {#if shippingDetails}
 					<DescriptionToggle title="Shipping Details" description={shippingDetails} />
 				{/if} -->
+
+				<!-- ADD TO CART -->
+				<button
+					on:click={addToCart({ variant: selectedVariant })}
+					class="hover:bg-primary hover:text-dark hover:border-primary flex w-full items-center justify-center border p-4 text-white opacity-90 transition-all duration-300 hover:font-bold"
+				>
+					<span class="text-sm uppercase">Add To Cart</span>
+				</button>
+				<p class="py-3 text-xs italic text-red-500">
+					<b class="uppercase">final sale:</b> custom item not subject to returns.
+				</p>
 			</div>
 		</div>
 	{/if}
