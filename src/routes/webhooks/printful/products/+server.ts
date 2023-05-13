@@ -43,7 +43,7 @@ export async function POST({ request }) {
 			product?.variants?.map((variant) => {
 				// check if product already exists
 				const productExists = stripeProducts.data.find((p) => p.id === getId({ product, variant }))
-				console.log('productExists: ', productExists)
+				console.log('productExists: ', productExists, getId({ product, variant }))
 
 				// if it exists, update it
 				if (productExists) {
