@@ -38,12 +38,12 @@
 <section class="bg-dark relative py-10" bind:clientWidth>
 	{#if clientWidth}
 		<div class="lg:px-10">
-			<div class="flex flex-col justify-between p-5 lg:flex-row lg:px-0">
+			<div class="flex justify-between p-5 lg:px-0">
 				{#if title}
 					<h2 class="font-display">{title}</h2>
 				{/if}
 				<a
-					class="underline underline-offset-4 transition-all duration-300 hover:underline-offset-2"
+					class="hidden underline underline-offset-4 transition-all duration-300 hover:underline-offset-2 lg:block"
 					href="/projects">view all</a
 				>
 			</div>
@@ -81,9 +81,17 @@
 							</a>
 						{/if}
 					</swiper-slide>
-				{:else}
-					<span>no products!</span>
 				{/each}
+				<swiper-slide
+					class="bg-gradient-3 bg-primary text-light border-light relative mb-10 grid aspect-[3/4] h-full place-content-center border-2 lg:hidden"
+				>
+					{#if slideWidth}
+						<a
+							href={`/projects/`}
+							class="absolute inset-0 grid place-content-center text-lg uppercase">view all</a
+						>
+					{/if}
+				</swiper-slide>
 			</swiper-container>
 
 			{#if !isEnd}
