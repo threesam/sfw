@@ -6,7 +6,6 @@
 	export let data: PageData
 
 	const { projects, products } = data.body
-	console.log('projects: ', projects)
 </script>
 
 <Banner {...projects[0]} path="/projects/" />
@@ -25,7 +24,10 @@
 	</div>
 </section>
 
-<Swiper title="Projects" slides={projects.slice(1)} />
+<Swiper
+	title="Featured Projects"
+	slides={projects.slice(1).filter(({ status }) => status !== 'pre-production')}
+/>
 
 <h4 class="font-display px-5 text-4xl lg:px-10">Merch</h4>
 <div class="bg-dark mb-10 grid gap-10 p-5 lg:grid-cols-3 lg:gap-2 lg:p-10">
@@ -41,3 +43,8 @@
 		</a>
 	{/each}
 </div>
+
+<Swiper
+	title="In Development"
+	slides={projects.slice(1).filter(({ status }) => status === 'pre-production')}
+/>
