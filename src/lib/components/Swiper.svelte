@@ -2,7 +2,7 @@
 	export let slides = []
 	export let title = ''
 
-	import Slide from '$components/SwiperSlide.svelte'
+	import Image from '$components/Image.svelte'
 	import Icons from '$components/Icons.svelte'
 	import { register } from 'swiper/element/bundle'
 
@@ -38,7 +38,7 @@
 <section class="bg-dark relative py-10" bind:clientWidth>
 	{#if clientWidth}
 		<div class="lg:px-10">
-			<div class="flex justify-between p-5 lg:px-0">
+			<div class="flex flex-col justify-between p-5 lg:flex-row lg:px-0">
 				{#if title}
 					<h2 class="font-display">{title}</h2>
 				{/if}
@@ -70,10 +70,15 @@
 				centered-slides={false}
 				on:progress={onProgress}
 			>
-				{#each slides as slide}
+				{#each slides as { slug, title, image }}
 					<swiper-slide class="mb-10" bind:clientWidth={slideWidth}>
 						{#if slideWidth}
-							<Slide title={slide.title} src={slide.image?.src} href={`/projects/${slide.slug}`} />
+							<a href={`/projects/${slug}`} class="relative aspect-[3/4] bg-red-500">
+								<Image src={image?.src} alt={title} isPoster={!!image?.src} />
+								<h5 class={`grid h-full place-content-center p-5 ${image?.src ? 'sr-only' : ''}`}>
+									{title}
+								</h5>
+							</a>
 						{/if}
 					</swiper-slide>
 				{:else}
