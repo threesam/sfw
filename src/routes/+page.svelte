@@ -13,7 +13,7 @@
 <section class="grid h-96 w-full place-content-center bg-gradient-to-tl from-gray-700 to-gray-900">
 	<div class="flex max-w-3xl flex-col items-center gap-5 p-5 lg:grid lg:grid-cols-2">
 		<h2
-			class="font-display flex h-full w-full items-center justify-center border p-5 text-5xl font-bold"
+			class="font-display shadow-primary text-primary flex h-full w-full items-center justify-center border border-slate-700 p-5 text-5xl font-bold shadow-md"
 		>
 			Our Mission
 		</h2>
