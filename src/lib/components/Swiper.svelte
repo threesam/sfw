@@ -88,7 +88,7 @@
 					{#if slideWidth}
 						<a
 							href={`/projects/`}
-							class="absolute inset-0 grid place-content-center text-lg uppercase">view all</a
+							class="absolute inset-0 grid place-content-center text-lg uppercase">all projects</a
 						>
 					{/if}
 				</swiper-slide>
