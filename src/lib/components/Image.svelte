@@ -5,6 +5,7 @@
 	export let src = ''
 	export let alt = ''
 	export let caption = ''
+	export let isPoster = false
 	export let defaultSrc =
 		'https://cdn.sanity.io/images/4yxngtwt/production/42c583f33f8b7a507fa0b80668904ec5688bb86e-1052x1052.png'
 	export let defaultAlt = 'Skeleton Flowers + Water'
@@ -15,10 +16,10 @@
 	}
 </script>
 
-<figure class="aspect-[3/4] h-full max-h-min w-full object-contain">
+<figure class={`h-full max-h-min w-full object-contain`}>
 	{#if src}
 		<img
-			class="aspect-[3/4] max-h-full w-full"
+			class={`max-h-full w-full ${isPoster ? 'aspect-[3/4]' : 'object-cover'}`}
 			in:fade
 			src={urlFor(src).auto('format').url()}
 			{alt}

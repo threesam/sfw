@@ -8,7 +8,7 @@
 </script>
 
 <a {href} class="relative aspect-[3/4] bg-red-500">
-	<Image {src} {alt} />
+	<Image {src} {alt} isPoster />
 
 	<h5 class={`grid h-full place-content-center p-5 ${src ? 'sr-only' : ''}`}>{title}</h5>
 </a>
