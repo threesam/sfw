@@ -16,10 +16,10 @@
 	}
 </script>
 
-<figure class={`h-full max-h-min w-full object-contain`}>
+<figure class={`h-full max-h-min w-full`}>
 	{#if src}
 		<img
-			class={`max-h-full w-full ${isPoster ? 'aspect-[3/4]' : 'object-cover'}`}
+			class={`h-full max-h-full w-full ${isPoster ? 'aspect-[3/4]' : ''}`}
 			in:fade
 			src={urlFor(src).auto('format').url()}
 			{alt}
