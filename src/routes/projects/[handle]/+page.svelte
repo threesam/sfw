@@ -14,10 +14,12 @@
 	console.log('backstageLink: ', backstageLink)
 </script>
 
-<Banner height="47vh" image={project.image} />
+<!-- <Banner height="47vh" image={project.image} /> -->
+<section class="bg-gradient-3 relative mb-5 grid h-64 w-full place-content-center bg-black">
+	<div class="absolute inset-0 bg-black/40" />
+	<h1 class="relative z-0 pb-10 pt-5 text-center text-3xl lg:text-5xl">{project.title}</h1>
+</section>
 <section class="p-5">
-	<h1 class="pb-10 pt-5 text-center text-3xl lg:text-5xl">{project.title}</h1>
-
 	{#if project.status === 'pre-production' && backstageLink}
 		<div
 			class="shadow-primary text-light mx-auto mb-10 max-w-xl border border-slate-700 p-10 shadow-md"
