@@ -6,9 +6,11 @@
 	export let data: PageData
 
 	const { projects, products } = data.body
+
+	const featuredProject = projects.find(({ isFeatured }) => isFeatured) ?? projects[0]
 </script>
 
-<Banner {...projects[0]} path="/projects/" />
+<Banner {...featuredProject} path="/projects/" />
 
 <section class="grid h-96 w-full place-content-center bg-gradient-to-tl from-gray-700 to-gray-900">
 	<div class="flex max-w-3xl flex-col items-center gap-5 p-5 lg:grid lg:grid-cols-2">
@@ -36,7 +38,7 @@
 			<img
 				class="mb-2 max-w-full bg-gradient-to-tr from-slate-100"
 				src={product.thumbnail_url}
-				alt=""
+				alt={product.name}
 			/>
 			<div class={`${i % 2 === 0 ? '' : 'pl-5'} lg:p-0`}>
 				<h4>{product.name}</h4>
