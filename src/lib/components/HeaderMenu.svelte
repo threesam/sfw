@@ -35,7 +35,7 @@
 					>
 						<a
 							href={link.href}
-							class={`font-display text-dark rounded-lg text-2xl font-thin hover:opacity-100 ${
+							class={`font-display rounded-lg text-2xl font-thin text-black hover:opacity-100 ${
 								currentRoute === link.href ? 'opacity-100' : 'opacity-75'
 							}`}>{link.title}</a
 						>
