@@ -80,10 +80,10 @@
 			<P5 {sketch} />
 		</div>
 	{/if}
-	<div class="relative border-2 border-black bg-primary p-5 font-bold text-black">
-		<h2 class="mb-2 font-sans text-2xl">Subscribe</h2>
+	<div class="bg-dark relative border-2 border-black p-5 font-bold text-black lg:p-10">
+		<h2 class="text-light mb-2 font-sans text-2xl">Subscribe</h2>
 		<SubscribeForm />
-		<h2 class="mb-2 mt-8 font-sans text-2xl">Follow</h2>
-		<SocialLinks links={settings.links} size={60} />
+		<h2 class="text-light mb-2 mt-8 font-sans text-2xl">Follow</h2>
+		<SocialLinks links={settings.links} color="var(--primary)" size={60} />
 	</div>
 </section>

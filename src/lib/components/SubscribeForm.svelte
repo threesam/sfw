@@ -1,5 +1,7 @@
 <script>
 	export let endpoint = '/subscribe.js'
+	export let darkMode = false
+
 	import { slide } from 'svelte/transition'
 	import { createForm } from 'svelte-forms-lib'
 	$: isSubmitted = false
@@ -49,14 +51,16 @@
 			name="email"
 			id="email"
 			placeholder="enter email"
-			class="border-dark bg-dark placeholder:text-light focus:border-light focus:placeholder:text-light/60 w-full rounded-none border-2
-			p-5 text-white focus:outline-none"
+			class={` bg-dark placeholder:text-light focus:border-light focus:placeholder:text-light/60 w-full rounded-none border-2
+			p-5 text-white focus:outline-none ${darkMode ? 'border-dark' : 'border-primary'}`}
 			on:change={handleChange}
 			bind:value={$form.email}
 		/>
 	</label>
 	<button
-		class="border-light bg-light text-dark rounded-none border-2 p-5 lg:border-none lg:pl-5"
+		class={`bg-primary text-dark rounded-none border-2 p-5 lg:pl-5 ${
+			darkMode ? 'border-dark' : 'border-primary'
+		}`}
 		type="submit"
 	>
 		subscribe
