@@ -37,7 +37,7 @@
 	<div class="flex h-16 w-full items-center justify-between px-5 lg:px-10">
 		<a class="relative z-10" href="/">
 			<h3
-				class="font-display from-primary bg-gradient-to-r via-pink-300 to-blue-400 bg-clip-text text-transparent"
+				class="font-display via-primary bg-gradient-to-r from-slate-200 to-slate-200 bg-clip-text text-transparent"
 			>
 				<span class="hidden text-2xl lg:block">Skeleton Flowers & Water</span>
 				<span class="block text-xl lg:hidden">SF+W</span>

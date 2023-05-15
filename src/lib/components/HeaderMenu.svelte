@@ -22,9 +22,9 @@
 	<div
 		bind:clientHeight
 		in:fly={{ y: -clientHeight, opacity: 100, duration: 400, easing: quintInOut }}
-		class="bg-gradient-3 z-30 w-full p-5 md:w-1/2 lg:w-1/3"
+		class="bg-dark z-30 w-full md:w-1/2 lg:w-1/3"
 	>
-		<div class="flex w-full flex-col items-start gap-5 py-5">
+		<div class="bg-primary flex w-full flex-col items-start gap-5 p-5">
 			{#each links as link, i (link.title)}
 				<div>
 					<button
