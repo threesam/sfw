@@ -63,7 +63,11 @@
 		<div class="flex max-w-full flex-col md:flex-row">
 			<!-- IMAGE GALLERY -->
 			<!-- <ProductDetailsImageGallery {product} /> -->
-			<img class="md:w-2/3" src={product.thumbnail_url} alt="product - {product.name}" />
+			<img
+				class="bg-gradient-to-tr from-slate-700 md:w-2/3"
+				src={product.thumbnail_url}
+				alt="product - {product.name}"
+			/>
 
 			<!-- DETAILS -->
 			<div class="h-full md:w-1/3 lg:pl-10">

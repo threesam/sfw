@@ -76,12 +76,12 @@
 	>
 		<!-- HEADER -->
 		<div
-			class="border-dark flex h-16 w-full items-center justify-between border-b-2 bg-gray-700 px-6 py-5"
+			class="border-dark bg-gradient-3 flex h-16 w-full items-center justify-between border-b-2 px-6 py-5"
 		>
-			<div class="font-display text-xl font-medium">cart</div>
+			<div class="font-display text-dark text-xl font-medium">cart</div>
 			<button
 				on:click={() => ($showCart = false)}
-				class="text-light text-sm uppercase opacity-80 hover:opacity-100">close</button
+				class="text-md font-medium lowercase text-black opacity-80 hover:opacity-100">close</button
 			>
 		</div>
 
@@ -106,7 +106,7 @@
 						alt={item.name}
 						decoding="async"
 						loading="lazy"
-						class="h-24 w-24 flex-none bg-gradient-to-tr from-slate-100 to-gray-700"
+						class="h-24 w-24 flex-none bg-gradient-to-tr from-slate-700"
 						src={item.product.thumbnail_url}
 					/>
 					<div class="ml-4 flex w-full flex-col justify-between">

@@ -36,7 +36,7 @@
 	{#each products as product, i}
 		<a href="/merch/{product.id}" class={`${i % 2 === 0 ? 'pl-5' : 'pr-5'} lg:p-0`}>
 			<img
-				class="mb-2 max-w-full bg-gradient-to-tr from-slate-100"
+				class="mb-2 max-w-full bg-gradient-to-tr from-slate-700"
 				src={product.thumbnail_url}
 				alt={product.name}
 			/>
