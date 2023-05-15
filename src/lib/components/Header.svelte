@@ -33,7 +33,7 @@
 	}
 </script>
 
-<header class="fixed z-10 flex w-full flex-col items-center bg-black">
+<header class="bg-dark fixed z-10 flex w-full flex-col items-center">
 	<div class="flex h-16 w-full items-center justify-between px-5 lg:px-10">
 		<a class="relative z-10" href="/">
 			<h3
@@ -59,7 +59,7 @@
 				{#if Number($cartQuantity) > 0}
 					<div
 						data-test="cart-quantity"
-						class="absolute bottom-0 left-0 -mb-3 -ml-3 flex h-5 w-5 items-center justify-center border-2 border-black bg-white text-xs font-bold text-black"
+						class="border-dark text-dark absolute bottom-0 left-0 -mb-3 -ml-3 flex h-5 w-5 items-center justify-center border-2 bg-white text-xs font-bold"
 					>
 						{$cartQuantity}
 					</div>

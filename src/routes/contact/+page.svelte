@@ -80,7 +80,7 @@
 			<P5 {sketch} />
 		</div>
 	{/if}
-	<div class="bg-dark relative border-2 border-black p-5 font-bold text-black lg:p-10">
+	<div class="bg-dark border-dark text-dark relative border-2 p-5 font-bold lg:p-10">
 		<h2 class="text-light mb-2 font-sans text-2xl">Subscribe</h2>
 		<SubscribeForm />
 		<h2 class="text-light mb-2 mt-8 font-sans text-2xl">Follow</h2>

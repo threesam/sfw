@@ -16,7 +16,7 @@
 	on:click|self={() => {
 		$showMenu = false
 	}}
-	class="absolute inset-0 top-16 z-50 flex min-h-screen w-full justify-end overflow-hidden bg-black/50 lg:hidden"
+	class="bg-dark/50 absolute inset-0 top-16 z-50 flex min-h-screen w-full justify-end overflow-hidden lg:hidden"
 >
 	<!-- MENU -->
 	<div

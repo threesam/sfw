@@ -26,7 +26,7 @@
 				@apply text-gray-700 underline underline-offset-4;
 
 				&:hover {
-					@apply text-black underline-offset-2 transition-all;
+					@apply text-dark underline-offset-2 transition-all;
 				}
 			}
 		}
