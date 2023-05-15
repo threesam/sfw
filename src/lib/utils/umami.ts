@@ -12,7 +12,7 @@ export function trackCart({
 			// imageURL: product?.images.edges[0].node.originalSrc ?? '',
 			name: variant?.productTitle ?? '',
 			price: Number(variant.retail_price) ?? '',
-			sku: variant.sku ?? '',
+			// sku: variant.sku ?? '',
 			// variant: variant.node.title ?? '',
 			variant_id: variant.id ?? ''
 		})
