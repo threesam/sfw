@@ -1,7 +1,5 @@
 <script lang="ts">
 	import type { PageData } from './$types'
-	import Banner from '$lib/components/Banner.svelte'
-	import Image from '$lib/components/Image.svelte'
 	import SocialLinks from '$lib/components/SocialLinks.svelte'
 	import { PortableText } from '@portabletext/svelte'
 
@@ -30,20 +28,16 @@
 		</div>
 	{/if}
 
-	<div class="mx-auto w-max pb-10">
-		<SocialLinks size={40} links={project.links} color={project.image.color} />
-	</div>
-
 	<div class="mx-auto max-w-2xl pb-10" style={`--primary: ${project.image.color}`}>
 		{#if project.body}
 			<h3 class="text-center font-sans text-2xl font-normal">abstract</h3>
-			<div class="portable-text mb-5 text-center font-extralight">
+			<div class="portable-text mb-10 text-center font-extralight">
 				<PortableText value={project.body} />
 			</div>
 		{/if}
 
 		{#if project.cast}
-			<h4 class="pt-3 text-center font-sans text-2xl">cast</h4>
+			<h4 class="text-center font-sans text-2xl">cast</h4>
 			<ul class="mb-10">
 				{#each project.cast as castMember}
 					<li class="grid grid-cols-2 gap-2 text-left">
@@ -59,7 +53,7 @@
 		{/if}
 
 		{#if project.crew}
-			<h4 class="pt-3 text-center font-sans text-2xl">crew</h4>
+			<h4 class="text-center font-sans text-2xl">crew</h4>
 			<ul>
 				{#each project.crew as crewMember}
 					<li class="grid grid-cols-2 gap-2 text-left">
@@ -74,6 +68,12 @@
 			</ul>
 		{/if}
 	</div>
+
+	{#if project.links?.length}
+		<div class="mx-auto w-max pb-20 pt-10">
+			<SocialLinks size={40} links={project.links} color={project.image.color} />
+		</div>
+	{/if}
 
 	{#if project.posters}
 		<figure class=" w-max-content flex w-full justify-center pb-10 lg:max-h-[50vh]">
