@@ -4,8 +4,9 @@ export default {
 	theme: {
 		extend: {
 			fontFamily: {
-				display: "'Fredericka the Great', cursive",
-				sans: "'Montserrat', sans-serif"
+				display: "'Staatliches', monospace",
+				sans: "'Montserrat', sans-serif",
+				mono: "'Cherry', monospace"
 			},
 			backgroundImage: {
 				'gradient-fade': 'linear-gradient(180deg, transparent 40%, black)',

@@ -40,7 +40,7 @@
 		<div class="lg:px-10">
 			<div class="flex justify-between p-5 lg:px-0">
 				{#if title}
-					<h2 class="font-display">{title}</h2>
+					<h2 class="font-display text-light shadow-primary drop-shadow-lg">{title}</h2>
 				{/if}
 				<a
 					class="hidden underline underline-offset-4 transition-all duration-300 hover:underline-offset-2 lg:block"

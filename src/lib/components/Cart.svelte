@@ -112,7 +112,7 @@
 					<div class="ml-4 flex w-full flex-col justify-between">
 						<div class="flex w-full justify-between">
 							<div>
-								<p class="text-lg font-medium">{item.name.split(' - ')[0]}</p>
+								<p class="font-display text-xl font-medium">{item.name.split(' - ')[0]}</p>
 								<p class="text-sm">{item.name.split(' - ')[1]}</p>
 							</div>
 							<p class="font-medium">{item.retail_price} {item.currency}</p>
@@ -171,7 +171,7 @@
 				</div>
 				<button
 					on:click={checkout}
-					class="hover:bg-primary hover:text-dark hover:border-primary flex w-full items-center justify-center border p-4 text-white opacity-90 transition-all duration-300 hover:font-bold"
+					class="font-display hover:bg-primary hover:text-dark hover:border-primary flex w-full items-center justify-center border p-4 text-lg text-white opacity-90 transition-all duration-300 hover:font-bold"
 				>
 					<span class="text-lg uppercase">{checkoutText}</span>
 				</button>

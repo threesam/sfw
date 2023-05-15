@@ -1,4 +1,21 @@
-@import url('https://fonts.googleapis.com/css2?family=Fredericka+the+Great&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;1,100&display=swap');
+@font-face {
+	font-family: 'Staatliches';
+	font-display: swap;
+	src: url('$lib/assets/fonts/Staatliches-Regular.ttf');
+}
+
+@font-face {
+	font-family: 'Cherry';
+	font-display: swap;
+	src: url('$lib/assets/fonts/Cherry Monospace-Light.ttf');
+}
+
+@font-face {
+	font-family: 'Montserrat';
+	font-display: swap;
+	src: url('$lib/assets/fonts/Montserrat-VariableFont_wght.ttf'),
+		url('$lib/assets/fonts/Montserrat-Italic-VariableFont_wght.ttf');
+}
 
 @tailwind base;
 @tailwind components;
