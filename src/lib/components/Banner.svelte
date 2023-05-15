@@ -27,15 +27,15 @@
 			class="absolute bottom-0 left-0 max-w-lg p-5 lg:p-10"
 		>
 			<span
-				class="bg-dark inline-block border border-gray-700 p-3 text-sm tracking-wider text-gray-300"
+				class="bg-dark inline-block border border-slate-700 p-3 text-sm tracking-wider text-slate-300"
 				>{status.replace(/-/g, ' ')}</span
 			>
-			<h2 class="font-display py-3 text-3xl lg:text-4xl" style="color: var(--primary);">{title}</h2>
-			<p class="hidden pb-3 lg:block">{description}</p>
+			<h2 class="font-display pt-2 text-3xl lg:text-4xl" style="color: var(--primary);">{title}</h2>
+			<p>{description}</p>
 			{#if slug}
 				<a
 					href={handle}
-					class="hover:text-primary underline underline-offset-4 transition-all duration-300 hover:underline-offset-1"
+					class="hover:text-primary inline-block pt-5 underline underline-offset-4 transition-all duration-300 hover:underline-offset-1"
 					>learn more</a
 				>
 			{/if}
