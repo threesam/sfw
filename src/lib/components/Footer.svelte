@@ -23,7 +23,7 @@
 	<footer
 		class="bg-primary flex flex-col items-center justify-between gap-5 p-5 lg:flex-row lg:gap-10 lg:p-10"
 	>
-		<SubscribeForm />
+		<SubscribeForm darkMode />
 		<SocialLinks links={settings.links} size={69} />
 	</footer>
 {/if}
