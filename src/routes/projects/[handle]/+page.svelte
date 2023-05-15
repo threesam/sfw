@@ -13,7 +13,9 @@
 </script>
 
 <section class="bg-gradient-3 relative mb-5 grid h-64 w-full place-content-center bg-black">
-	<h1 class="text-dark text-bold relative z-0 text-center text-3xl lg:text-5xl">{project.title}</h1>
+	<h1 class="text-dark font-display text-bold relative z-0 text-center text-3xl lg:text-5xl">
+		{project.title}
+	</h1>
 </section>
 
 <section class="p-5">
@@ -30,14 +32,14 @@
 
 	<div class="mx-auto max-w-2xl pb-10" style={`--primary: ${project.image.color}`}>
 		{#if project.body}
-			<h3 class="text-center font-sans text-2xl font-normal">abstract</h3>
+			<h3 class="font-display text-center text-2xl font-normal">abstract</h3>
 			<div class="portable-text mb-10 text-center font-extralight">
 				<PortableText value={project.body} />
 			</div>
 		{/if}
 
 		{#if project.cast}
-			<h4 class="text-center font-sans text-2xl">cast</h4>
+			<h4 class="font-display text-center text-2xl">cast</h4>
 			<ul class="mb-10">
 				{#each project.cast as castMember}
 					<li class="grid grid-cols-2 gap-2 text-left">
@@ -53,7 +55,7 @@
 		{/if}
 
 		{#if project.crew}
-			<h4 class="text-center font-sans text-2xl">crew</h4>
+			<h4 class="font-display text-center text-2xl">crew</h4>
 			<ul>
 				{#each project.crew as crewMember}
 					<li class="grid grid-cols-2 gap-2 text-left">
