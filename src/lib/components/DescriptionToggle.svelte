@@ -10,7 +10,7 @@
 
 <button
 	on:click={() => (toggle = !toggle)}
-	class="flex w-full border-b border-black/50 py-4 text-sm"
+	class="border-dark/50 flex w-full border-b py-4 text-sm"
 >
 	<div class={`rotate h-6 w-6 ${toggle ? 'down' : ''}`}>
 		<Icons type="caretRight" strokeColor="#000" />

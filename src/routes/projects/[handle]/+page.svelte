@@ -12,7 +12,7 @@
 	console.log('backstageLink: ', backstageLink)
 </script>
 
-<section class="bg-gradient-3 relative mb-5 grid h-64 w-full place-content-center bg-black">
+<section class="bg-gradient-3 bg-dark relative mb-5 grid h-64 w-full place-content-center">
 	<h1 class="text-dark font-display text-bold relative z-0 text-center text-3xl lg:text-5xl">
 		{project.title}
 	</h1>

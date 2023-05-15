@@ -88,7 +88,7 @@
 								on:click={() => getSelectedVariant(variant.id)}
 								class={`${
 									selectedVariant?.id === variant.id
-										? 'bg-gradient-to-tr from-slate-100 to-gray-500 font-extrabold text-black'
+										? 'text-dark bg-gradient-to-tr from-slate-100 to-gray-500 font-extrabold'
 										: ''
 								} flex h-12 w-24 items-center justify-center border transition duration-300 ease-in-out hover:scale-95 hover:opacity-100`}
 							>

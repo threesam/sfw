@@ -65,7 +65,7 @@
 	<!-- OVERLAY -->
 	<button
 		transition:fade={{ duration: 700, easing: quintInOut }}
-		class="fixed inset-0 z-10 w-full bg-black bg-opacity-70"
+		class="bg-dark fixed inset-0 z-10 w-full bg-opacity-70"
 		on:click={() => ($showCart = false)}
 	/>
 
@@ -76,7 +76,7 @@
 	>
 		<!-- HEADER -->
 		<div
-			class="flex h-16 w-full items-center justify-between border-b-2 border-black bg-gray-700 px-6 py-5"
+			class="border-dark flex h-16 w-full items-center justify-between border-b-2 bg-gray-700 px-6 py-5"
 		>
 			<div class="font-display text-xl font-medium">cart</div>
 			<button
