@@ -83,12 +83,13 @@
 					</swiper-slide>
 				{/each}
 				<swiper-slide
-					class="bg-gradient-3 bg-dark text-light border-light relative mb-10 grid aspect-[3/4] h-full place-content-center border-2 lg:hidden"
+					class="bg-gradient-3 bg-dark text-dark border-primary relative mb-10 grid aspect-[3/4] h-full place-content-center border-2 lg:hidden"
 				>
 					{#if slideWidth}
 						<a
 							href={`/projects/`}
-							class="absolute inset-0 grid place-content-center text-lg uppercase">all projects</a
+							class="absolute inset-0 grid place-content-center text-lg lowercase underline underline-offset-2"
+							>all projects</a
 						>
 					{/if}
 				</swiper-slide>
