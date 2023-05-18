@@ -107,7 +107,7 @@
 					on:click={addToCart({ variant: selectedVariant })}
 					class="hover:bg-primary hover:text-dark hover:border-primary flex w-full items-center justify-center border p-4 text-white opacity-90 transition-all duration-300 hover:font-bold"
 				>
-					<span class="text-sm uppercase">Add To Cart</span>
+					<span class="font-display text-lg uppercase">Add To Cart</span>
 				</button>
 				<p class="py-3 text-xs italic text-red-500">
 					<b class="uppercase">final sale:</b> custom item not subject to returns.
