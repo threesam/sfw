@@ -28,7 +28,7 @@ export async function POST({ request }) {
 	const webhookData: PrintfulWebhook = await request.json()
 
 	// @ts-expect-error init stripe
-	const stripe = new Stripe(env.STRIPE_TEST_SECRET_KEY)
+	const stripe = new Stripe(env.STRIPE_SECRET_KEY)
 
 	const product = await getProduct({
 		id: webhookData.data.sync_product.id

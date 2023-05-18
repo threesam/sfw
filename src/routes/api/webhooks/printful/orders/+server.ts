@@ -42,7 +42,7 @@ type LineItem = {
 
 export async function POST({ request }) {
 	// @ts-expect-error it is what it is
-	const stripe = new Stripe(env.STRIPE_TEST_SECRET_KEY)
+	const stripe = new Stripe(env.STRIPE_SECRET_KEY)
 
 	// get stripe signature
 	const signature = request.headers.get('Stripe-Signature') ?? ''
