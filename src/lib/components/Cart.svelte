@@ -114,7 +114,7 @@
 						<div class="flex w-full justify-between">
 							<div>
 								<p class="font-display text-xl font-medium">{item.name.split(' - ')[0]}</p>
-								<p class="text-sm">{item.name.split(' - ')[1]}</p>
+								<p class="text-sm">{item.name.split(' - ')[1] ?? ''}</p>
 							</div>
 							<p class="font-medium">{item.retail_price} {item.currency}</p>
 						</div>
