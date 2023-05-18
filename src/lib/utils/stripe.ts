@@ -1,7 +1,7 @@
 import Stripe from 'stripe'
-import { STRIPE_TEST_SECRET_KEY } from '$env/static/private'
+import { STRIPE_SECRET_KEY } from '$env/static/private'
 
-const stripe = new Stripe(STRIPE_TEST_SECRET_KEY)
+const stripe = new Stripe(STRIPE_SECRET_KEY)
 
 export async function createCheckoutSession({ items = [], origin }) {
 	const { data: stripeProducts } = await stripe.products.list()
