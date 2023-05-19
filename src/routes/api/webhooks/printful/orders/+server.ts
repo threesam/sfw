@@ -45,11 +45,12 @@ export async function POST({ request }) {
 	const stripe = new Stripe(env.STRIPE_SECRET_KEY)
 
 	// get stripe signature
-	const signature = request.headers.get('Stripe-Signature') ?? ''
+	const signature = request.headers.get('stripe-signature') ?? ''
+	const rawBody = await request.text()
 
 	// validate that the webhook originated from Stripe
 	const { data } = await stripe.webhooks.constructEventAsync(
-		await request.text(), // raw request body
+		rawBody, // raw request body
 		signature, // signature header
 		env.STRIPE_WEBHOOK_SECRET
 	)
