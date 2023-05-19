@@ -16,15 +16,12 @@
 					method: 'POST',
 					body: JSON.stringify({ email: values.email })
 				})
-				console.log('response', response)
-				if (response.status == 400) {
-					message = 'Already Subscribed!'
-				}
+
 				if (response.status == 200) {
 					message = 'Thanks for Subscribing!'
 				}
 
-				message = 'This absolutely does not work yet'
+				message = 'Error: please try again or contact support'
 
 				// const json = await response.json()
 				isSubmitted = true
@@ -67,5 +64,5 @@
 	</button>
 </form>
 {#if isSubmitted}
-	<h5 transition:slide>{message}</h5>
+	<h5 class="text-light" transition:slide>{message}</h5>
 {/if}
