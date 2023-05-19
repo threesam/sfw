@@ -35,7 +35,7 @@
 
 <header class="bg-dark fixed z-10 flex w-full flex-col items-center">
 	<div class="flex h-16 w-full items-center justify-between px-5 lg:px-10">
-		<a class="relative z-10" href="/">
+		<a class="pointer-events-none relative z-10" href="/">
 			<h3
 				class="font-display via-primary bg-gradient-to-r from-slate-200 to-slate-200 bg-clip-text text-transparent transition-all duration-500 hover:from-red-500 hover:via-slate-200 hover:to-red-500"
 			>
