@@ -55,7 +55,7 @@ export async function POST({ request }) {
 	)
 
 	// set customer info
-	const customer = data?.object?.customer_details as CustomerDetails
+	const shipping = data?.object?.shipping_details as CustomerDetails
 
 	const checkoutId = data?.object?.id
 
@@ -84,14 +84,15 @@ export async function POST({ request }) {
 		method: 'POST',
 		body: JSON.stringify({
 			recipient: {
-				name: customer.name,
-				address1: customer.address.line1,
-				city: customer.address.city,
-				state_code: customer.address.state,
-				country_code: customer.address.country,
-				zip: customer.address.postal_code,
-				email: customer.email,
-				phone: customer.phone
+				name: shipping.name,
+				address1: shipping.address.line1,
+				address2: shipping.address.line2,
+				city: shipping.address.city,
+				state_code: shipping.address.state,
+				country_code: shipping.address.country,
+				zip: shipping.address.postal_code,
+				email: data.object.customer_details.email,
+				phone: data.object.customer_details.phone
 			},
 			items: items.map((item) => ({
 				external_variant_id: item.product.split('_').pop(),
@@ -103,7 +104,7 @@ export async function POST({ request }) {
 	// get result of order request
 	const { result } = await printfulOrderRes.json()
 
-	console.log({ data, result, customer, items })
+	console.log({ data, result, shipping, items })
 
 	return new Response('ok')
 }
