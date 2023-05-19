@@ -1,5 +1,5 @@
 <script>
-	export let endpoint = '/subscribe.js'
+	export let endpoint = '/api/subscribe'
 	export let darkMode = false
 
 	import { slide } from 'svelte/transition'
