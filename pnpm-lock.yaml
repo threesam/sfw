@@ -2,7 +2,7 @@ lockfileVersion: '6.0'
 
 dependencies:
   '@mailchimp/mailchimp_marketing':
-    specifier: ^3.0.80
+    specifier: 3.0.80
     version: 3.0.80
   '@playwright/test':
     specifier: 1.33.0
