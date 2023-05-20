@@ -20,15 +20,17 @@ export async function GET({ url }) {
 
 export async function POST({ request }) {
 	const { email } = await request.json()
+	console.log('email: ', email)
 
-	// check if member already exists, if so do nothing
+	let event
+	// upsert member
 	try {
-		const response = await client.lists.setListMember(env.MAILCHIMP_LIST_ID, email, {
+		event = await client.lists.setListMember(env.MAILCHIMP_LIST_ID, email, {
 			status: 'subscribed'
 		})
-
-		return new Response(JSON.stringify({ email, response }, null, 2))
 	} catch ({ status }: any) {
 		console.error(status)
 	}
+	console.log({ email, event })
+	return new Response(JSON.stringify({ email, event }, null, 2))
 }
