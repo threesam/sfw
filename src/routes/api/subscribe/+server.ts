@@ -23,14 +23,26 @@ export async function POST({ request }) {
 	console.log('email: ', email)
 
 	let event
-	// upsert member
+	// create member
 	try {
 		event = await client.lists.setListMember(env.MAILCHIMP_LIST_ID, email, {
 			status: 'subscribed'
 		})
-	} catch ({ status }: any) {
-		console.error(status)
+	} catch (e: any) {
+		console.error(e)
 	}
+
+	if (!event) {
+		try {
+			event = await client.lists.addListMember(env.MAILCHIMP_LIST_ID, {
+				email_address: email,
+				status: 'subscribed'
+			})
+		} catch (e: any) {
+			console.error(e)
+		}
+	}
+
 	console.log({ email, event })
 	return new Response(JSON.stringify({ email, event }, null, 2))
 }
