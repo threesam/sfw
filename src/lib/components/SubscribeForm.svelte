@@ -17,7 +17,7 @@
 					body: JSON.stringify({ email: $form.email })
 				})
 
-				message = 'Thanks for Subscribing!'
+				message = 'Thanks for subscribing!'
 
 				// const json = await response.json()
 				isSubmitted = true
