@@ -38,26 +38,27 @@
 	on:submit|preventDefault={handleSubmit}
 >
 	<label for="email">
-		<input
-			type="email"
-			name="email"
-			id="email"
-			placeholder="enter email"
-			class={` bg-dark placeholder:text-light focus:border-light focus:placeholder:text-light/60 w-full rounded-none border-2
-			p-5 text-white focus:outline-none ${darkMode ? 'border-dark' : 'border-primary'}`}
-			on:change={handleChange}
-			bind:value={$form.email}
-		/>
-	</label>
-	<button
-		class={`bg-primary text-dark rounded-none border-2 p-5 lg:pl-5 ${
-			darkMode ? 'border-dark' : 'border-primary'
-		}`}
-		type="submit"
-	>
-		subscribe
-	</button>
+		{#if !isSubmitted}
+			<input
+				type="email"
+				name="email"
+				id="email"
+				placeholder="enter email"
+				class={` bg-dark placeholder:text-light focus:border-light focus:placeholder:text-light/60 w-full rounded-none border-2
+				p-5 text-white focus:outline-none ${darkMode ? 'border-dark' : 'border-primary'}`}
+				on:change={handleChange}
+				bind:value={$form.email}
+			/>
+		</label>
+		<button
+			class={`bg-primary text-dark rounded-none border-2 p-5 lg:pl-5 ${
+				darkMode ? 'border-dark' : 'border-primary'
+			}`}
+			type="submit"
+		>
+			subscribe
+		</button>
+	{:else}
+		<h5 class={`${darkMode ? 'text-light' : 'text-dark'}`} transition:slide>{message}</h5>
+	{/if}
 </form>
-{#if isSubmitted}
-	<h5 class="text-light" transition:slide>{message}</h5>
-{/if}
