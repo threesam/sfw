@@ -60,8 +60,8 @@
 	{#if isSubmitted}
 		<p
 			class={`absolute -bottom-6 left-0 ${darkMode ? 'text-dark' : 'text-light'}`}
-			in:fly={{ x: -50 }}
-			out:fly={{ x: 50 }}
+			in:fly={{ x: -30 }}
+			out:fly={{ x: 30 }}
 		>
 			{message}
 		</p>
