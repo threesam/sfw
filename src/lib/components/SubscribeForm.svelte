@@ -12,16 +12,12 @@
 		},
 		onSubmit: async (values) => {
 			try {
-				const response = await fetch(endpoint, {
+				await fetch(endpoint, {
 					method: 'POST',
-					body: JSON.stringify({ email: values.email })
+					body: JSON.stringify({ email: $form.email })
 				})
 
-				if (response.status == 200) {
-					message = 'Thanks for Subscribing!'
-				}
-
-				message = 'Error: please try again or contact support'
+				message = 'Thanks for Subscribing!'
 
 				// const json = await response.json()
 				isSubmitted = true
@@ -30,6 +26,7 @@
 					isSubmitted = false
 				}, 3000)
 			} catch (error) {
+				message = 'Error: please try again or contact support'
 				console.error(error)
 			}
 		}
@@ -38,8 +35,6 @@
 
 <form
 	class="flex w-full flex-grow flex-col justify-start lg:flex-row lg:gap-0"
-	action={endpoint}
-	method="post"
 	on:submit|preventDefault={handleSubmit}
 >
 	<label for="email">
