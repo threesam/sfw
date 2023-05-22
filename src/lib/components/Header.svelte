@@ -53,7 +53,7 @@
 				<p>no links!</p>
 			{/each}
 		</div>
-		<div class="z-10 flex gap-3">
+		<div class="z-10 flex gap-4">
 			<button on:click={openCart} class="relative my-2">
 				<Icons strokeColor={Number($cartQuantity) > 0 ? '#777' : '#fff'} type="cart" />
 				{#if Number($cartQuantity) > 0}

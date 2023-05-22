@@ -78,7 +78,7 @@
 	{/if}
 
 	{#if project.posters}
-		<figure class=" w-max-content flex w-full justify-center pb-10 lg:max-h-[50vh]">
+		<figure class="w-max-content flex w-full justify-center pb-20 lg:max-h-[50vh]">
 			<img
 				class="lg:max-h-[50vh]"
 				src={project.posters[0].src}
