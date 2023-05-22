@@ -79,6 +79,7 @@
 			{:else}
 				<button
 					aria-label="Close menu"
+					class="lg:hidden"
 					on:click={() => {
 						$showMenu = false
 					}}
