@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { fly } from 'svelte/transition'
+	import Badge from './Badge.svelte'
 	import Image from './Image.svelte'
 
 	export let height = ''
@@ -26,10 +27,7 @@
 			in:fly={{ x: -50, duration: 400 }}
 			class="absolute bottom-0 left-0 max-w-lg p-5 lg:p-10"
 		>
-			<span
-				class="bg-dark inline-block border border-slate-700 p-3 text-sm tracking-wider text-slate-300"
-				>{status.replace(/-/g, ' ')}</span
-			>
+			<Badge text={status.replace(/-/g, ' ')} />
 			<h2 class="font-display pt-2 text-3xl lg:text-4xl" style="color: var(--primary);">{title}</h2>
 			<p>{description}</p>
 			{#if slug}

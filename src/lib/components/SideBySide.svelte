@@ -3,23 +3,29 @@
 	export let description = ''
 	export let path = '/'
 	export let slug = ''
+	export let status = ''
 	export let buttonText = 'learn more'
 	export let index = 0
 	export let image: any = {}
 	const { src, alt, caption, color } = image
 
+	import Badge from './Badge.svelte'
 	import Image from './Image.svelte'
 </script>
 
 <section
 	style="--primary: {color}"
-	class="mx-auto my-5 flex max-w-5xl flex-col items-center lg:my-0 lg:grid lg:grid-cols-2"
+	class="mx-auto my-5 flex max-w-5xl flex-col items-start lg:my-0 lg:grid lg:grid-cols-2 lg:items-center"
 >
-	<div class={`lg:border-primary lg:border-2 ${index % 2 === 0 ? 'lg:order-last' : ''}`}>
+	<div class={`${index % 2 === 0 ? 'lg:order-last' : ''}`}>
 		<Image {src} {alt} {caption} />
 	</div>
 	<div class={`px-5 pb-10 pt-5 ${index % 2 === 0 ? 'lg:text-end' : ''}`}>
-		<h3 class="font-display text-primary sm:mb-3 sm:text-2xl lg:text-3xl">{title}</h3>
+		<div class="block lg:hidden">
+			<Badge text={status.replace(/-/g, ' ')} />
+		</div>
+		<span class="mb-2 hidden text-sm lg:block">{status.replace(/-/g, ' ')}</span>
+		<h3 class="font-display text-primary sm:text-2xl lg:text-3xl">{title}</h3>
 		<p class="pb-3 lg:py-3">{description}</p>
 
 		{#if slug}
