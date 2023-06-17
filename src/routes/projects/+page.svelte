@@ -5,6 +5,7 @@
 	export let data: PageData
 
 	const { projects } = data.body
+	console.log('projects: ', projects)
 
 	let sortedProjects = []
 	projects.forEach((project) => {
@@ -16,9 +17,9 @@
 	})
 </script>
 
-<h1 class="font-display w-full px-5 pb-0 pt-10 lg:text-center">All Projects</h1>
+<h1 class="w-full px-5 pb-0 pt-10 font-display lg:text-center">All Projects</h1>
 <div class="flex flex-col pt-10 last:mb-20">
 	{#each sortedProjects as project, index}
-		<SideBySide {...project} {index} path="/projects/" />
+		<SideBySide {project} {index} path="/projects/" />
 	{/each}
 </div>

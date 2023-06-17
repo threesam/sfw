@@ -69,6 +69,7 @@ export async function getAllProjects() {
       "caption": image.caption,
       "color": image.asset->metadata.palette.lightVibrant.background,
     },
+    "posters": posters[].asset->
   }`)
 }
 

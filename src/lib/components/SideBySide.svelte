@@ -1,13 +1,11 @@
 <script lang="ts">
-	export let title = ''
-	export let description = ''
+	export let project
 	export let path = '/'
-	export let slug = ''
-	export let status = ''
 	export let buttonText = 'learn more'
 	export let index = 0
-	export let image: any = {}
-	const { src, alt, caption, color } = image
+	const { title, description, slug, status, image, posters } = project ?? {}
+	console.log('project: ', project)
+	const { src, alt, caption, color } = image ?? {}
 
 	import Badge from './Badge.svelte'
 	import Image from './Image.svelte'
@@ -18,7 +16,7 @@
 	class="mx-auto my-5 flex max-w-5xl flex-col items-start lg:my-0 lg:grid lg:grid-cols-2 lg:items-center"
 >
 	<div class={`${index % 2 === 0 ? 'lg:order-last' : ''}`}>
-		<Image {src} {alt} {caption} />
+		<Image src={src ?? posters?.[0].url} {alt} {caption} />
 	</div>
 	<div class={`px-5 pb-10 pt-5 ${index % 2 === 0 ? 'lg:text-end' : ''}`}>
 		<div class="block lg:hidden">
@@ -30,7 +28,7 @@
 
 		{#if slug}
 			<a
-				class="hover:text-primary underline underline-offset-4 transition-all duration-300 hover:underline-offset-2"
+				class="underline underline-offset-4 transition-all duration-300 hover:text-primary hover:underline-offset-2"
 				href={path + slug}>{buttonText}</a
 			>
 		{/if}
