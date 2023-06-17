@@ -3,7 +3,7 @@ import { STRIPE_SECRET_KEY } from '$env/static/private'
 
 const stripe = new Stripe(STRIPE_SECRET_KEY)
 
-export async function createCheckoutSession({ items = [], origin }) {
+export async function createCheckoutSession({ items = [], origin, pathname }) {
 	const { data: stripeProducts } = await stripe.products.list()
 	console.log('stripeProducts: ', stripeProducts)
 
@@ -23,7 +23,7 @@ export async function createCheckoutSession({ items = [], origin }) {
 		line_items: lineItems,
 		mode: 'payment',
 		success_url: `${origin}/checkout/success`,
-		cancel_url: `${origin}/`,
+		cancel_url: origin + pathname,
 		shipping_address_collection: {
 			allowed_countries: ['US']
 		}
