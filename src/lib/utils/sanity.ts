@@ -88,6 +88,12 @@ export async function getSettings({ hostname }: { hostname: string }) {
         "src": url,
         alt,
         caption
+      },
+      founders[]->{
+        ...,
+        image{
+          asset->
+        }
       }
     }`,
 		{
