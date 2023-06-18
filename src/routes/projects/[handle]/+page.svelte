@@ -12,7 +12,10 @@
 	console.log('backstageLink: ', backstageLink)
 </script>
 
-<section class="relative mb-5 grid h-64 w-full place-content-center bg-dark bg-gradient-3">
+<section
+	style="--primary: {project.image.color}"
+	class="relative mb-5 grid h-64 w-full place-content-center bg-dark bg-gradient-3"
+>
 	<h1 class="text-bold relative z-0 text-center font-display text-3xl text-dark lg:text-5xl">
 		{project.title}
 	</h1>
@@ -24,7 +27,7 @@
 			class="mx-auto mb-10 max-w-xl border border-slate-700 p-10 text-light shadow-md shadow-primary"
 		>
 			This project is in active development, see available roles on <a
-				class="text-primary underline underline-offset-4 transition-all duration-300 hover:underline-offset-2"
+				class="border-b border-primary text-primary transition-all duration-300 hover:underline-offset-2"
 				href={backstageLink.href}>backstage</a
 			>
 		</div>
@@ -45,7 +48,10 @@
 					<li class="grid grid-cols-2 gap-2 text-left">
 						<span class="text-right">{castMember.castname}</span>
 						{#if castMember.name && castMember.link}
-							<a class="underline underline-offset-4" href={castMember.link}>{castMember.name}</a>
+							<a
+								class="h-max w-max border-b border-primary transition-all duration-300 hover:border-transparent hover:tracking-wider hover:text-primary"
+								href={castMember.link}>{castMember.name}</a
+							>
 						{:else}
 							<span>{castMember.name}</span>
 						{/if}
@@ -61,7 +67,10 @@
 					<li class="grid grid-cols-2 gap-2 text-left">
 						<span class="text-right">{crewMember.role}</span>
 						{#if crewMember.name && crewMember.link}
-							<a class="underline underline-offset-4" href={crewMember.link}>{crewMember.name}</a>
+							<a
+								class="h-max w-max border-b border-primary transition-all duration-300 hover:border-transparent hover:tracking-wider hover:text-primary"
+								href={crewMember.link}>{crewMember.name}</a
+							>
 						{:else}
 							<span>{crewMember.name}</span>
 						{/if}
