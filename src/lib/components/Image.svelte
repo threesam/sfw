@@ -3,6 +3,7 @@
 	import { fade } from 'svelte/transition'
 
 	export let src = ''
+	console.log('src: ', src)
 	export let alt = ''
 	export let caption = ''
 	export let objectFit = ''
@@ -16,11 +17,11 @@
 	}
 </script>
 
-<figure class={`h-full max-h-min w-full `}>
+<figure class={`h-full max-h-min w-full ${objectFit === 'contain' ? 'aspect-square' : ''}`}>
 	{#if src}
 		<img
-			class={`h-full max-h-full w-full ${
-				objectFit === 'contain' ? 'object-contain' : 'object-cover'
+			class={`h-full w-full ${
+				objectFit === 'contain' ? 'aspect-square object-contain' : 'object-cover'
 			}`}
 			in:fade
 			src={urlFor(src).auto('format').url()}

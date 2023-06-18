@@ -71,12 +71,20 @@
 				{#each slides as { slug, title, image, posters }}
 					<swiper-slide class="mb-10" bind:clientWidth={slideWidth}>
 						{#if slideWidth}
-							<a href={`/projects/${slug}`} class="relative bg-red-500">
-								<Image src={image?.src ?? posters[0]?.url} alt={title} />
-								<span class="absolute inset-0 bg-black object-contain opacity-0 hover:opacity-100">
-									<Image src={posters[0]?.url ?? image?.src} alt={title} objectFit="contain" />
-								</span>
-								<h5 class={`h-full p-5`}>
+							<a href={`/projects/${slug}`} class="relative aspect-[3/4] bg-red-500">
+								<Image src={image?.src} alt={title} />
+								{#if posters?.[0]?.url}
+									<span
+										class="absolute inset-0 aspect-[3/4] h-full w-full bg-black opacity-0 hover:opacity-100"
+									>
+										<img
+											class="mx-auto h-full object-contain"
+											src={posters?.[0]?.url}
+											alt={title}
+										/>
+									</span>
+								{/if}
+								<h5 class={`h-full py-5 text-center`}>
 									{title}
 								</h5>
 							</a>
