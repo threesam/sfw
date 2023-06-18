@@ -92,7 +92,7 @@
 					</swiper-slide>
 				{/each}
 				<swiper-slide
-					class="relative mb-10 grid aspect-[3/4] h-full place-content-center border-2 border-primary bg-dark bg-gradient-3 text-dark lg:hidden"
+					class="relative mb-10 grid aspect-square h-full place-content-center border-2 border-primary bg-dark bg-gradient-3 text-dark lg:hidden"
 				>
 					{#if slideWidth}
 						<a

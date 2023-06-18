@@ -19,7 +19,7 @@
 		<div class="relative aspect-square">
 			<img src={image?.asset.url} alt="" />
 			<div class="absolute inset-0 bg-black/50" />
-			<h4 class="absolute left-3 top-3">{name}</h4>
+			<h4 class="absolute left-0 top-0 bg-black p-3">{name}</h4>
 		</div>
 	{/each}
 </section>
