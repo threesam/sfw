@@ -33,11 +33,11 @@
 	}
 </script>
 
-<header class="bg-dark fixed z-10 flex w-full flex-col items-center">
+<header class="fixed z-10 flex w-full flex-col items-center bg-dark">
 	<div class="flex h-16 w-full items-center justify-between px-5 lg:px-10">
 		<a class="relative z-10" href="/">
 			<h3
-				class="font-display via-primary bg-gradient-to-r from-slate-200 to-slate-200 bg-clip-text text-transparent transition-all duration-500 hover:from-red-500 hover:via-slate-200 hover:to-red-500"
+				class="bg-gradient-to-r from-slate-200 via-primary to-slate-200 bg-clip-text font-display text-transparent transition-all duration-500 hover:from-red-500 hover:via-slate-200 hover:to-red-500"
 			>
 				<span class="hidden text-2xl lg:block">Skeleton Flowers & Water</span>
 				<span class="block text-xl lg:hidden">SF+W</span>
@@ -46,7 +46,7 @@
 		<div class="absolute inset-0 hidden items-center justify-center gap-5 lg:flex">
 			{#each links as { href, title }}
 				<a
-					class="hover:border-primary hover:text-primary border-b-2 border-transparent text-base transition duration-300 lg:text-lg"
+					class="border-b-2 border-transparent text-base transition duration-300 hover:border-primary hover:text-primary lg:text-lg"
 					{href}>{title}</a
 				>
 			{:else}
@@ -59,7 +59,7 @@
 				{#if Number($cartQuantity) > 0}
 					<div
 						data-test="cart-quantity"
-						class="border-dark text-dark absolute bottom-0 left-0 -mb-3 -ml-3 flex h-5 w-5 items-center justify-center border-2 bg-white text-xs font-bold"
+						class="absolute bottom-0 left-0 -mb-3 -ml-3 flex h-5 w-5 items-center justify-center border-2 border-dark bg-white text-xs font-bold text-dark"
 					>
 						{$cartQuantity}
 					</div>
