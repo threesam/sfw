@@ -1,6 +1,5 @@
 <script lang="ts">
 	export let slides = []
-	console.log('slides: ', slides)
 	export let title = ''
 
 	import Image from '$components/Image.svelte'

@@ -2,15 +2,24 @@
 	import type { PageData } from './$types'
 	import SocialLinks from '$lib/components/SocialLinks.svelte'
 	import { PortableText } from '@portabletext/svelte'
+	import SEO from 'svelte-seo'
 
 	export let data: PageData
 
 	const { project } = data.body
-	console.log('project: ', project)
 
 	const backstageLink = project.links.find(({ title }) => title === 'backstage')
-	console.log('backstageLink: ', backstageLink)
 </script>
+
+<SEO
+	title={project.title}
+	description={project.description}
+	openGraph={{
+		title: project.title,
+		description: project.description,
+		images: [{ url: project.image.src }]
+	}}
+/>
 
 <section
 	style="--primary: {project.image.color}"

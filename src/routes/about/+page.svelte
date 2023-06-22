@@ -4,7 +4,6 @@
 
 	export let data
 	const { settings } = data.body
-	console.log('settings: ', settings)
 </script>
 
 <div class="mx-auto max-w-3xl">

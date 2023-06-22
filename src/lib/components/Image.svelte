@@ -3,7 +3,6 @@
 	import { fade } from 'svelte/transition'
 
 	export let src = ''
-	console.log('src: ', src)
 	export let alt = ''
 	export let caption = ''
 	export let objectFit = ''

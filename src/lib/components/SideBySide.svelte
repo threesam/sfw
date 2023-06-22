@@ -4,7 +4,6 @@
 	export let buttonText = 'learn more'
 	export let index = 0
 	const { title, description, slug, status, image, posters } = project ?? {}
-	console.log('project: ', project)
 	const { src, alt, caption, color } = image ?? {}
 
 	import Badge from './Badge.svelte'
