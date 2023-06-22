@@ -17,7 +17,7 @@
 	openGraph={{
 		title: project.title,
 		description: project.description,
-		images: [{ url: project.image.src }]
+		images: [{ url: project?.image?.src ?? '' }]
 	}}
 />
 
