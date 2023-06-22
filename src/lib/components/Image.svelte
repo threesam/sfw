@@ -7,7 +7,7 @@
 	export let caption = ''
 	export let objectFit = ''
 	export let defaultSrc =
-		'https://cdn.sanity.io/images/4yxngtwt/production/e3e7081a77638fa4443c527c2dd4d286c15e888d-1052x1052.jpg'
+		'https://cdn.sanity.io/images/4yxngtwt/production/df0b294263b9284c4c170bb80d500b594a220138-1024x1024.jpg'
 	export let defaultAlt = 'Skeleton Flowers + Water'
 
 	if (!src) {
