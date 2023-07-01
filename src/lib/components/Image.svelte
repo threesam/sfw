@@ -5,9 +5,9 @@
 	export let src = ''
 	export let alt = ''
 	export let caption = ''
-	export let isPoster = false
+	export let objectFit = ''
 	export let defaultSrc =
-		'https://cdn.sanity.io/images/4yxngtwt/production/42c583f33f8b7a507fa0b80668904ec5688bb86e-1052x1052.png'
+		'https://cdn.sanity.io/images/4yxngtwt/production/df0b294263b9284c4c170bb80d500b594a220138-1024x1024.jpg'
 	export let defaultAlt = 'Skeleton Flowers + Water'
 
 	if (!src) {
@@ -16,10 +16,12 @@
 	}
 </script>
 
-<figure class={`h-full max-h-min w-full`}>
+<figure class={`h-full max-h-min w-full ${objectFit === 'contain' ? 'aspect-square' : ''}`}>
 	{#if src}
 		<img
-			class={`h-full max-h-full w-full ${isPoster ? 'aspect-[3/4]' : ''}`}
+			class={`h-full w-full ${
+				objectFit === 'contain' ? 'aspect-square object-contain' : 'object-cover'
+			}`}
 			in:fade
 			src={urlFor(src).auto('format').url()}
 			{alt}

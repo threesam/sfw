@@ -42,11 +42,15 @@ type LineItem = {
 
 export async function POST({ request }) {
 	// @ts-expect-error it is what it is
-	const stripe = new Stripe(env.STRIPE_SECRET_KEY)
+	const stripe = new Stripe(env.STRIPE_SECRET_KEY, {
+		apiVersion: '2022-11-15'
+	})
 
 	// get stripe signature
 	const signature = request.headers.get('stripe-signature') ?? ''
 	const rawBody = await request.text()
+
+	console.log({ signature, rawBody })
 
 	// validate that the webhook originated from Stripe
 	const { data } = await stripe.webhooks.constructEventAsync(

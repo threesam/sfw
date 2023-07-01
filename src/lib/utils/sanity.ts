@@ -1,8 +1,8 @@
-import sanityClient from '@sanity/client'
+import { createClient } from '@sanity/client'
 import imageUrlBuilder from '@sanity/image-url'
 import { env } from '$env/dynamic/public'
 
-const client = sanityClient({
+const client = createClient({
 	projectId: env.PUBLIC_SANITY_PROJECT_ID,
 	dataset: env.PUBLIC_SANITY_DATASET,
 	apiVersion: '2021-10-21',
@@ -69,6 +69,7 @@ export async function getAllProjects() {
       "caption": image.caption,
       "color": image.asset->metadata.palette.lightVibrant.background,
     },
+    "posters": posters[].asset->
   }`)
 }
 
@@ -87,6 +88,12 @@ export async function getSettings({ hostname }: { hostname: string }) {
         "src": url,
         alt,
         caption
+      },
+      founders[]->{
+        ...,
+        image{
+          asset->
+        }
       }
     }`,
 		{

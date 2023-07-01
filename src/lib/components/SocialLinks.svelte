@@ -10,6 +10,7 @@
 	export let size = 69
 	export let links: Link[] = []
 
+	import Backstage from './icons/Backstage.svelte'
 	import Facebook from './icons/Facebook.svelte'
 	import Imdb from './icons/Imdb.svelte'
 	import Instagram from './icons/Instagram.svelte'
@@ -20,6 +21,7 @@
 
 	const options = [
 		{ title: 'facebook', component: Facebook },
+		{ title: 'backstage', component: Backstage },
 		{ title: 'imdb', component: Imdb },
 		{ title: 'instagram', component: Instagram },
 		{ title: 'linkedin', component: LinkedIn },

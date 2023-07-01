@@ -15,11 +15,10 @@
 			h3,
 			h4,
 			h5 {
-				padding-bottom: 0.5rem;
-				font-weight: 800;
+				@apply pb-3 font-thin;
 			}
 			p {
-				padding-bottom: 1rem;
+				@apply pb-5;
 			}
 
 			a {

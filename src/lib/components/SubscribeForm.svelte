@@ -1,8 +1,8 @@
 <script>
-	export let endpoint = '/subscribe.js'
+	export let endpoint = '/api/subscribe'
 	export let darkMode = false
 
-	import { slide } from 'svelte/transition'
+	import { fly } from 'svelte/transition'
 	import { createForm } from 'svelte-forms-lib'
 	$: isSubmitted = false
 	$: message = ''
@@ -12,19 +12,12 @@
 		},
 		onSubmit: async (values) => {
 			try {
-				const response = await fetch(endpoint, {
+				await fetch(endpoint, {
 					method: 'POST',
-					body: JSON.stringify({ email: values.email })
+					body: JSON.stringify({ email: $form.email })
 				})
-				console.log('response', response)
-				if (response.status == 400) {
-					message = 'Already Subscribed!'
-				}
-				if (response.status == 200) {
-					message = 'Thanks for Subscribing!'
-				}
 
-				message = 'This absolutely does not work yet'
+				message = 'Thanks for subscribing!'
 
 				// const json = await response.json()
 				isSubmitted = true
@@ -33,6 +26,7 @@
 					isSubmitted = false
 				}, 3000)
 			} catch (error) {
+				message = 'Error: please try again or contact support'
 				console.error(error)
 			}
 		}
@@ -40,9 +34,7 @@
 </script>
 
 <form
-	class="flex w-full flex-grow flex-col justify-start lg:flex-row lg:gap-0"
-	action={endpoint}
-	method="post"
+	class="relative flex w-full flex-grow flex-col justify-start lg:flex-row lg:gap-0"
 	on:submit|preventDefault={handleSubmit}
 >
 	<label for="email">
@@ -52,7 +44,7 @@
 			id="email"
 			placeholder="enter email"
 			class={` bg-dark placeholder:text-light focus:border-light focus:placeholder:text-light/60 w-full rounded-none border-2
-			p-5 text-white focus:outline-none ${darkMode ? 'border-dark' : 'border-primary'}`}
+				p-5 text-white focus:outline-none ${darkMode ? 'border-dark' : 'border-primary'}`}
 			on:change={handleChange}
 			bind:value={$form.email}
 		/>
@@ -65,7 +57,13 @@
 	>
 		subscribe
 	</button>
+	{#if isSubmitted}
+		<p
+			class={`absolute -bottom-6 left-0 ${darkMode ? 'text-dark' : 'text-light'}`}
+			in:fly={{ x: -30 }}
+			out:fly={{ x: 30 }}
+		>
+			{message}
+		</p>
+	{/if}
 </form>
-{#if isSubmitted}
-	<h5 transition:slide>{message}</h5>
-{/if}
