@@ -12,7 +12,7 @@
 
 <section
 	style="--primary: {color}"
-	class="mx-auto my-5 flex max-w-5xl flex-col items-start lg:my-0 lg:grid lg:grid-cols-2 lg:items-center"
+	class="mx-auto my-5 flex max-w-full flex-col items-start lg:my-0 lg:grid lg:grid-cols-2 lg:items-center"
 >
 	<div class={`${index % 2 === 0 ? 'lg:order-last' : ''}`}>
 		<Image src={src ?? posters?.[0].url} {alt} {caption} />
@@ -27,7 +27,7 @@
 
 		{#if slug}
 			<a
-				class="underline underline-offset-4 transition-all duration-300 hover:text-primary hover:underline-offset-2"
+				class="hover:text-primary underline underline-offset-4 transition-all duration-300 hover:underline-offset-2"
 				href={path + slug}>{buttonText}</a
 			>
 		{/if}
