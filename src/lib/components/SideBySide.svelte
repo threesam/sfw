@@ -12,7 +12,7 @@
 
 <section
 	style="--primary: {color}"
-	class="mx-auto my-5 flex max-w-full flex-col items-start lg:my-0 lg:grid lg:grid-cols-2 lg:items-center"
+	class="mx-auto mb-10 flex max-w-full flex-col items-start lg:my-0 lg:grid lg:grid-cols-2 lg:items-center"
 >
 	<div class={`${index % 2 === 0 ? 'lg:order-last' : ''}`}>
 		<Image src={src ?? posters?.[0].url} {alt} {caption} />

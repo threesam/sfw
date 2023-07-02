@@ -24,7 +24,7 @@
 		All Projects
 	</h1>
 </section>
-<!-- <h1 class="font-display bg-primary w-full px-5 pb-0 pt-10 lg:text-center">All Projects</h1> -->
+
 <div class="flex flex-col">
 	{#each sortedProjects as project, index}
 		<SideBySide {project} {index} path="/projects/" />
