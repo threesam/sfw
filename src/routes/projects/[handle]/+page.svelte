@@ -8,7 +8,7 @@
 
 	$: ({ project } = data.body)
 
-	const backstageLink = project.links.find(({ title }) => title === 'backstage')
+	const backstageLink = project?.links.find(({ title }) => title === 'backstage')
 </script>
 
 <SEO

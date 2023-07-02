@@ -1,20 +1,25 @@
 import Stripe from 'stripe'
 import { STRIPE_SECRET_KEY } from '$env/static/private'
 
-const stripe = new Stripe(STRIPE_SECRET_KEY)
+const stripe = new Stripe(STRIPE_SECRET_KEY, {
+	apiVersion: '2022-11-15'
+})
 
-export async function createCheckoutSession({ items = [], origin, pathname }) {
+export async function createCheckoutSession({ items = [], origin = '', pathname = '/' }) {
+	console.log('items: ', items)
 	const { data: stripeProducts } = await stripe.products.list()
 	console.log('stripeProducts: ', stripeProducts)
 
-	let lineItems = []
+	const lineItems = [] as Stripe.Checkout.SessionCreateParams.LineItem[]
+
 	stripeProducts.forEach((p) => {
-		const lineItem = items.find((item) => p.id.split('_')[2] === item.external_id)
-		if (lineItem) {
+		const item = items.find((item) => p.id.split('_')[2] === item.external_id)
+
+		if (item) {
 			lineItems.push({
-				quantity: lineItem.quantity,
+				quantity: item.quantity,
 				adjustable_quantity: { enabled: true },
-				price: p.default_price
+				price: p.default_price as string | undefined
 			})
 		}
 	})
