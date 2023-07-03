@@ -33,33 +33,33 @@
 	}
 </script>
 
-<header class="fixed z-10 flex w-full flex-col items-center bg-dark">
+<header class="bg-dark fixed z-10 flex w-full flex-col items-center">
 	<div class="flex h-16 w-full items-center justify-between px-5 lg:px-10">
-		<a class="relative z-10" href="/">
-			<h3
-				class="bg-gradient-to-r from-slate-200 via-primary to-slate-200 bg-clip-text font-display text-transparent transition-all duration-500 hover:from-red-500 hover:via-slate-200 hover:to-red-500"
-			>
-				<span class="hidden text-2xl lg:block">Skeleton Flowers & Water</span>
-				<span class="block text-xl lg:hidden">SF+W</span>
-			</h3>
-		</a>
-		<div class="absolute inset-0 hidden items-center justify-center gap-5 lg:flex">
+		<div class="relative z-10 hidden gap-5 lg:flex">
 			{#each links as { href, title }}
 				<a
-					class="border-b-2 border-transparent text-base transition duration-300 hover:border-primary hover:text-primary lg:text-lg"
+					class="hover:border-primary hover:text-primary border-b-2 border-transparent text-base transition duration-300 lg:text-lg"
 					{href}>{title}</a
 				>
 			{:else}
 				<p>no links!</p>
 			{/each}
 		</div>
+		<a class="relative inset-0 flex items-center justify-center gap-5 lg:absolute" href="/">
+			<h3
+				class="via-primary font-display bg-gradient-to-r from-slate-200 to-slate-200 bg-clip-text text-transparent transition-all duration-500 hover:from-red-500 hover:via-slate-200 hover:to-red-500"
+			>
+				<span class="hidden text-2xl lg:block">Skeleton Flowers & Water</span>
+				<span class="block text-xl lg:hidden">SF+W</span>
+			</h3>
+		</a>
 		<div class="z-10 flex gap-4">
 			<button on:click={openCart} class="relative my-2">
 				<Icons strokeColor={Number($cartQuantity) > 0 ? '#777' : '#fff'} type="cart" />
 				{#if Number($cartQuantity) > 0}
 					<div
 						data-test="cart-quantity"
-						class="absolute bottom-0 left-0 -mb-3 -ml-3 flex h-5 w-5 items-center justify-center border-2 border-dark bg-white text-xs font-bold text-dark"
+						class="border-dark text-dark absolute bottom-0 left-0 -mb-3 -ml-3 flex h-5 w-5 items-center justify-center border-2 bg-white text-xs font-bold"
 					>
 						{$cartQuantity}
 					</div>
