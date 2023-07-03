@@ -12,17 +12,21 @@
 
 <section
 	style="--primary: {color}"
-	class="mx-auto mb-10 flex max-w-full flex-col items-start lg:my-0 lg:grid lg:grid-cols-2 lg:items-center"
+	class="text-light mx-auto mb-10 flex max-w-full flex-col items-start lg:my-0 lg:grid lg:grid-cols-2 lg:items-center"
 >
-	<div class={`${index % 2 === 0 ? 'lg:order-last' : ''}`}>
+	<div class={`grayscale ${index % 2 === 0 ? 'lg:order-last' : ''}`}>
 		<Image src={src ?? posters?.[0].url} {alt} {caption} />
 	</div>
-	<div class={`px-5 pb-10 pt-5 ${index % 2 === 0 ? 'lg:text-end' : ''}`}>
+	<div
+		class={`flex h-full flex-col justify-center px-5 pb-10 pt-5 ${
+			index % 2 === 0 ? 'lg:text-end' : ''
+		}`}
+	>
 		<div class="block lg:hidden">
 			<Badge text={status.replace(/-/g, ' ')} />
 		</div>
 		<span class="mb-2 hidden text-sm lg:block">{status.replace(/-/g, ' ')}</span>
-		<h3 class="font-display text-primary sm:text-2xl lg:text-3xl">{title}</h3>
+		<h3 class="font-display sm:text-2xl lg:text-3xl">{title}</h3>
 		<p class="pb-3 lg:py-3">{description}</p>
 
 		{#if slug}

@@ -12,7 +12,7 @@
 	--white: #fff;
 
 	/* define colors' intentions */
-	--primary: var(--yellow);
+	--primary: var(--grey);
 	--danger: var(--red);
 	--background: var(--lightGrey);
 	--textColor: var(--black);
