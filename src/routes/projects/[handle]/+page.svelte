@@ -24,7 +24,7 @@
 
 	<section
 		style="--primary: {project.image.color}"
-		class="bg-dark bg-gradient-3 relative grid h-64 w-full place-content-center"
+		class="bg-dark bg-gradient-3 relative grid h-32 w-full place-content-center lg:h-64"
 	>
 		<h1 class="text-bold font-display text-dark relative z-0 text-center text-3xl lg:text-5xl">
 			{project.title}
