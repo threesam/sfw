@@ -24,7 +24,7 @@
 	}
 </script>
 
-<section class="relative bg-dark py-10" bind:clientWidth>
+<section class="bg-dark relative py-10" bind:clientWidth>
 	{#if clientWidth}
 		<div class="lg:px-10">
 			<div class="flex justify-between p-5 lg:px-0">
@@ -39,7 +39,7 @@
 
 			{#if !isBeginning}
 				<button
-					class="absolute left-0 top-0 z-10 hidden h-full w-10 rotate-180 items-center justify-center bg-dark lg:flex"
+					class="bg-dark absolute left-0 top-0 z-10 hidden h-full w-10 rotate-180 items-center justify-center lg:flex"
 					on:click={() => swiperEl.swiper.slidePrev()}
 				>
 					<Icons type="caretRight" strokeColor="var(--primary)" />
@@ -71,7 +71,9 @@
 					<swiper-slide class="mb-10" bind:clientWidth={slideWidth}>
 						{#if slideWidth}
 							<a href={`/projects/${slug}`} class="relative aspect-[3/4] bg-red-500">
-								<Image src={image?.src} alt={title} />
+								<div class="grayscale">
+									<Image src={image?.src} alt={title} />
+								</div>
 								{#if posters?.[0]?.url}
 									<span
 										class="absolute inset-0 aspect-[3/4] h-full w-full bg-black opacity-0 hover:opacity-100"
@@ -91,7 +93,7 @@
 					</swiper-slide>
 				{/each}
 				<swiper-slide
-					class="relative mb-10 grid aspect-square h-full place-content-center border-2 border-primary bg-dark bg-gradient-3 text-dark lg:hidden"
+					class="border-primary bg-dark bg-gradient-3 text-dark relative mb-10 grid aspect-square h-full place-content-center border-2 lg:hidden"
 				>
 					{#if slideWidth}
 						<a
@@ -105,7 +107,7 @@
 
 			{#if !isEnd}
 				<button
-					class="absolute right-0 top-0 z-10 hidden h-full w-10 items-center justify-center bg-dark lg:flex"
+					class="bg-dark absolute right-0 top-0 z-10 hidden h-full w-10 items-center justify-center lg:flex"
 					on:click={() => swiperEl.swiper.slideNext()}
 				>
 					<Icons type="caretRight" strokeColor="var(--primary)" />

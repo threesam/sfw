@@ -24,14 +24,20 @@
 
 	<section
 		style="--primary: {project.image.color}"
-		class="bg-dark bg-gradient-3 relative mb-5 grid h-64 w-full place-content-center"
+		class="bg-dark bg-gradient-3 relative grid h-64 w-full place-content-center"
 	>
 		<h1 class="text-bold font-display text-dark relative z-0 text-center text-3xl lg:text-5xl">
 			{project.title}
 		</h1>
 	</section>
 
-	<section class="p-5">
+	{#if project.links?.length}
+		<div class="flex w-full items-center justify-center py-10">
+			<SocialLinks size={40} links={project.links} color={project.image.color} />
+		</div>
+	{/if}
+
+	<section>
 		{#if project.status === 'pre-production' && backstageLink}
 			<div
 				class="text-light shadow-primary mx-auto mb-10 max-w-xl border border-slate-700 p-10 shadow-md"
@@ -43,7 +49,7 @@
 			</div>
 		{/if}
 
-		<div class="mx-auto max-w-2xl pb-10" style={`--primary: ${project.image.color}`}>
+		<div class="mx-auto max-w-2xl px-5 pb-10" style={`--primary: ${project.image.color}`}>
 			{#if project.body}
 				<h3 class="font-display text-center text-2xl font-normal">abstract</h3>
 				<div class="portable-text mb-10 text-center font-extralight">
@@ -90,14 +96,8 @@
 			{/if}
 		</div>
 
-		{#if project.links?.length}
-			<div class="mx-auto w-max pb-20 pt-10">
-				<SocialLinks size={40} links={project.links} color={project.image.color} />
-			</div>
-		{/if}
-
 		{#if project.posters}
-			<figure class="w-max-content flex aspect-[3/4] w-full justify-center pb-20 lg:max-h-[50vh]">
+			<figure class="flex aspect-[3/4] w-full justify-center px-5 pb-10 lg:max-h-[50vh]">
 				<img
 					class="aspect-[3/4] lg:max-h-[50vh]"
 					src={project.posters[0].src}
