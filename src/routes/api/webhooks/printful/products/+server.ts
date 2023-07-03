@@ -53,6 +53,7 @@ export async function POST({ request }) {
 
 				// otherwise create a new one
 				return stripe.products.create({
+					active: false,
 					id: getId({ product, variant }),
 					name: variant.name,
 					images: product.thumbnail_url ? [product.thumbnail_url] : [],
