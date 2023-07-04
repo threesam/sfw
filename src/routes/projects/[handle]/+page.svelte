@@ -24,7 +24,7 @@
 
 	<section
 		style="--primary: {project.image.color}"
-		class="bg-dark bg-gradient-3 relative grid h-64 w-full place-content-center"
+		class="bg-dark bg-gradient-3 relative grid h-32 w-full place-content-center lg:h-64"
 	>
 		<h1 class="text-bold font-display text-dark relative z-0 text-center text-3xl lg:text-5xl">
 			{project.title}
@@ -52,6 +52,7 @@
 		<div class="mx-auto max-w-2xl px-5 pb-10" style={`--primary: ${project.image.color}`}>
 			{#if project.body}
 				<h3 class="font-display text-center text-2xl font-normal">abstract</h3>
+
 				<div class="portable-text mb-10 text-center font-extralight">
 					<PortableText value={project.body} />
 				</div>
@@ -59,10 +60,12 @@
 
 			{#if project.cast}
 				<h4 class="font-display text-center text-2xl">cast</h4>
+
 				<ul class="mb-10">
 					{#each project.cast as castMember}
 						<li class="grid grid-cols-2 gap-2 text-left">
 							<span class="text-right">{castMember.castname}</span>
+
 							{#if castMember.name && castMember.link}
 								<a
 									class="border-primary hover:text-primary h-max w-max border-b transition-all duration-300 hover:border-transparent hover:tracking-wider"
@@ -78,10 +81,12 @@
 
 			{#if project.crew}
 				<h4 class="font-display text-center text-2xl">crew</h4>
+
 				<ul>
 					{#each project.crew as crewMember}
 						<li class="grid grid-cols-2 gap-2 text-left">
 							<span class="text-right">{crewMember.role}</span>
+
 							{#if crewMember.name && crewMember.link}
 								<a
 									class="border-primary hover:text-primary h-max w-max border-b transition-all duration-300 hover:border-transparent hover:tracking-wider"
