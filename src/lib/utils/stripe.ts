@@ -70,4 +70,19 @@ export async function upsertProduct({ product }) {
 	return variants
 }
 
-export async function deleteProduct() {}
+export async function deleteProduct({ id }) {
+	// parent product id
+	const { data: allProducts } = await getAllProducts()
+
+	// return products that include parent product id
+	const productsToDelete = allProducts.filter((p) => p.id.split('_')[1] === id)
+
+	// loop through products, set to inactive
+	for (const p of productsToDelete) {
+		await stripe.products.update(p.id, { active: false })
+	}
+
+	return {
+		message: 'Product(s) set to inactive'
+	}
+}

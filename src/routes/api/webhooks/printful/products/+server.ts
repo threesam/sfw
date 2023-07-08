@@ -1,8 +1,9 @@
 import { env } from '$env/dynamic/private'
 import Stripe from 'stripe'
 import { getProduct } from '$utils/printful.js'
-import { upsertProduct } from '$utils/stripe.js'
+import { deleteProduct, upsertProduct } from '$utils/stripe.js'
 import { json } from '@sveltejs/kit'
+import { sendOrderCreatedNotification, sendPackageShippedNotification } from '$utils/sendgrid'
 
 type PrintfulWebhook = {
 	type: 'product_updated' | 'product_deleted'
@@ -23,18 +24,37 @@ type PrintfulWebhook = {
 }
 
 export async function POST({ request }) {
-	const webhookData: PrintfulWebhook = await request.json()
+	const { data, type }: any = await request.json()
 
-	// @ts-expect-error init stripe
-	const stripe = new Stripe(env.STRIPE_SECRET_KEY)
+	if (type === 'order_created') {
+		const res = await sendOrderCreatedNotification({
+			customer: data.order.recipient,
+			orderNumber: data.order.external_id,
+			rawData: data
+		})
 
-	const product = await getProduct({
-		id: webhookData.data.sync_product.id
-	})
+		return json({
+			res
+		})
+	}
 
-	const stripeProducts = await stripe.products.list({ active: true, limit: 100 })
+	if (type === 'package_shipped') {
+		const res = await sendPackageShippedNotification({
+			customer: data.order.recipient,
+			orderNumber: data.order.external_id,
+			shipment: data.shipment,
+			rawData: data
+		})
 
-	if (webhookData.type === 'product_updated') {
+		return json({
+			res
+		})
+	}
+
+	if (type === 'product_updated') {
+		const product = await getProduct({
+			id: data.sync_product.id
+		})
 		// loop through variants and upsert to stripe
 		const variants = await upsertProduct({ product })
 
@@ -43,19 +63,12 @@ export async function POST({ request }) {
 		})
 	}
 
-	if (webhookData.type === 'product_deleted') {
-		// parent product id
-		const productId = webhookData.data.sync_product.external_id
+	if (type === 'product_deleted') {
+		const { message } = await deleteProduct({ id: data.sync_product.external_id })
 
-		// return products that include parent product id
-		const productsToDelete = stripeProducts.data.filter((p) => p.id.split('_')[1] === productId)
-
-		// loop through products, set to inactive
-		for (const p of productsToDelete) {
-			await stripe.products.update(p.id, { active: false })
-		}
-
-		return new Response('Product(s) set to inactive')
+		return json({
+			message
+		})
 	}
 
 	return new Response('Unsupported webhook')
