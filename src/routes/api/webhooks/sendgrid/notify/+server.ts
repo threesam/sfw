@@ -1,8 +1,9 @@
 import { sendOrderCreatedNotification, sendPackageShippedNotification } from '$utils/sendgrid.js'
 
 export async function POST({ request }) {
-	const { data, type } = await request.json()
+	const webhookRes = await request.json()
 	// console.log('data: ', data)
+	const { type, data } = webhookRes
 
 	let res
 	if (type === 'order_created') {
@@ -22,5 +23,5 @@ export async function POST({ request }) {
 		})
 	}
 
-	return new Response(JSON.stringify({ res }, null, 2))
+	return new Response(JSON.stringify({ webhookRes }, null, 2))
 }
