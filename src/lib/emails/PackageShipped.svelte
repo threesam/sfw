@@ -10,7 +10,7 @@
 <Html lang="en">
 	<Preview preview="Skeleton Flowers and Water tracking info" />
 	<Container>
-		<Heading as="h1">Shipped!</Heading>
+		<Heading style={{ margin: 0 }} as="h1">Shipped!</Heading>
 
 		<Text>
 			Your order ({orderNumber}) has been shipped to: <br />

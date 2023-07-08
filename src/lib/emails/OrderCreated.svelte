@@ -9,7 +9,7 @@
 <Html lang="en">
 	<Preview preview="Skeleton Flowers and Water receipt" />
 	<Container>
-		<Heading as="h1">Thanks, {customer.name}!</Heading>
+		<Heading style={{ margin: 0 }} as="h1">Thanks, {customer.name}!</Heading>
 
 		<Text>
 			Your order ({orderNumber}) has been processed. We will let you know when it ships!
