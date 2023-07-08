@@ -25,12 +25,13 @@ export async function createCheckoutSession({ items = [], origin = '', pathname 
 	})
 
 	return stripe.checkout.sessions.create({
+		allow_promotion_codes: true,
+		cancel_url: origin + pathname,
 		line_items: lineItems,
 		mode: 'payment',
-		success_url: `${origin}/checkout/success`,
-		cancel_url: origin + pathname,
 		shipping_address_collection: {
 			allowed_countries: ['US']
-		}
+		},
+		success_url: `${origin}/checkout/success`
 	})
 }
