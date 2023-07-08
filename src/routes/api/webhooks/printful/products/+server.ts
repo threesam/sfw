@@ -1,6 +1,8 @@
 import { env } from '$env/dynamic/private'
 import Stripe from 'stripe'
 import { getProduct } from '$utils/printful.js'
+import { upsertProduct } from '$utils/stripe.js'
+import { json } from '@sveltejs/kit'
 
 type PrintfulWebhook = {
 	type: 'product_updated' | 'product_deleted'
@@ -20,10 +22,6 @@ type PrintfulWebhook = {
 	}
 }
 
-function getId({ product, variant }) {
-	return `printful_${product.external_id}_${variant.external_id}`
-}
-
 export async function POST({ request }) {
 	const webhookData: PrintfulWebhook = await request.json()
 
@@ -38,34 +36,11 @@ export async function POST({ request }) {
 
 	if (webhookData.type === 'product_updated') {
 		// loop through variants and upsert to stripe
-		const variants = await Promise.all(
-			product?.variants?.map((variant) => {
-				// check if product already exists
-				const productExists = stripeProducts.data.find((p) => p.id === getId({ product, variant }))
+		const variants = await upsertProduct({ product })
 
-				// if it exists, update it
-				if (productExists) {
-					return stripe.products.update(getId({ product, variant }), {
-						name: variant.name,
-						images: product.thumbnail_url ? [product.thumbnail_url] : []
-					})
-				}
-
-				// otherwise create a new one
-				return stripe.products.create({
-					active: false,
-					id: getId({ product, variant }),
-					name: variant.name,
-					images: product.thumbnail_url ? [product.thumbnail_url] : [],
-					default_price_data: {
-						currency: variant.currency,
-						unit_amount: +variant.retail_price * 100
-					}
-				})
-			})
-		)
-
-		return new Response(JSON.stringify(variants, null, 2))
+		return json({
+			variants
+		})
 	}
 
 	if (webhookData.type === 'product_deleted') {

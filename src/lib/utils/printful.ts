@@ -29,6 +29,10 @@ export async function getProduct({ id }: { id: string | number }) {
 	}
 }
 
+export function getId({ product, variant }) {
+	return `printful_${product.external_id}_${variant.external_id}`
+}
+
 // MODELS
 
 export const orderCreatedModel = {

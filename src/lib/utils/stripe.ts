@@ -1,7 +1,14 @@
 import Stripe from 'stripe'
 import { STRIPE_SECRET_KEY } from '$env/static/private'
+import { getId } from './printful'
 
-const stripe = new Stripe(STRIPE_SECRET_KEY)
+const stripe = new Stripe(STRIPE_SECRET_KEY, {
+	apiVersion: '2022-11-15'
+})
+
+export async function getAllProducts() {
+	return await stripe.products.list({ active: true, limit: 100 })
+}
 
 export async function createCheckoutSession({ items = [], origin }) {
 	const { data: stripeProducts } = await stripe.products.list()
@@ -29,3 +36,38 @@ export async function createCheckoutSession({ items = [], origin }) {
 		}
 	})
 }
+
+export async function upsertProduct({ product }) {
+	const { data: allProducts } = await getAllProducts()
+	// loop through variants and upsert to stripe
+	const variants = await Promise.all(
+		product?.variants?.map((variant) => {
+			// check if product already exists
+			const productExists = allProducts.find((p) => p.id === getId({ product, variant }))
+
+			// if it exists, update it
+			if (productExists) {
+				return stripe.products.update(getId({ product, variant }), {
+					name: variant.name,
+					images: product.thumbnail_url ? [product.thumbnail_url] : []
+				})
+			}
+
+			// otherwise create a new one
+			return stripe.products.create({
+				active: false,
+				id: getId({ product, variant }),
+				name: variant.name,
+				images: product.thumbnail_url ? [product.thumbnail_url] : [],
+				default_price_data: {
+					currency: variant.currency,
+					unit_amount: +variant.retail_price * 100
+				}
+			})
+		})
+	)
+
+	return variants
+}
+
+export async function deleteProduct() {}
