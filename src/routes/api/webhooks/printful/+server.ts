@@ -2,27 +2,10 @@ import { deleteProduct, upsertProduct } from '$utils/stripe.js'
 import { sendOrderCreatedNotification, sendPackageShippedNotification } from '$utils/sendgrid'
 import { getProduct } from '$utils/printful.js'
 import { json } from '@sveltejs/kit'
-
-type PrintfulWebhook = {
-	type: 'product_updated' | 'product_deleted'
-	created: number
-	retries: number
-	store: number
-	data: {
-		sync_product: {
-			id: number
-			external_id: string
-			name: string
-			variants?: number
-			synced?: number
-			thumbnail_url?: string
-			is_ignored?: boolean
-		}
-	}
-}
+import type { PrintfulWebhook } from '$types'
 
 export async function POST({ request }) {
-	const { data, type }: any = await request.json()
+	const { data, type }: PrintfulWebhook = await request.json()
 
 	if (type === 'order_created') {
 		const res = await sendOrderCreatedNotification({
