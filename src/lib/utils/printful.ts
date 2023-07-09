@@ -13,13 +13,11 @@ export async function fetchPrintful(endpoint: string) {
 }
 
 export async function getProducts() {
-	const {
-		result: allProducts
-	}: {
-		result: PrintfulSyncProduct[]
-	} = await fetchPrintful('/store/products')
+	const { result: allProducts } = await fetchPrintful('/store/products')
 
-	return await Promise.all(allProducts.map((product) => getProduct({ id: product.id })))
+	return await Promise.all(
+		(allProducts as PrintfulSyncProduct[]).map((product) => getProduct({ id: product.id }))
+	)
 }
 
 export async function getProduct({ id }: { id: string | number }) {

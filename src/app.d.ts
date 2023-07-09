@@ -41,7 +41,7 @@ export type PrintfulCustomer = {
 	tax_number: string | null
 }
 
-export type PrintfulFile = {
+type PrintfulFile = {
 	id: number
 	type: string
 	hash: string
@@ -60,7 +60,7 @@ export type PrintfulFile = {
 	is_temporary: boolean
 }
 
-export type PrintfulShipmentInfo = {
+type PrintfulShipmentInfo = {
 	id: number
 	carrier: string
 	service: string
@@ -78,7 +78,37 @@ export type PrintfulShipmentInfo = {
 	}[]
 }
 
-export type PrintfulOrderItem = {
+type PrintfulOrder = {
+	id: number | null
+	external_id: string
+	store: number | null
+	status: string | null
+	shipping: string
+	shipping_service_name: string | null
+	created: string | null
+	updated: string | null
+	recipient: PrintfulCustomer
+	items: PrintfulOrderItem[]
+	branding_items: null
+	incomplete_items: null
+	costs: null
+	retail_costs: {
+		currency: string
+		subtotal: string
+		discount: string
+		shipping: string
+		tax: string
+	}
+	pricing_breakdown: null
+	shipments: null
+	gift: {
+		subject: string
+		message: string
+	}
+	packing_slip: unknown
+}
+
+type PrintfulOrderItem = {
 	id: number
 	external_id: string
 	variant_id: number
@@ -126,7 +156,7 @@ export type PrintfulOrderItem = {
 	out_of_stock: boolean
 }
 
-export type PrintfulProduct = {
+type PrintfulProduct = {
 	variant_id: number
 	product_id: number
 	thumbnail_url: string | null
@@ -171,35 +201,7 @@ export type PrintfulWebhook = {
 	retries: number
 	store: number
 	data: {
-		order: {
-			id: number | null
-			external_id: string
-			store: number | null
-			status: string | null
-			shipping: string
-			shipping_service_name: string | null
-			created: string | null
-			updated: string | null
-			recipient: PrintfulCustomer
-			items: PrintfulOrderItem[]
-			branding_items: null
-			incomplete_items: null
-			costs: null
-			retail_costs: {
-				currency: string
-				subtotal: string
-				discount: string
-				shipping: string
-				tax: string
-			}
-			pricing_breakdown: null
-			shipments: null
-			gift: {
-				subject: string
-				message: string
-			}
-			packing_slip: unknown
-		}
+		order: PrintfulOrder
 		shipment: PrintfulShipmentInfo
 		sync_product: {
 			id: number
