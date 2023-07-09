@@ -1,16 +1,16 @@
-import type { PrintfulOrder, PrintfulShipmentInfo, PrintfulWebhook } from '$types'
+import type { PrintfulOrder, PrintfulShipmentInfo } from '$types'
 import { env } from '$env/dynamic/private'
-import { render } from 'svelte-email'
+import { error } from '@sveltejs/kit'
 import OrderCreated from '$lib/emails/OrderCreated.svelte'
 import PackageShipped from '$lib/emails/PackageShipped.svelte'
+import { render } from 'svelte-email'
 import sendgrid from '@sendgrid/mail'
-import { error } from '@sveltejs/kit'
 
 sendgrid.setApiKey(env.SENDGRID_API_KEY)
 
 export async function sendOrderCreatedNotification({ order }: { order: PrintfulOrder }) {
-	if (!order.recipient?.email) {
-		throw error(500, 'No order id provided')
+	if (!order.recipient.email) {
+		throw error(500, 'No email provided')
 	}
 
 	const emailHtml = render({

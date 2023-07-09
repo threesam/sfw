@@ -16,6 +16,15 @@
 
 		<br />
 
+		<Heading style={{ margin: 0 }} as="h5">Items</Heading>
+		{#each order.items as item}
+			<Text>
+				{item.quantity} X {item.name}
+			</Text>
+		{/each}
+
+		<br />
+
 		<Img
 			src="https://cdn.sanity.io/images/4yxngtwt/production/df0b294263b9284c4c170bb80d500b594a220138-1024x1024.jpg"
 			width="200"
