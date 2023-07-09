@@ -56,7 +56,7 @@ export async function sendPackageShippedNotification({
 	return await sendgrid.send({
 		to: order.recipient.email,
 		from: env.SENDGRID_VERIFIED_SENDER,
-		subject: `Skeleton Flowers and Water: Order ${order.id} Shipped`,
+		subject: `Skeleton Flowers and Water: Order Shipped`,
 		html: emailHtml
 	})
 }
