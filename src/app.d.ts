@@ -41,6 +41,25 @@ export type PrintfulCustomer = {
 	tax_number: string | null
 }
 
+export type PrintfulFile = {
+	id: number
+	type: string
+	hash: string
+	url: string | null
+	filename: string
+	mime_type: string
+	size: number
+	width: number
+	height: number
+	dpi: number | null
+	status: string
+	created: number
+	thumbnail_url: string
+	preview_url: string
+	visible: boolean
+	is_temporary: boolean
+}
+
 export type PrintfulShipmentInfo = {
 	id: number
 	carrier: string
@@ -72,12 +91,7 @@ export type PrintfulOrderItem = {
 	price: string
 	retail_price: string
 	name: string
-	product: {
-		variant_id: number
-		product_id: number
-		image: string
-		name: string
-	}
+	product: PrintfulProduct
 	files: [
 		{
 			type: string
@@ -110,6 +124,45 @@ export type PrintfulOrderItem = {
 	sku: string | null
 	discontinued: boolean
 	out_of_stock: boolean
+}
+
+export type PrintfulProduct = {
+	variant_id: number
+	product_id: number
+	thumbnail_url: string | null
+	image: string
+	name: string
+}
+
+export type PrintfulSyncProduct = {
+	id: number
+	external_id: string
+	name: string
+	variants: number
+	synced: number
+	thumbnail_url: string | null
+	is_ignored: boolean
+}
+
+export type PrintfulSyncVariant = {
+	id: number
+	external_id: string
+	sync_product_id: number
+	name: string
+	synced: boolean
+	variant_id: number
+	main_category_id: number
+	warehouse_product_variant_id: string | null
+	retail_price: string
+	sku: string
+	currency: string
+	product: PrintfulProduct
+	files: PrintfulFile[]
+	options: {
+		id: string
+		value: string | string[] | boolean
+	}[]
+	is_ignored: false
 }
 
 export type PrintfulWebhook = {
