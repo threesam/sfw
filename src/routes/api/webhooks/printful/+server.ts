@@ -10,7 +10,7 @@ export async function POST({ request }) {
 	if (type === 'order_created') {
 		const res = await sendOrderCreatedNotification({
 			customer: data.order.recipient,
-			orderNumber: data.order.external_id,
+			orderNumber: String(data.order.id),
 			rawData: data
 		})
 
@@ -22,7 +22,7 @@ export async function POST({ request }) {
 	if (type === 'package_shipped') {
 		const res = await sendPackageShippedNotification({
 			customer: data.order.recipient,
-			orderNumber: data.order.external_id,
+			orderNumber: String(data.order.id),
 			shipment: data.shipment,
 			rawData: data
 		})
