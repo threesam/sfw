@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Container, Heading, Html, Img, Preview, Text } from 'svelte-email'
+	import { Container, Heading, Html, Hr, Img, Preview, Text } from 'svelte-email'
 	import type { PrintfulOrder } from '$types'
 
 	export let order: PrintfulOrder
@@ -7,14 +7,14 @@
 
 <Html lang="en">
 	<Preview preview="Skeleton Flowers and Water receipt" />
-	<Container>
+	<Container style={{ fontFamily: 'monospace' }}>
 		<Heading style={{ margin: 0 }} as="h1">Thanks, {order.recipient.name}!</Heading>
 
 		<Text>
 			Your order ({order.id}) has been processed. We will let you know when it ships!
 		</Text>
 
-		<br />
+		<Hr />
 
 		<Heading style={{ margin: 0 }} as="h5">Items</Heading>
 		{#each order.items as item}
