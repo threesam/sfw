@@ -8,7 +8,7 @@
 
 <Html lang="en">
 	<Preview preview="Skeleton Flowers and Water tracking info" />
-	<Container>
+	<Container style={{ fontFamily: 'monospace' }}>
 		<Heading style={{ margin: 0 }} as="h1">Shipped!</Heading>
 
 		<Text>
