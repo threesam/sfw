@@ -7,6 +7,7 @@
 	import { onMount } from 'svelte'
 	import { trackCart } from '$utils/umami'
 	import DescriptionToggle from '$components/DescriptionToggle.svelte'
+	import type { PrintfulSyncVariant } from '$types'
 
 	export let data: PageData
 
@@ -16,7 +17,7 @@
 	const { searchParams } = new URL($page.url)
 	$: selectedVariantId = searchParams.get('v')
 
-	$: selectedVariant = null as any
+	$: selectedVariant = undefined as PrintfulSyncVariant | undefined
 
 	function getSize(name: string) {
 		const splitName = name.split(' - ')
