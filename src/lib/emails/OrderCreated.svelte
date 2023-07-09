@@ -1,18 +1,17 @@
 <script lang="ts">
 	import { Container, Heading, Html, Img, Preview, Text } from 'svelte-email'
-	import type { PrintfulCustomer } from '../../app'
+	import type { PrintfulOrder } from '$types'
 
-	export let customer: PrintfulCustomer
-	export let orderNumber: string
+	export let order: PrintfulOrder
 </script>
 
 <Html lang="en">
 	<Preview preview="Skeleton Flowers and Water receipt" />
 	<Container>
-		<Heading style={{ margin: 0 }} as="h1">Thanks, {customer.name}!</Heading>
+		<Heading style={{ margin: 0 }} as="h1">Thanks, {order.recipient.name}!</Heading>
 
 		<Text>
-			Your order ({orderNumber}) has been processed. We will let you know when it ships!
+			Your order ({order.id}) has been processed. We will let you know when it ships!
 		</Text>
 
 		<br />
