@@ -1,9 +1,7 @@
-import { env } from '$env/dynamic/private'
-import Stripe from 'stripe'
-import { getProduct } from '$utils/printful.js'
 import { deleteProduct, upsertProduct } from '$utils/stripe.js'
-import { json } from '@sveltejs/kit'
 import { sendOrderCreatedNotification, sendPackageShippedNotification } from '$utils/sendgrid'
+import { getProduct } from '$utils/printful.js'
+import { json } from '@sveltejs/kit'
 
 type PrintfulWebhook = {
 	type: 'product_updated' | 'product_deleted'
