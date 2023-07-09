@@ -15,13 +15,16 @@
 		</Text>
 
 		<Hr />
+		<br />
 
-		<Heading style={{ margin: 0 }} as="h5">Items</Heading>
-		{#each order.items as item}
-			<Text>
-				{item.quantity} X {item.name}
-			</Text>
-		{/each}
+		<Heading style={{ marginTop: 0 }} as="h3">Items</Heading>
+		<ul>
+			{#each order.items as item}
+				<li style="list-style: none">
+					{item.quantity} X {item.name}
+				</li>
+			{/each}
+		</ul>
 
 		<br />
 
