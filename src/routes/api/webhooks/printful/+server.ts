@@ -54,18 +54,18 @@ export async function POST({ request }) {
 			id: data.sync_product.id
 		})
 		// loop through variants and upsert to stripe
-		const variants = await upsertProduct({ product })
+		const res = await upsertProduct({ product })
 
 		return json({
-			variants
+			res
 		})
 	}
 
 	if (type === 'product_deleted') {
-		const { message } = await deleteProduct({ id: data.sync_product.external_id })
+		const res = await deleteProduct({ id: data.sync_product.external_id })
 
 		return json({
-			message
+			res
 		})
 	}
 

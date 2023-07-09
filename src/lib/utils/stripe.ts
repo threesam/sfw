@@ -67,7 +67,7 @@ export async function upsertProduct({ product }) {
 		})
 	)
 
-	return variants
+	return { variants }
 }
 
 export async function deleteProduct({ id }) {
