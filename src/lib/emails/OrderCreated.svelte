@@ -1,22 +1,35 @@
 <script lang="ts">
-	import { Container, Heading, Html, Img, Preview, Text } from 'svelte-email'
-	import type { PrintfulCustomer } from '../../app'
+	import { Container, Heading, Html, Hr, Img, Preview, Text } from 'svelte-email'
+	import type { PrintfulOrder } from '$types'
 
-	export let customer: PrintfulCustomer
-	export let orderNumber: string
+	export let order: PrintfulOrder
 </script>
 
 <Html lang="en">
 	<Preview preview="Skeleton Flowers and Water receipt" />
-	<Container>
-		<Heading style={{ margin: 0 }} as="h1">Thanks, {customer.name}!</Heading>
+	<Container style={{ fontFamily: 'monospace' }}>
+		<Heading style={{ margin: 0 }} as="h1">Thanks, {order.recipient.name}!</Heading>
 
 		<Text>
-			Your order ({orderNumber}) has been processed. We will let you know when it ships!
+			Your order ({order.id}) has been processed. We will let you know when it ships!
 		</Text>
+
+		<Hr />
+		<br />
+
+		<Heading style={{ marginTop: 0 }} as="h3">Items</Heading>
+		<ul style="margin: 0; padding: 0;">
+			{#each order.items as item}
+				<li style="list-style: none; margin: 0; padding: 0;">
+					{item.quantity} X {item.name}
+				</li>
+			{/each}
+		</ul>
 
 		<br />
 
+		<h4 style="margin: 0; padding-top: 32px;">Skeleton Flowers and Water</h4>
+		<!-- <address>address</address> -->
 		<Img
 			src="https://cdn.sanity.io/images/4yxngtwt/production/df0b294263b9284c4c170bb80d500b594a220138-1024x1024.jpg"
 			width="200"
