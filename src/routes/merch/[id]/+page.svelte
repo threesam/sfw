@@ -11,7 +11,7 @@
 	export let data: PageData
 
 	const { product } = data.body
-	const { variants }: { variants: any[] } = product
+	const { variants } = product
 
 	const { searchParams } = new URL($page.url)
 	$: selectedVariantId = searchParams.get('v')
@@ -108,7 +108,7 @@
 
 				<!-- ADD TO CART -->
 				<button
-					on:click={addToCart({ variant: selectedVariant })}
+					on:click={() => addToCart({ variant: selectedVariant })}
 					class="hover:bg-primary hover:text-dark hover:border-primary flex w-full items-center justify-center border p-4 text-white opacity-90 transition-all duration-300 hover:font-bold"
 				>
 					<span class="font-display text-lg uppercase">Add To Cart</span>
