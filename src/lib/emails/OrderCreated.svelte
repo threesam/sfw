@@ -18,7 +18,7 @@
 		<br />
 
 		<Heading style={{ marginTop: 0 }} as="h3">Items</Heading>
-		<ul>
+		<ul style="margin: 0">
 			{#each order.items as item}
 				<li style="list-style: none">
 					{item.quantity} X {item.name}
@@ -36,3 +36,9 @@
 		/>
 	</Container>
 </Html>
+
+<style>
+	li {
+		color: red;
+	}
+</style>
