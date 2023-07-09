@@ -38,7 +38,7 @@
 		<div class="relative z-10 hidden gap-5 lg:flex">
 			{#each links as { href, title }}
 				<a
-					class="hover:border-primary hover:text-primary border-b-2 border-transparent text-base transition duration-300 lg:text-lg"
+					class="border-b-2 border-transparent text-base transition duration-300 hover:border-slate-500 lg:text-lg"
 					{href}>{title}</a
 				>
 			{:else}
@@ -47,7 +47,7 @@
 		</div>
 		<a class="relative inset-0 flex items-center justify-center gap-5 lg:absolute" href="/">
 			<h3
-				class="via-primary font-display bg-gradient-to-r from-slate-200 to-slate-200 bg-clip-text text-transparent transition-all duration-500 hover:from-red-500 hover:via-slate-200 hover:to-red-500"
+				class="via-primary font-display hover:from-primary hover:to-primary bg-gradient-to-r from-slate-200 to-slate-200 bg-clip-text text-transparent transition-all duration-500 hover:via-slate-200"
 			>
 				<span class="hidden text-2xl lg:block">Skeleton Flowers & Water</span>
 				<span class="block text-xl lg:hidden">SF+W</span>
