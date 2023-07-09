@@ -18,6 +18,11 @@
 
 	$: selectedVariant = null as any
 
+	function getSize(name: string) {
+		const splitName = name.split(' - ')
+		return splitName[1] ?? 'one size'
+	}
+
 	function getSelectedVariant(id?: number | string | null) {
 		if (id === null) {
 			selectedVariant = variants[0]
@@ -96,7 +101,7 @@
 										: ''
 								} flex h-12 w-24 items-center justify-center border transition duration-300 ease-in-out hover:scale-95 hover:opacity-100`}
 							>
-								{variant.name.split(' - ').pop()}
+								{getSize(variant.name)}
 							</button>
 						{/each}
 					</div>
