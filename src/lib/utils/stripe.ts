@@ -1,6 +1,7 @@
 import Stripe from 'stripe'
 import { STRIPE_SECRET_KEY } from '$env/static/private'
 import { getId } from './printful'
+import type { PrintfulProduct } from '$types'
 
 const stripe = new Stripe(STRIPE_SECRET_KEY, {
 	apiVersion: '2022-11-15'
@@ -39,14 +40,7 @@ export async function createCheckoutSession({ items = [] as any[], origin = '', 
 	})
 }
 
-export async function upsertProduct({
-	product
-}: {
-	product: {
-		thumbnail_url?: string
-		variants: any[]
-	}
-}) {
+export async function upsertProduct({ product }: { product: PrintfulProduct }) {
 	const { data: allProducts } = await getAllProducts()
 	// loop through variants and upsert to stripe
 	const variants = await Promise.all(

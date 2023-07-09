@@ -8,13 +8,13 @@ declare namespace App {
 	// interface Platform {}
 }
 
-export type castMember = {
+export type CastMember = {
 	castname: string
 	name: string
 	link: string
 }
 
-export type crewMember = {
+export type CrewMember = {
 	role: string
 	name: string
 }
@@ -60,24 +60,6 @@ type PrintfulFile = {
 	is_temporary: boolean
 }
 
-type PrintfulShipmentInfo = {
-	id: number
-	carrier: string
-	service: string
-	tracking_number: number
-	tracking_url: string
-	created: number
-	ship_date: string
-	shipped_at: number
-	reshipment: boolean
-	items: {
-		item_id: number
-		quantity: number
-		picked: number
-		printed: number
-	}[]
-}
-
 type PrintfulOrder = {
 	id: number | null
 	external_id: string
@@ -121,7 +103,13 @@ type PrintfulOrderItem = {
 	price: string
 	retail_price: string
 	name: string
-	product: PrintfulProduct
+	product: {
+		variant_id: number
+		product_id: number
+		thumbnail_url: string | null
+		image: string
+		name: string
+	}
 	files: [
 		{
 			type: string
@@ -156,12 +144,26 @@ type PrintfulOrderItem = {
 	out_of_stock: boolean
 }
 
-type PrintfulProduct = {
-	variant_id: number
-	product_id: number
-	thumbnail_url: string | null
-	image: string
-	name: string
+export type PrintfulProduct = PrintfulSyncProduct & {
+	variants: PrintfulSyncVariant[]
+}
+
+type PrintfulShipmentInfo = {
+	id: number
+	carrier: string
+	service: string
+	tracking_number: number
+	tracking_url: string
+	created: number
+	ship_date: string
+	shipped_at: number
+	reshipment: boolean
+	items: {
+		item_id: number
+		quantity: number
+		picked: number
+		printed: number
+	}[]
 }
 
 export type PrintfulSyncProduct = {
@@ -186,7 +188,13 @@ export type PrintfulSyncVariant = {
 	retail_price: string
 	sku: string
 	currency: string
-	product: PrintfulProduct
+	product: {
+		variant_id: number
+		product_id: number
+		thumbnail_url: string | null
+		image: string
+		name: string
+	}
 	files: PrintfulFile[]
 	options: {
 		id: string
@@ -222,7 +230,7 @@ export type ProjectData = {
 	caption: string
 	image: Image
 	body: []
-	cast: castMember[]
-	crew: crewMember[]
+	cast: CastMember[]
+	crew: CrewMember[]
 	posters: Image[]
 }
