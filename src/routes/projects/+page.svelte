@@ -39,15 +39,12 @@
 			class="text-light relative mx-auto mb-10 flex aspect-square h-full w-full flex-col items-start"
 		>
 			{#if slug}
-				<a
-					href={'/projects/' + slug}
-					class={`absolute inset-0 grayscale transition-all duration-300 hover:opacity-5`}
-				>
+				<a href={'/projects/' + slug} class={`absolute inset-0 grayscale`}>
 					<Image src={image.src ?? posters?.[0].url} alt={image.alt} caption={image.caption} />
 				</a>
 
 				<div
-					class={`flex h-full w-full flex-col items-start justify-center px-5 pb-10 pt-5 lg:items-center`}
+					class="z-0 flex h-full w-full flex-col items-start justify-center bg-black/80 px-5 pb-10 pt-5 opacity-0 transition-all duration-300 hover:opacity-100 lg:items-center"
 				>
 					<div
 						class="flex w-full max-w-lg flex-col justify-center lg:mx-auto lg:items-center lg:text-center"
