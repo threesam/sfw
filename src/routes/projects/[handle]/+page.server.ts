@@ -1,7 +1,8 @@
-import { getProject } from '$utils/sanity.js'
 import { error } from '@sveltejs/kit'
+import { getProject } from '$utils/sanity.js'
+import type { RouteParams } from './$types'
 
-export async function load({ params }) {
+export async function load({ params }: { params: RouteParams }) {
 	const { handle } = params
 	const project = await getProject({ handle })
 

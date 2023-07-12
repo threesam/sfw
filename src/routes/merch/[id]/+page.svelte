@@ -17,7 +17,7 @@
 	const { searchParams } = new URL($page.url)
 	$: selectedVariantId = searchParams.get('v')
 
-	$: selectedVariant = undefined as PrintfulSyncVariant | undefined
+	$: selectedVariant = undefined as (PrintfulSyncVariant & { quantity?: number }) | undefined
 
 	function getSize(name: string) {
 		const splitName = name.split(' - ')
@@ -36,7 +36,7 @@
 		}
 	}
 
-	function addToCart({ variant }: { variant: any }) {
+	function addToCart({ variant }: { variant: PrintfulSyncVariant & { quantity?: number } }) {
 		let isAlreadyAdded = false
 		const items = [] as any[]
 		$cartItems.forEach((item) => {
@@ -114,7 +114,7 @@
 
 				<!-- ADD TO CART -->
 				<button
-					on:click={() => addToCart({ variant: selectedVariant })}
+					on:click={() => addToCart({ variant: selectedVariant ?? variants[0] })}
 					class="hover:bg-primary hover:text-dark hover:border-primary flex w-full items-center justify-center border p-4 text-white opacity-90 transition-all duration-300 hover:font-bold"
 				>
 					<span class="font-display text-lg uppercase">Add To Cart</span>

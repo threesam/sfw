@@ -4,7 +4,7 @@ import { getProduct } from '$utils/printful.js'
 import { json } from '@sveltejs/kit'
 import type { PrintfulWebhook } from '$types'
 
-export async function POST({ request }) {
+export async function POST({ request }: { request: Request }) {
 	const { data, type }: PrintfulWebhook = await request.json()
 
 	if (type === 'order_created') {

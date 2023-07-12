@@ -8,41 +8,20 @@ client.setConfig({
 	server: env.MAILCHIMP_SERVER_PREFIX
 })
 
-export async function GET({ url }) {
-	const { searchParams } = new URL(url)
-
-	if (searchParams.get('i_will_allow_it')) {
-		const response = await client.lists.getListMembersInfo(env.MAILCHIMP_LIST_ID)
-
-		return new Response(JSON.stringify(response, null, 2))
-	}
-}
-
-export async function POST({ request }) {
+export async function POST({ request }: { request: Request }) {
 	const { email } = await request.json()
-	console.log('email: ', email)
 
-	let event
 	// create member
 	try {
-		event = await client.lists.setListMember(env.MAILCHIMP_LIST_ID, email, {
-			status: 'subscribed'
+		const event = await client.lists.setListMember(env.MAILCHIMP_LIST_ID, email, {
+			email_address: email,
+			status_if_new: 'pending'
 		})
-	} catch (e: any) {
+
+		console.log({ email, event })
+		return new Response(JSON.stringify({ email, event }, null, 2))
+	} catch (e) {
 		console.error(e)
+		throw error(500, e as Error)
 	}
-
-	if (!event) {
-		try {
-			event = await client.lists.addListMember(env.MAILCHIMP_LIST_ID, {
-				email_address: email,
-				status: 'subscribed'
-			})
-		} catch (e: any) {
-			console.error(e)
-		}
-	}
-
-	console.log({ email, event })
-	return new Response(JSON.stringify({ email, event }, null, 2))
 }
