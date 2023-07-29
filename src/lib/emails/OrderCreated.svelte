@@ -28,6 +28,10 @@
 
 		<br />
 
+		<p>If you have any questions about your order, please feel free to reach out to <a href="mailto:support@skeletonflowersandwater.com">support@skeletonflowersandwater.com</a></p>
+
+		<br />
+
 		<h4 style="margin: 0; padding-top: 32px;">Skeleton Flowers and Water</h4>
 		<!-- <address>address</address> -->
 		<Img
