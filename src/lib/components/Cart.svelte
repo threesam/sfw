@@ -90,14 +90,13 @@
 		<!-- EMPTY CART -->
 		{#if $cartItems.length === 0}
 			<div class="mt-20 flex w-full flex-col items-center justify-center overflow-hidden px-6">
-				<!-- <button
+				<button
 					on:click={() => ($showCart = false)}
 					class="flex h-16 w-16 items-center justify-center"
 				>
 					<Icons type="cart" strokeColor="#fff" />
 				</button>
-				<div class="mt-6 text-center text-2xl font-bold">Your cart is empty.</div> -->
-				<div class="mt-6 text-center text-2xl font-bold">Merch coming soon!</div>
+				<div class="mt-6 text-center text-2xl font-bold">Your cart is empty.</div>
 			</div>
 		{/if}
 
