@@ -27,8 +27,8 @@
 			in:fly={{ x: -50, duration: 400 }}
 			class="absolute bottom-0 left-0 max-w-lg p-5 lg:p-10"
 		>
-			<Badge text={status.replace(/-/g, ' ')} />
-			<h2 class="font-display pt-2 text-3xl lg:text-4xl" style="color: var(--primary);">{title}</h2>
+		<span class="text-sm text-gray-300 uppercase">{status.replace(/-/g, ' ')}</span>
+		<h1 class="font-display py-2 text-3xl lg:text-6xl" style="color: var(--primary);">{title}</h1>
 			<p>{description}</p>
 			{#if slug}
 				<a

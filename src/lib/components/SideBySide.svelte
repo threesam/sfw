@@ -25,7 +25,7 @@
 		<div
 			class="flex w-full max-w-lg flex-col justify-center lg:mx-auto lg:items-center lg:text-center"
 		>
-			<span class="mb-2 text-sm">{status.replace(/-/g, ' ')}</span>
+		<span class="text-sm mb-2 text-gray-300 uppercase">{status.replace(/-/g, ' ')}</span>
 
 			<h3 class="font-display sm:text-2xl lg:text-5xl">{title}</h3>
 
