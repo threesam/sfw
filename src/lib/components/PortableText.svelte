@@ -22,10 +22,10 @@
 			}
 
 			a {
-				@apply text-gray-700 underline underline-offset-4;
+				@apply text-light border-b border-primary;
 
 				&:hover {
-					@apply text-dark underline-offset-2 transition-all;
+					@apply text-primary border-transparent;
 				}
 			}
 		}

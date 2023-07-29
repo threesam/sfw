@@ -8,7 +8,7 @@
 
 	$: ({ project } = data.body)
 
-	const backstageLink = project?.links.find(({ title }) => title === 'backstage')
+	const getBackstage = (project) => project?.links.find(({ title }) => title === 'backstage')
 </script>
 
 {#if project}
@@ -31,40 +31,34 @@
 		</h1>
 	</section>
 
-	{#if project.links?.length}
-		<div class="flex w-full items-center justify-center py-10">
-			<SocialLinks size={40} links={project.links} color={project.image.color} />
-		</div>
-	{/if}
-
-	<section>
-		{#if project.status === 'pre-production' && backstageLink}
+	<section class="text-xl">
+		{#if project.status === 'pre-production' && getBackstage(project)}
 			<div
-				class="text-light shadow-primary mx-auto mb-10 max-w-xl border border-slate-700 p-10 shadow-md"
+				class="text-light shadow-primary mx-auto my-32 max-w-xl border border-slate-700 p-10 shadow-md"
 			>
 				This project is in active development, see available roles on <a
-					class="border-primary text-primary border-b transition-all duration-300 hover:underline-offset-2"
-					href={backstageLink.href}>backstage</a
+					class="border-primary text-light border-b transition-all duration-300 hover:border-transparent"
+					href={getBackstage(project).href}>backstage</a
 				>
 			</div>
 		{/if}
 
-		<div class="mx-auto max-w-2xl px-5 pb-10" style={`--primary: ${project.image.color}`}>
+		<div class="mx-auto max-w-2xl px-5 my-32" style={`--primary: ${project.image.color}`}>
 			{#if project.body}
-				<h3 class="font-display text-center text-2xl font-normal">abstract</h3>
+				<h3 class="font-thin text-center text-2xl sm:text-4xl mb-3 font-normal">abstract</h3>
 
-				<div class="portable-text mb-10 text-center font-extralight">
+				<div class="portable-text mb-32 text-center text-light font-extralight text-xl sm:text-2xl">
 					<PortableText value={project.body} />
 				</div>
 			{/if}
 
 			{#if project.cast}
-				<h4 class="font-display text-center text-2xl">cast</h4>
+				<h4 class="font-thin mb-3 text-center text-2xl sm:text-4xl">cast</h4>
 
-				<ul class="mb-10">
+				<ul class="mb-32">
 					{#each project.cast as castMember}
-						<li class="grid grid-cols-2 gap-2 text-left">
-							<span class="text-right">{castMember.castname}</span>
+						<li class="grid grid-cols-2 gap-3 items-center text-left mb-2">
+							<span class="text-right text-gray-300 text-base">{castMember.castname}</span>
 
 							{#if castMember.name && castMember.link}
 								<a
@@ -80,12 +74,12 @@
 			{/if}
 
 			{#if project.crew}
-				<h4 class="font-display text-center text-2xl">crew</h4>
+				<h4 class="font-thin mb-3 text-center text-2xl sm:text-4xl">crew</h4>
 
 				<ul>
 					{#each project.crew as crewMember}
-						<li class="grid grid-cols-2 gap-2 text-left">
-							<span class="text-right">{crewMember.role}</span>
+					<li class="grid grid-cols-2 gap-3 items-center text-left mb-2">
+						<span class="text-right text-gray-300 text-base">{crewMember.role}</span>
 
 							{#if crewMember.name && crewMember.link}
 								<a
@@ -101,8 +95,14 @@
 			{/if}
 		</div>
 
+		{#if project.links?.length}
+			<div class="flex w-full items-center justify-center mb-32">
+				<SocialLinks size={40} links={project.links} color={project.image.color} />
+			</div>
+		{/if}
+
 		{#if project.posters}
-			<figure class="flex aspect-[3/4] w-full justify-center px-5 pb-10 lg:max-h-[50vh]">
+			<figure class="flex aspect-[3/4] w-full justify-center px-5 mb-32 lg:max-h-[50vh]">
 				<img
 					class="aspect-[3/4] lg:max-h-[50vh]"
 					src={project.posters[0].src}
