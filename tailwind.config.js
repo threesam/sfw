@@ -18,7 +18,7 @@ export default {
 			colors: {
 				primary: 'var(--primary)',
 				dark: '#111111',
-				light: '#FAFAFA'
+				light: '#FCFCFC'
 			}
 		},
 		listStyleType: {
