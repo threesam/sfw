@@ -3,6 +3,7 @@ import { sendOrderCreatedNotification, sendPackageShippedNotification } from '$u
 import { getProduct } from '$utils/printful.js'
 import { json } from '@sveltejs/kit'
 import type { PrintfulWebhook } from '$types'
+import { createOrReplacePrintfulroduct } from '$utils/transactions'
 
 export async function POST({ request }) {
 	const { data, type }: PrintfulWebhook = await request.json()
@@ -32,8 +33,25 @@ export async function POST({ request }) {
 		const product = await getProduct({
 			id: data.sync_product.id
 		})
-		// loop through variants and upsert to stripe
-		const res = await upsertProduct({ product })
+
+		const res = {
+			sanity: undefined,
+			stripe: undefined
+		}
+
+		try {
+			res.sanity = await createOrReplacePrintfulroduct({ product })
+		} catch (error) {
+			console.error('error: ', error)
+			res.sanity = error
+		}
+
+		try {
+			res.stripe = await upsertProduct({ product })
+		} catch (error) {
+			console.error('error: ', error)
+			res.stripe = error
+		}
 
 		return json({
 			res
