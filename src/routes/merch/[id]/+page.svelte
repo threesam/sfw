@@ -108,10 +108,6 @@
 					</div>
 				</div>
 
-				<!-- {#if shippingDetails}
-					<DescriptionToggle title="Shipping Details" description={shippingDetails} />
-				{/if} -->
-
 				<!-- ADD TO CART -->
 				<button
 					on:click={() => addToCart({ variant: selectedVariant ?? variants[0] })}
@@ -122,6 +118,7 @@
 				<p class="py-3 text-xs italic text-red-500">
 					<b class="uppercase">final sale:</b> custom item not subject to returns.
 				</p>
+				<DescriptionToggle title="Shipping Details" description="US Orders only, shipping included for limited time." />
 			</div>
 		</div>
 	{/if}

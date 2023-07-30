@@ -13,7 +13,7 @@
 	class="border-dark/50 flex w-full border-b py-4 text-sm"
 >
 	<div class={`rotate h-6 w-6 ${toggle ? 'down' : ''}`}>
-		<Icons type="caretRight" strokeColor="#000" />
+		<Icons type="caretRight" strokeColor="#fff" />
 	</div>
 	<div class="ml-2 text-left">
 		<div class="text-base font-bold">{title}</div>
