@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { urlFor } from '../utils/sanity'
+	import { urlFor } from '../utils/sanity/client'
 	import { fade } from 'svelte/transition'
 
 	export let src = ''

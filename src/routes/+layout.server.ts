@@ -1,4 +1,4 @@
-import { getSettings } from '$utils/sanity'
+import { getSettings } from '$utils/sanity/client'
 import { error } from '@sveltejs/kit'
 
 export async function load() {

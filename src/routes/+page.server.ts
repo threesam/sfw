@@ -1,5 +1,5 @@
 import { getProducts } from '$utils/printful'
-import { getAllProjects } from '$utils/sanity'
+import { getAllProjects } from '$utils/sanity/client'
 import { error } from '@sveltejs/kit'
 
 export async function load() {

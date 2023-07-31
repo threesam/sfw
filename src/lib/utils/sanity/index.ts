@@ -1,13 +1,14 @@
-import { env } from '$env/dynamic/private'
+import { env as private_env } from '$env/static/private'
+import { env as public_env } from '$env/static/public'
 import { createClient } from '@sanity/client'
 import type { PrintfulProduct } from '$types'
 
 const client = createClient({
-	projectId: env.SANITY_PROJECT_ID,
-	dataset: env.SANITY_DATASET,
+	projectId: public_env.PUBLIC_SANITY_PROJECT_ID,
+	dataset: public_env.PUBLIC_SANITY_DATASET,
 	apiVersion: '2021-10-21',
 	useCdn: false,
-	token: env.SANITY_TOKEN
+	token: private_env.SANITY_TOKEN
 })
 
 export async function createOrReplacePrintfulroduct({ product }: { product: PrintfulProduct }) {

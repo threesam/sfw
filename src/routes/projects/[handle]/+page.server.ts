@@ -1,5 +1,5 @@
 import { error } from '@sveltejs/kit'
-import { getProject } from '$utils/sanity.js'
+import { getProject } from '$utils/sanity/client.js'
 import type { RouteParams } from './$types'
 
 export async function load({ params }: { params: RouteParams }) {
