@@ -36,7 +36,7 @@ export async function createOrReplacePrintfulProduct({ product }: { product: Pri
           _ref: image?._id
         }
       },
-      name: product.name === variant.name ? 'One Size' : variant.name,
+      name: product.name === variant.name ? 'One Size' : variant.name.split(' - ')[1],
       price: variant.retail_price,
       sku: variant.sku,
       thumbnailUrl: product.thumbnail_url
