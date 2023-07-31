@@ -31,9 +31,11 @@ export async function createOrReplacePrintfulProduct({ product }: { product: Pri
     variants: product.variants.map((variant) => ({
       _id: variant.external_id,
       image: {
-        ref: image?._id
+        asset: {
+          _ref: image?._id
+        }
       },
-      name: variant.name,
+      name: product.name === variant.name ? 'One Size' : variant.name,
       price: variant.retail_price,
       sku: variant.sku,
       thumbnailUrl: product.thumbnail_url
