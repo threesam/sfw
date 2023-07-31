@@ -12,7 +12,7 @@ const client = createClient({
   token: private_env.SANITY_TOKEN
 })
 
-async function uploadImage(url: string | null) {
+async function uploadImageFromUrl(url: string | null) {
   if (!url) return
 
   const { data } = await axios.get(url, { responseType: 'arraybuffer' })
@@ -21,7 +21,7 @@ async function uploadImage(url: string | null) {
 }
 
 export async function createOrReplacePrintfulProduct({ product }: { product: PrintfulProduct }) {
-  const image = await uploadImage(product.thumbnail_url)
+  const image = await uploadImageFromUrl(product.thumbnail_url)
 
   return await client.createOrReplace({
     _id: product.external_id,
