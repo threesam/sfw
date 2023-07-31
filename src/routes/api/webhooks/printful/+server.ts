@@ -34,27 +34,28 @@ export async function POST({ request }: { request: Request }) {
       id: data.sync_product.id
     })
 
-    const res = {
-      sanity: undefined,
-      stripe: undefined
+    let sanityRes
+    let stripeRes
+
+    try {
+      sanityRes = await createOrReplacePrintfulProduct({ product })
+    } catch (error) {
+      console.error('error: ', error)
+      sanityRes = error
     }
 
     try {
-      res.sanity = await createOrReplacePrintfulProduct({ product })
+      stripeRes = await upsertProduct({ product })
     } catch (error) {
       console.error('error: ', error)
-      res.sanity = error
-    }
-
-    try {
-      res.stripe = await upsertProduct({ product })
-    } catch (error) {
-      console.error('error: ', error)
-      res.stripe = error
+      stripeRes = error
     }
 
     return json({
-      res
+      res: {
+        sanity: sanityRes,
+        stripe: stripeRes
+      }
     })
   }
 
