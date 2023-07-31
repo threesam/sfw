@@ -5,6 +5,7 @@ import OrderCreated from '$lib/emails/OrderCreated.svelte'
 import PackageShipped from '$lib/emails/PackageShipped.svelte'
 import { render } from 'svelte-email'
 import sendgrid from '@sendgrid/mail'
+import type { ComponentType, SvelteComponent } from 'svelte'
 
 sendgrid.setApiKey(env.SENDGRID_API_KEY)
 
@@ -14,7 +15,7 @@ export async function sendOrderCreatedNotification({ order }: { order: PrintfulO
 	}
 
 	const emailHtml = render({
-		template: OrderCreated,
+		template: OrderCreated as unknown as ComponentType<SvelteComponent<{ order: PrintfulOrder }>>,
 		props: { order }
 	})
 
@@ -46,7 +47,9 @@ export async function sendPackageShippedNotification({
 	}
 
 	const emailHtml = render({
-		template: PackageShipped,
+		template: PackageShipped as unknown as ComponentType<
+			SvelteComponent<{ order: PrintfulOrder; shipment: PrintfulShipmentInfo }>
+		>,
 		props: {
 			order,
 			shipment

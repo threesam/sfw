@@ -1,5 +1,5 @@
 import { env } from '$env/dynamic/private'
-import type { PrintfulSyncProduct, PrintfulSyncVariant } from '$types'
+import type { PrintfulProduct, PrintfulSyncProduct, PrintfulSyncVariant } from '$types'
 
 export async function fetchPrintful(endpoint: string) {
 	const res = await fetch(env.PRINTFUL_API_ENDPOINT + endpoint, {
@@ -13,11 +13,9 @@ export async function fetchPrintful(endpoint: string) {
 }
 
 export async function getProducts() {
-	const { result: allProducts } = await fetchPrintful('/store/products')
+	const { result }: { result: PrintfulSyncProduct[] } = await fetchPrintful('/store/products')
 
-	return await Promise.all(
-		(allProducts as PrintfulSyncProduct[]).map((product) => getProduct({ id: product.id }))
-	)
+	return await Promise.all(result.map((product) => getProduct({ id: product.id })))
 }
 
 export async function getProduct({ id }: { id: string | number }) {
@@ -35,7 +33,7 @@ export async function getProduct({ id }: { id: string | number }) {
 	return {
 		...sync_product,
 		variants: sync_variants
-	}
+	} as PrintfulProduct
 }
 
 export function getId({

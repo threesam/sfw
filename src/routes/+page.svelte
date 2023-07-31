@@ -36,9 +36,9 @@
 	slides={projects.filter(({ status }) => status !== 'pre-production')}
 />
 
-<!-- <h4 class="font-display p-5 text-4xl lg:px-10">Merch</h4>
+<h4 class="font-display p-5 text-4xl lg:px-10">Merch</h4>
 <div class="bg-dark mb-10 grid gap-10 lg:grid-cols-3 lg:gap-2 lg:px-10">
-	{#each products as product, i}
+	{#each products.sort((a,b) => b.variants[0].retail_price - a.variants[0].retail_price) as product, i}
 		<a href="/merch/{product.id}" class={`${i % 2 === 0 ? 'pl-5' : 'pr-5'} lg:p-0`}>
 			<img
 				class="mb-2 max-w-full bg-gradient-to-tr from-slate-700"
@@ -51,7 +51,7 @@
 			</div>
 		</a>
 	{/each}
-</div> -->
+</div>
 
 <Swiper
 	title="In Development"

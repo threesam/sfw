@@ -7,6 +7,7 @@
 	import { onMount } from 'svelte'
 	import { trackCart } from '$utils/umami'
 	import DescriptionToggle from '$components/DescriptionToggle.svelte'
+	import type { PrintfulSyncVariant } from '$types'
 
 	export let data: PageData
 
@@ -16,7 +17,12 @@
 	const { searchParams } = new URL($page.url)
 	$: selectedVariantId = searchParams.get('v')
 
-	$: selectedVariant = null as any
+	$: selectedVariant = undefined as (PrintfulSyncVariant & { quantity?: number }) | undefined
+
+	function getSize(name: string) {
+		const splitName = name.split(' - ')
+		return splitName[1] ?? 'one size'
+	}
 
 	function getSelectedVariant(id?: number | string | null) {
 		if (id === null) {
@@ -30,7 +36,7 @@
 		}
 	}
 
-	function addToCart({ variant }: { variant: any }) {
+	function addToCart({ variant }: { variant: PrintfulSyncVariant & { quantity?: number } }) {
 		let isAlreadyAdded = false
 		const items = [] as any[]
 		$cartItems.forEach((item) => {
@@ -96,19 +102,15 @@
 										: ''
 								} flex h-12 w-24 items-center justify-center border transition duration-300 ease-in-out hover:scale-95 hover:opacity-100`}
 							>
-								{variant.name.split(' - ').pop()}
+								{getSize(variant.name)}
 							</button>
 						{/each}
 					</div>
 				</div>
 
-				<!-- {#if shippingDetails}
-					<DescriptionToggle title="Shipping Details" description={shippingDetails} />
-				{/if} -->
-
 				<!-- ADD TO CART -->
 				<button
-					on:click={() => addToCart({ variant: selectedVariant })}
+					on:click={() => addToCart({ variant: selectedVariant ?? variants[0] })}
 					class="hover:bg-primary hover:text-dark hover:border-primary flex w-full items-center justify-center border p-4 text-white opacity-90 transition-all duration-300 hover:font-bold"
 				>
 					<span class="font-display text-lg uppercase">Add To Cart</span>
@@ -116,6 +118,7 @@
 				<p class="py-3 text-xs italic text-red-500">
 					<b class="uppercase">final sale:</b> custom item not subject to returns.
 				</p>
+				<DescriptionToggle title="Shipping Details" description="US Orders only, shipping included for limited time." />
 			</div>
 		</div>
 	{/if}

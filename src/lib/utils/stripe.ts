@@ -11,30 +11,32 @@ export async function getAllProducts() {
 	return await stripe.products.list({ active: true, limit: 100 })
 }
 
-export async function createCheckoutSession({ items = [], origin }) {
-	const { data: stripeProducts } = await stripe.products.list()
-	console.log('stripeProducts: ', stripeProducts)
+export async function createCheckoutSession({ items = [] as any[], origin = '', pathname = '/' }) {
+	const { data: allProducts } = await getAllProducts()
 
-	let lineItems = []
-	stripeProducts.forEach((p) => {
-		const lineItem = items.find((item) => p.id.split('_')[2] === item.external_id)
-		if (lineItem) {
+	const lineItems = [] as Stripe.Checkout.SessionCreateParams.LineItem[]
+
+	allProducts.forEach((p) => {
+		const item = items.find((item) => p.id.split('_')[2] === item.external_id)
+
+		if (item) {
 			lineItems.push({
-				quantity: lineItem.quantity,
+				quantity: item.quantity,
 				adjustable_quantity: { enabled: true },
-				price: p.default_price
+				price: p.default_price as string | undefined
 			})
 		}
 	})
 
 	return stripe.checkout.sessions.create({
+		allow_promotion_codes: true,
+		cancel_url: origin + pathname,
 		line_items: lineItems,
 		mode: 'payment',
-		success_url: `${origin}/checkout/success`,
-		cancel_url: `${origin}/`,
 		shipping_address_collection: {
 			allowed_countries: ['US']
-		}
+		},
+		success_url: `${origin}/checkout/success`
 	})
 }
 
@@ -71,7 +73,7 @@ export async function upsertProduct({ product }: { product: PrintfulProduct }) {
 	return { variants }
 }
 
-export async function deleteProduct({ id }) {
+export async function deleteProduct({ id }: { id: string }) {
 	// parent product id
 	const { data: allProducts } = await getAllProducts()
 

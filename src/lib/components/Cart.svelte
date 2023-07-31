@@ -1,9 +1,11 @@
-<script>
+<script lang="ts">
 	import Icons from './Icons.svelte'
 	import { showCart, cartItems } from '$store'
 	import { fly, fade } from 'svelte/transition'
 	import { quintInOut } from 'svelte/easing'
 	import { trackCart } from '$lib/utils/umami'
+	import { goto } from '$app/navigation'
+	import { page } from '$app/stores'
 
 	let clientWidth
 
@@ -50,13 +52,13 @@
 	}
 
 	$: checkoutText = 'checkout'
-	async function checkout() {
-		// const checkoutUrl = localStorage.getItem('cartUrl')
-		// window.open(JSON.parse(checkoutUrl ?? ''), '_blank')
-		checkoutText = '...coming soon'
-		setTimeout(() => {
-			checkoutText = 'checkout'
-		}, 3000)
+	async function handleCheckout() {
+		const res = await fetch('/checkout/payment-intent', {
+			method: 'POST',
+			body: JSON.stringify({ items: $cartItems, pathname: $page.url.pathname })
+		})
+		const url = await res.text()
+		goto(url)
 	}
 </script>
 
@@ -65,20 +67,20 @@
 	<!-- OVERLAY -->
 	<button
 		transition:fade={{ duration: 700, easing: quintInOut }}
-		class="bg-dark fixed inset-0 z-10 w-full bg-opacity-70"
+		class="fixed inset-0 z-10 w-full bg-dark bg-opacity-70"
 		on:click={() => ($showCart = false)}
 	/>
 
 	<div
-		class="bg-dark z-50 flex h-full w-full flex-col justify-between gap-6 shadow-xl md:w-1/2 lg:w-1/3"
+		class="z-50 flex h-full w-full flex-col justify-between gap-6 bg-dark shadow-xl md:w-1/2 lg:w-1/3"
 		bind:clientWidth
 		transition:fly={{ x: clientWidth, opacity: 100, duration: 700, easing: quintInOut }}
 	>
 		<!-- HEADER -->
 		<div
-			class="border-dark bg-gradient-3 flex h-16 w-full items-center justify-between border-b-2 px-6 py-5"
+			class="flex h-16 w-full items-center justify-between border-b-2 border-dark bg-gradient-3 px-6 py-5"
 		>
-			<div class="font-display text-dark text-xl font-medium">cart</div>
+			<div class="font-display text-xl font-medium text-dark">cart</div>
 			<button
 				on:click={() => ($showCart = false)}
 				class="text-md font-medium lowercase text-black opacity-80 hover:opacity-100">close</button
@@ -88,14 +90,13 @@
 		<!-- EMPTY CART -->
 		{#if $cartItems.length === 0}
 			<div class="mt-20 flex w-full flex-col items-center justify-center overflow-hidden px-6">
-				<!-- <button
+				<button
 					on:click={() => ($showCart = false)}
 					class="flex h-16 w-16 items-center justify-center"
 				>
 					<Icons type="cart" strokeColor="#fff" />
 				</button>
-				<div class="mt-6 text-center text-2xl font-bold">Your cart is empty.</div> -->
-				<div class="mt-6 text-center text-2xl font-bold">Merch coming soon!</div>
+				<div class="mt-6 text-center text-2xl font-bold">Your cart is empty.</div>
 			</div>
 		{/if}
 
@@ -114,7 +115,7 @@
 						<div class="flex w-full justify-between">
 							<div>
 								<p class="font-display text-xl font-medium">{item.name.split(' - ')[0]}</p>
-								<p class="text-sm">{item.name.split(' - ')[1]}</p>
+								<p class="text-sm">{item.name.split(' - ')[1] ?? ''}</p>
 							</div>
 							<p class="font-medium">{item.retail_price} {item.currency}</p>
 						</div>
@@ -127,7 +128,7 @@
 					>
 						<!-- <Icons type="close" strokeColor="#000" /> -->
 						<span
-							class="text-light font-bold underline underline-offset-4 duration-300 hover:text-red-500 hover:underline-offset-2"
+							class="font-bold text-light underline underline-offset-4 duration-300 hover:text-red-500 hover:underline-offset-2"
 							>remove</span
 						>
 					</button>
@@ -171,8 +172,8 @@
 					>
 				</div>
 				<button
-					on:click={checkout}
-					class="font-display hover:bg-primary hover:text-dark hover:border-primary flex w-full items-center justify-center border p-4 text-lg text-white opacity-90 transition-all duration-300 hover:font-bold"
+					on:click={handleCheckout}
+					class="flex w-full items-center justify-center border p-4 font-display text-lg text-white opacity-90 transition-all duration-300 hover:border-primary hover:bg-primary hover:font-bold hover:text-dark"
 				>
 					<span class="text-lg uppercase">{checkoutText}</span>
 				</button>
