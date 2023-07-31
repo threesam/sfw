@@ -1,5 +1,5 @@
-import { env as private_env } from '$env/static/private'
-import { env as public_env } from '$env/static/public'
+import { env as private_env } from '$env/dynamic/private'
+import { env as public_env } from '$env/dynamic/public'
 import { createClient } from '@sanity/client'
 import type { PrintfulProduct } from '$types'
 
