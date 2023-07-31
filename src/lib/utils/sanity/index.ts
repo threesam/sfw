@@ -28,8 +28,9 @@ export async function createOrReplacePrintfulProduct({ product }: { product: Pri
     _type: 'product',
     title: product.name,
     vendor: 'printful',
-    variants: product.variants.map((variant) => ({
+    variants: product.variants.map((variant, i) => ({
       _id: variant.external_id,
+      _key: `printful_${product.external_id}_${variant.external_id}`,
       image: {
         asset: {
           _ref: image?._id
