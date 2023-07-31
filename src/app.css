@@ -1,20 +1,20 @@
 @font-face {
-	font-family: 'Staatliches';
-	font-display: swap;
-	src: url('$lib/assets/fonts/Staatliches-Regular.ttf');
+  font-family: 'Staatliches';
+  font-display: swap;
+  src: url('$lib/assets/fonts/Staatliches-Regular.ttf');
 }
 
 @font-face {
-	font-family: 'Cherry';
-	font-display: swap;
-	src: url('$lib/assets/fonts/Cherry Monospace-Light.ttf');
+  font-family: 'Cherry';
+  font-display: swap;
+  src: url('$lib/assets/fonts/Cherry Monospace-Light.ttf');
 }
 
 @font-face {
-	font-family: 'Montserrat';
-	font-display: swap;
-	src: url('$lib/assets/fonts/Montserrat-VariableFont_wght.ttf'),
-		url('$lib/assets/fonts/Montserrat-Italic-VariableFont_wght.ttf');
+  font-family: 'Montserrat';
+  font-display: swap;
+  src: url('$lib/assets/fonts/Montserrat-VariableFont_wght.ttf'),
+    url('$lib/assets/fonts/Montserrat-Italic-VariableFont_wght.ttf');
 }
 
 @tailwind base;
@@ -22,19 +22,19 @@
 @tailwind utilities;
 
 @layer base {
-	h1 {
-		@apply text-5xl text-primary;
-	}
-	h2 {
-		@apply text-4xl text-primary;
-	}
-	h3 {
-		@apply text-3xl text-primary;
-	}
-	h4 {
-		@apply text-2xl text-primary;
-	}
-	h5 {
-		@apply text-xl text-primary;
-	}
+  h1 {
+    @apply text-5xl text-primary;
+  }
+  h2 {
+    @apply text-4xl text-primary;
+  }
+  h3 {
+    @apply text-3xl text-primary;
+  }
+  h4 {
+    @apply text-2xl text-primary;
+  }
+  h5 {
+    @apply text-xl text-primary;
+  }
 }

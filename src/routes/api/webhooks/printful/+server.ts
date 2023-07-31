@@ -3,68 +3,68 @@ import { sendOrderCreatedNotification, sendPackageShippedNotification } from '$u
 import { getProduct } from '$utils/printful.js'
 import { json } from '@sveltejs/kit'
 import type { PrintfulWebhook } from '$types'
-import { createOrReplacePrintfulroduct } from '$utils/transactions'
+import { createOrReplacePrintfulProduct } from '$utils/sanity'
 
 export async function POST({ request }: { request: Request }) {
-	const { data, type }: PrintfulWebhook = await request.json()
+  const { data, type }: PrintfulWebhook = await request.json()
 
-	if (type === 'order_created') {
-		const res = await sendOrderCreatedNotification({
-			order: data.order
-		})
+  if (type === 'order_created') {
+    const res = await sendOrderCreatedNotification({
+      order: data.order
+    })
 
-		return json({
-			res
-		})
-	}
+    return json({
+      res
+    })
+  }
 
-	if (type === 'package_shipped') {
-		const res = await sendPackageShippedNotification({
-			order: data.order,
-			shipment: data.shipment
-		})
+  if (type === 'package_shipped') {
+    const res = await sendPackageShippedNotification({
+      order: data.order,
+      shipment: data.shipment
+    })
 
-		return json({
-			res
-		})
-	}
+    return json({
+      res
+    })
+  }
 
-	if (type === 'product_updated') {
-		const product = await getProduct({
-			id: data.sync_product.id
-		})
+  if (type === 'product_updated') {
+    const product = await getProduct({
+      id: data.sync_product.id
+    })
 
-		const res = {
-			sanity: undefined,
-			stripe: undefined
-		}
+    const res = {
+      sanity: undefined,
+      stripe: undefined
+    }
 
-		try {
-			res.sanity = await createOrReplacePrintfulroduct({ product })
-		} catch (error) {
-			console.error('error: ', error)
-			res.sanity = error
-		}
+    try {
+      res.sanity = await createOrReplacePrintfulProduct({ product })
+    } catch (error) {
+      console.error('error: ', error)
+      res.sanity = error
+    }
 
-		try {
-			res.stripe = await upsertProduct({ product })
-		} catch (error) {
-			console.error('error: ', error)
-			res.stripe = error
-		}
+    try {
+      res.stripe = await upsertProduct({ product })
+    } catch (error) {
+      console.error('error: ', error)
+      res.stripe = error
+    }
 
-		return json({
-			res
-		})
-	}
+    return json({
+      res
+    })
+  }
 
-	if (type === 'product_deleted') {
-		const res = await deleteProduct({ id: data.sync_product.external_id })
+  if (type === 'product_deleted') {
+    const res = await deleteProduct({ id: data.sync_product.external_id })
 
-		return json({
-			res
-		})
-	}
+    return json({
+      res
+    })
+  }
 
-	return new Response('Unsupported webhook')
+  return new Response('Unsupported webhook')
 }

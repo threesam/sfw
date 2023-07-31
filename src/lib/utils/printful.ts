@@ -2,46 +2,46 @@ import { env } from '$env/dynamic/private'
 import type { PrintfulProduct, PrintfulSyncProduct, PrintfulSyncVariant } from '$types'
 
 export async function fetchPrintful(endpoint: string) {
-	const res = await fetch(env.PRINTFUL_API_ENDPOINT + endpoint, {
-		headers: {
-			Authorization: 'Bearer ' + env.PRINTFUL_PRIVATE_ACCESS_KEY ?? '',
-			'X-PF-Store-Id': env.PRINTFUL_STORE_ID ?? ''
-		}
-	})
+  const res = await fetch(env.PRINTFUL_API_ENDPOINT + endpoint, {
+    headers: {
+      Authorization: 'Bearer ' + env.PRINTFUL_PRIVATE_ACCESS_KEY ?? '',
+      'X-PF-Store-Id': env.PRINTFUL_STORE_ID ?? ''
+    }
+  })
 
-	return await res.json()
+  return await res.json()
 }
 
 export async function getProducts() {
-	const { result }: { result: PrintfulSyncProduct[] } = await fetchPrintful('/store/products')
+  const { result }: { result: PrintfulSyncProduct[] } = await fetchPrintful('/store/products')
 
-	return await Promise.all(result.map((product) => getProduct({ id: product.id })))
+  return await Promise.all(result.map((product) => getProduct({ id: product.id })))
 }
 
 export async function getProduct({ id }: { id: string | number }) {
-	const { result } = await fetchPrintful(`/store/products/${id}`)
-	const {
-		sync_product,
-		sync_variants
-	}: {
-		sync_product: PrintfulSyncProduct
-		sync_variants: PrintfulSyncVariant[]
-	} = result
+  const { result } = await fetchPrintful(`/store/products/${id}`)
+  const {
+    sync_product,
+    sync_variants
+  }: {
+    sync_product: PrintfulSyncProduct
+    sync_variants: PrintfulSyncVariant[]
+  } = result
 
-	sync_variants?.forEach((v) => (v.product.thumbnail_url = sync_product.thumbnail_url))
+  sync_variants?.forEach((v) => (v.product.thumbnail_url = sync_product.thumbnail_url))
 
-	return {
-		...sync_product,
-		variants: sync_variants
-	} as PrintfulProduct
+  return {
+    ...sync_product,
+    variants: sync_variants
+  } as PrintfulProduct
 }
 
 export function getId({
-	product,
-	variant
+  product,
+  variant
 }: {
-	product: PrintfulSyncProduct
-	variant: PrintfulSyncVariant
+  product: PrintfulSyncProduct
+  variant: PrintfulSyncVariant
 }) {
-	return `printful_${product.external_id}_${variant.external_id}`
+  return `printful_${product.external_id}_${variant.external_id}`
 }
