@@ -17,7 +17,7 @@
 	const { searchParams } = new URL($page.url)
 	$: selectedVariantId = searchParams.get('v')
 
-	$: selectedVariant = undefined as (PrintfulSyncVariant & { quantity?: number }) | undefined
+	$: selectedVariant = variants.find((v) => String(v.id) === String(selectedVariantId)) ?? variants[0]
 
 	function getSize(name: string) {
 		const splitName = name.split(' - ')
@@ -25,15 +25,9 @@
 	}
 
 	function getSelectedVariant(id?: number | string | null) {
-		if (id === null) {
-			selectedVariant = variants[0]
-			searchParams.set('v', String(variants[0].id))
-			goto('?' + searchParams.toString())
-		} else {
-			selectedVariant = variants.find((variant) => String(variant.id) === String(id))
-			searchParams.set('v', String(id))
-			goto('?' + searchParams.toString())
-		}
+		const variantId = id ?? variants[0].id
+		searchParams.set('v', String(variantId))
+		goto('?' + searchParams.toString())
 	}
 
 	function addToCart({ variant }: { variant: PrintfulSyncVariant & { quantity?: number } }) {
@@ -60,7 +54,9 @@
 	}
 
 	onMount(() => {
-		getSelectedVariant(selectedVariantId)
+		if (!selectedVariantId) {
+			getSelectedVariant(null)
+		}
 	})
 </script>
 
