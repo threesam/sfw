@@ -19,8 +19,13 @@
 		variants.find((v) => String(v.id) === String(selectedVariantId)) ?? variants[0]
 	)
 
-	function getSize(name: string) {
-		const parts = name.split(' - ')
+	function getSize(variant: PrintfulSyncVariant) {
+		// variant.product.name is like "Unisex Organic T-shirt (Black / M)"
+		// extract the last value after the last " / " inside parens
+		const parenMatch = variant.product?.name?.match(/\(.*\/\s*(.+?)\)/)
+		if (parenMatch) return parenMatch[1]
+		// fallback: variant.name is "Product - Size"
+		const parts = variant.name.split(' - ')
 		return parts.length > 1 ? parts[parts.length - 1] : 'one size'
 	}
 
@@ -96,7 +101,7 @@
 										: ''
 								} flex h-12 w-24 items-center justify-center border transition duration-300 ease-in-out hover:scale-95 hover:opacity-100`}
 							>
-								{getSize(variant.name)}
+								{getSize(variant)}
 							</button>
 						{/each}
 					</div>
