@@ -3,7 +3,7 @@
 	import SocialLinks from './SocialLinks.svelte'
 	import { page } from '$app/stores'
 
-	export let data = {} as {
+	let { data = {} as {
 		body: {
 			settings: {
 				links: {
@@ -12,11 +12,11 @@
 				}[]
 			}
 		}
-	}
+	} } = $props()
 
 	const { settings } = data.body
 
-	$: route = $page?.route?.id || ''
+	let route = $derived($page?.route?.id || '')
 </script>
 
 {#if route !== '/contact'}

@@ -4,7 +4,7 @@
 	import Icons from '$components/Icons.svelte'
 	import { cartQuantity, showCart, showMenu } from '$store'
 
-	export let links = [
+	let { links = [
 		{
 			title: 'projects',
 			href: '/projects'
@@ -17,15 +17,15 @@
 			title: 'contact',
 			href: '/contact'
 		}
-	]
+	] } = $props()
 
-	$: currentRoute = $page.url.pathname
+	let currentRoute = $derived($page.url.pathname)
 
-	$: onChange(currentRoute)
-
-	function onChange(...args: any[]) {
+	$effect(() => {
+		// Close menu on route change
+		currentRoute;
 		$showMenu = false
-	}
+	})
 
 	function openCart() {
 		$showMenu = false
@@ -54,7 +54,7 @@
 			</h3>
 		</a>
 		<div class="z-10 flex gap-4">
-			<button on:click={openCart} class="relative my-2">
+			<button onclick={openCart} class="relative my-2">
 				<Icons strokeColor={Number($cartQuantity) > 0 ? '#777' : '#fff'} type="cart" />
 				{#if Number($cartQuantity) > 0}
 					<div
@@ -68,7 +68,7 @@
 			<!-- MOBILE MENU TOGGLE -->
 			{#if !$showMenu}
 				<button
-					on:click={() => {
+					onclick={() => {
 						$showMenu = true
 					}}
 					aria-label="Open menu"
@@ -80,7 +80,7 @@
 				<button
 					aria-label="Close menu"
 					class="lg:hidden"
-					on:click={() => {
+					onclick={() => {
 						$showMenu = false
 					}}
 				>

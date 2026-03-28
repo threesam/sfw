@@ -2,13 +2,14 @@
 	import { urlFor } from '../utils/sanity/client'
 	import { fade } from 'svelte/transition'
 
-	export let src = ''
-	export let alt = ''
-	export let caption = ''
-	export let objectFit = ''
-	export let defaultSrc =
-		'https://cdn.sanity.io/images/4yxngtwt/production/df0b294263b9284c4c170bb80d500b594a220138-1024x1024.jpg'
-	export let defaultAlt = 'Skeleton Flowers + Water'
+	let {
+		src = '',
+		alt = '',
+		caption = '',
+		objectFit = '',
+		defaultSrc = 'https://cdn.sanity.io/images/4yxngtwt/production/df0b294263b9284c4c170bb80d500b594a220138-1024x1024.jpg',
+		defaultAlt = 'Skeleton Flowers + Water'
+	} = $props()
 
 	if (!src) {
 		src = defaultSrc

@@ -1,6 +1,5 @@
 <script lang="ts">
-	export let slides = []
-	export let title = ''
+	let { slides = [], title = '' } = $props()
 
 	import Image from '$components/Image.svelte'
 	import Icons from '$components/Icons.svelte'
@@ -8,14 +7,14 @@
 
 	register()
 
-	let clientWidth: number
-	let swiperEl: any
+	let clientWidth = $state(0)
+	let swiperEl = $state(null) as any
 	const spaceBetween = 0
 
-	let slideWidth
+	let slideWidth = $state(0)
 
-	$: isBeginning = false
-	$: isEnd = true
+	let isBeginning = $state(false)
+	let isEnd = $state(true)
 
 	const onProgress = (e) => {
 		const [swiper, progress] = e.detail
@@ -40,7 +39,7 @@
 			{#if !isBeginning}
 				<button
 					class="bg-dark absolute left-0 top-0 z-10 hidden h-full w-10 rotate-180 items-center justify-center lg:flex"
-					on:click={() => swiperEl.swiper.slidePrev()}
+					onclick={() => swiperEl.swiper.slidePrev()}
 				>
 					<Icons type="caretRight" strokeColor="var(--primary)" />
 					<span class="sr-only">next</span>
@@ -65,7 +64,7 @@
 				slides-per-view={1.3}
 				space-between={spaceBetween}
 				centered-slides={false}
-				on:progress={onProgress}
+				onprogress={onProgress}
 			>
 				{#each slides as { slug, title, image, posters }}
 					<swiper-slide class="mb-10" bind:clientWidth={slideWidth}>
@@ -108,7 +107,7 @@
 			{#if !isEnd}
 				<button
 					class="bg-dark absolute right-0 top-0 z-10 hidden h-full w-10 items-center justify-center lg:flex"
-					on:click={() => swiperEl.swiper.slideNext()}
+					onclick={() => swiperEl.swiper.slideNext()}
 				>
 					<Icons type="caretRight" strokeColor="var(--primary)" />
 					<span class="sr-only">previous</span>

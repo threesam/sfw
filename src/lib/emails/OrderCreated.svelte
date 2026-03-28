@@ -2,7 +2,7 @@
 	import { Container, Heading, Html, Hr, Img, Preview, Text } from 'svelte-email'
 	import type { PrintfulOrder } from '$types'
 
-	export let order: PrintfulOrder
+	let { order }: { order: PrintfulOrder } = $props()
 </script>
 
 <Html lang="en">

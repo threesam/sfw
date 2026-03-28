@@ -1,8 +1,5 @@
 <script lang="ts">
-	export let project
-	export let path = '/'
-	export let buttonText = 'learn more'
-	export let index = 0
+	let { project, path = '/', buttonText = 'learn more', index = 0 } = $props()
 	const { title, description, slug, status, image, posters } = project ?? {}
 	const { src, alt, caption, color } = image ?? {}
 

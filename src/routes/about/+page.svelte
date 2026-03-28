@@ -2,7 +2,7 @@
 	import Image from '$components/Image.svelte'
 	import PortableText from '$components/PortableText.svelte'
 
-	export let data
+	let { data } = $props()
 	const { settings } = data.body
 </script>
 
@@ -17,7 +17,7 @@
 	{#each settings.founders as { name, image, link }}
 		<a href={link ?? '#'} class="relative aspect-square">
 			<img src={image?.asset.url} alt="" />
-			<div class="absolute inset-0 bg-black/50" />
+			<div class="absolute inset-0 bg-black/50"></div>
 			<h4 class="bg-primary text-dark absolute left-0 top-0 p-3">{name}</h4>
 		</a>
 	{/each}

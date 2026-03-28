@@ -4,20 +4,21 @@
 	import type { PageData } from './$types'
 	import { page } from '$app/stores'
 	import { goto } from '$app/navigation'
-	import { onMount } from 'svelte'
 	import { trackCart } from '$utils/umami'
 	import DescriptionToggle from '$components/DescriptionToggle.svelte'
 	import type { PrintfulSyncVariant } from '$types'
 
-	export let data: PageData
+	let { data }: { data: PageData } = $props()
 
 	const { product } = data.body
 	const { variants } = product
 
 	const { searchParams } = new URL($page.url)
-	$: selectedVariantId = searchParams.get('v')
+	let selectedVariantId = $derived(searchParams.get('v'))
 
-	$: selectedVariant = variants.find((v) => String(v.id) === String(selectedVariantId)) ?? variants[0]
+	let selectedVariant: (PrintfulSyncVariant & { quantity?: number }) | undefined = $derived(
+		variants.find((v) => String(v.id) === String(selectedVariantId)) ?? variants[0]
+	)
 
 	function getSize(name: string) {
 		const splitName = name.split(' - ')
@@ -53,7 +54,7 @@
 		trackCart({ variant, type: 'add-to-cart' })
 	}
 
-	onMount(() => {
+	$effect(() => {
 		if (!selectedVariantId) {
 			getSelectedVariant(null)
 		}
@@ -91,7 +92,7 @@
 					<div class="flex gap-3">
 						{#each variants as variant}
 							<button
-								on:click={() => getSelectedVariant(variant.id)}
+								onclick={() => getSelectedVariant(variant.id)}
 								class={`${
 									selectedVariant?.id === variant.id
 										? 'text-dark bg-gradient-to-tr from-slate-100 to-gray-500 font-extrabold'
@@ -106,7 +107,7 @@
 
 				<!-- ADD TO CART -->
 				<button
-					on:click={() => addToCart({ variant: selectedVariant ?? variants[0] })}
+					onclick={() => addToCart({ variant: selectedVariant ?? variants[0] })}
 					class="hover:bg-primary hover:text-dark hover:border-primary flex w-full items-center justify-center border p-4 text-white opacity-90 transition-all duration-300 hover:font-bold"
 				>
 					<span class="font-display text-lg uppercase">Add To Cart</span>

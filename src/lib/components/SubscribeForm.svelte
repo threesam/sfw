@@ -1,41 +1,36 @@
 <script>
-	export let endpoint = '/api/subscribe'
-	export let darkMode = false
+	let { endpoint = '/api/subscribe', darkMode = false } = $props()
 
 	import { fly } from 'svelte/transition'
-	import { createForm } from 'svelte-forms-lib'
-	$: isSubmitted = false
-	$: message = ''
-	const { form, handleChange, handleSubmit } = createForm({
-		initialValues: {
-			email: ''
-		},
-		onSubmit: async (values) => {
-			try {
-				await fetch(endpoint, {
-					method: 'POST',
-					body: JSON.stringify({ email: $form.email })
-				})
 
-				message = 'Thanks for subscribing!'
+	let isSubmitted = $state(false)
+	let message = $state('')
+	let email = $state('')
 
-				// const json = await response.json()
-				isSubmitted = true
-				setTimeout(() => {
-					$form.email = ''
-					isSubmitted = false
-				}, 3000)
-			} catch (error) {
-				message = 'Error: please try again or contact support'
-				console.error(error)
-			}
+	async function handleSubmit(e) {
+		e.preventDefault()
+		try {
+			await fetch(endpoint, {
+				method: 'POST',
+				body: JSON.stringify({ email })
+			})
+
+			message = 'Thanks for subscribing!'
+			isSubmitted = true
+			setTimeout(() => {
+				email = ''
+				isSubmitted = false
+			}, 3000)
+		} catch (error) {
+			message = 'Error: please try again or contact support'
+			console.error(error)
 		}
-	})
+	}
 </script>
 
 <form
 	class="relative flex w-full flex-grow flex-col justify-start lg:flex-row lg:gap-0"
-	on:submit|preventDefault={handleSubmit}
+	onsubmit={handleSubmit}
 >
 	<label for="email">
 		<input
@@ -45,8 +40,7 @@
 			placeholder="enter email"
 			class={` bg-dark placeholder:text-light focus:border-light focus:placeholder:text-light/60 w-full rounded-none border-2
 				p-5 text-white focus:outline-none ${darkMode ? 'border-dark' : 'border-primary'}`}
-			on:change={handleChange}
-			bind:value={$form.email}
+			bind:value={email}
 		/>
 	</label>
 	<button

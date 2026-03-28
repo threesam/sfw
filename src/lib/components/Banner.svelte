@@ -3,13 +3,15 @@
 	import Badge from './Badge.svelte'
 	import Image from './Image.svelte'
 
-	export let height = ''
-	export let status = ''
-	export let title = ''
-	export let description = ''
-	export let slug = ''
-	export let path = '/'
-	export let image: any = {}
+	let {
+		height = '',
+		status = '',
+		title = '',
+		description = '',
+		slug = '',
+		path = '/',
+		image = {} as any
+	} = $props()
 
 	const { src, alt, color } = image
 	const handle = path + slug
@@ -20,7 +22,7 @@
 	style={height ? `height: ${height}` : ''}
 >
 	<Image {src} {alt} />
-	<div class={`bg-gradient-fade absolute inset-0 ${height ? 'hidden' : ''}`} />
+	<div class={`bg-gradient-fade absolute inset-0 ${height ? 'hidden' : ''}`}></div>
 	{#if title || description}
 		<div
 			style={color && `--primary: ${color}`}

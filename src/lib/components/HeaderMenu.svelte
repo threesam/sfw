@@ -1,20 +1,20 @@
 <script>
-	export let links = []
+	let { links = [] } = $props()
 
 	import { fly } from 'svelte/transition'
 	import { quintInOut } from 'svelte/easing'
 	import { page } from '$app/stores'
 	import { showMenu } from '$store'
 
-	$: currentRoute = $page.url.pathname
+	let currentRoute = $derived($page.url.pathname)
 
-	let clientHeight
+	let clientHeight = $state(0)
 </script>
 
 <!-- OVERLAY -->
 <button
-	on:click|self={() => {
-		$showMenu = false
+	onclick={(e) => {
+		if (e.target === e.currentTarget) $showMenu = false
 	}}
 	class="bg-dark/90 absolute inset-0 top-16 z-50 flex min-h-screen w-full justify-end overflow-hidden lg:hidden"
 >
@@ -29,7 +29,7 @@
 				<div>
 					<button
 						class:active={currentRoute === link.href}
-						on:click={() => {
+						onclick={() => {
 							$showMenu = false
 						}}
 					>

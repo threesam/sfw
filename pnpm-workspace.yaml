@@ -1,0 +1,4 @@
+ignoredBuiltDependencies:
+  - '@parcel/watcher'
+  - '@sveltejs/kit'
+  - esbuild

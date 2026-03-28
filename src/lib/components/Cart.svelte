@@ -7,7 +7,7 @@
 	import { goto } from '$app/navigation'
 	import { page } from '$app/stores'
 
-	let clientWidth
+	let clientWidth = $state(0)
 
 	async function addOneItem(item) {
 		$cartItems = $cartItems.map((variant) => {
@@ -51,7 +51,7 @@
 		trackCart({ variant: item, type: 'remove-from-cart' })
 	}
 
-	$: checkoutText = 'checkout'
+	let checkoutText = $state('checkout')
 	async function handleCheckout() {
 		const res = await fetch('/checkout/payment-intent', {
 			method: 'POST',
@@ -68,8 +68,8 @@
 	<button
 		transition:fade={{ duration: 700, easing: quintInOut }}
 		class="fixed inset-0 z-10 w-full bg-dark bg-opacity-70"
-		on:click={() => ($showCart = false)}
-	/>
+		onclick={() => ($showCart = false)}
+	></button>
 
 	<div
 		class="z-50 flex h-full w-full flex-col justify-between gap-6 bg-dark shadow-xl md:w-1/2 lg:w-1/3"
@@ -82,7 +82,7 @@
 		>
 			<div class="font-display text-xl font-medium text-dark">cart</div>
 			<button
-				on:click={() => ($showCart = false)}
+				onclick={() => ($showCart = false)}
 				class="text-md font-medium lowercase text-black opacity-80 hover:opacity-100">close</button
 			>
 		</div>
@@ -91,7 +91,7 @@
 		{#if $cartItems.length === 0}
 			<div class="mt-20 flex w-full flex-col items-center justify-center overflow-hidden px-6">
 				<button
-					on:click={() => ($showCart = false)}
+					onclick={() => ($showCart = false)}
 					class="flex h-16 w-16 items-center justify-center"
 				>
 					<Icons type="cart" strokeColor="#fff" />
@@ -123,7 +123,7 @@
 				</div>
 				<div class="mb-6 flex w-full">
 					<button
-						on:click={() => removeEntireItem(item)}
+						onclick={() => removeEntireItem(item)}
 						class="mr-2 flex items-center justify-center"
 					>
 						<!-- <Icons type="close" strokeColor="#000" /> -->
@@ -134,7 +134,7 @@
 					</button>
 					<div class="flex h-8 w-full">
 						<button
-							on:click={() => {
+							onclick={() => {
 								removeOneItem(item)
 							}}
 							class="ml-auto flex h-8 w-8 items-center justify-center transition-all duration-300 hover:scale-125"
@@ -145,7 +145,7 @@
 							{item.quantity}
 						</div>
 						<button
-							on:click={() => {
+							onclick={() => {
 								addOneItem(item)
 							}}
 							class="flex h-8 w-8 items-center justify-center transition-all duration-300 hover:scale-125"
@@ -172,7 +172,7 @@
 					>
 				</div>
 				<button
-					on:click={handleCheckout}
+					onclick={handleCheckout}
 					class="flex w-full items-center justify-center border p-4 font-display text-lg text-white opacity-90 transition-all duration-300 hover:border-primary hover:bg-primary hover:font-bold hover:text-dark"
 				>
 					<span class="text-lg uppercase">{checkoutText}</span>

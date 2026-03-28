@@ -6,7 +6,7 @@
 	import { showCart } from '$lib/store'
 	import SEO from 'svelte-seo'
 
-	export let data = {}
+	let { data = {}, children } = $props()
 	const { settings } = data.body
 </script>
 
@@ -26,7 +26,7 @@
 {/if}
 
 <main class="min-h-screen pt-16">
-	<slot />
+	{@render children()}
 </main>
 
 <Footer {data} />

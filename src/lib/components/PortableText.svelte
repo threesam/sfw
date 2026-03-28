@@ -1,5 +1,5 @@
 <script lang="ts">
-	export let blocks: any[] = []
+	let { blocks = [] as any[] } = $props()
 	import { PortableText } from '@portabletext/svelte'
 </script>
 

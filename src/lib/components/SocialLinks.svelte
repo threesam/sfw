@@ -1,4 +1,5 @@
 <script lang="ts">
+	import type { Component } from 'svelte'
 	type Link = {
 		title: string
 		href: string
@@ -6,9 +7,7 @@
 
 	import { scale } from 'svelte/transition'
 
-	export let color = 'var(--background)'
-	export let size = 69
-	export let links: Link[] = []
+	let { color = 'var(--background)', size = 69, links = [] as Link[] } = $props()
 
 	import Backstage from './icons/Backstage.svelte'
 	import Facebook from './icons/Facebook.svelte'
@@ -19,7 +18,7 @@
 	import Website from './icons/Website.svelte'
 	import Youtube from './icons/Youtube.svelte'
 
-	const options = [
+	const options: { title: string; component: Component }[] = [
 		{ title: 'facebook', component: Facebook },
 		{ title: 'backstage', component: Backstage },
 		{ title: 'imdb', component: Imdb },
@@ -40,6 +39,7 @@
 {#if links?.length}
 	<div class="flex justify-start gap-5">
 		{#each validLinks as { href, title }, i}
+			{@const IconComp = getIconComponent(title)}
 			<a
 				class="transition-all duration-300 hover:scale-95"
 				style={`color: ${color};`}
@@ -47,7 +47,9 @@
 				{href}
 				aria-label={title}
 			>
-				<svelte:component this={getIconComponent(title)} {color} width={size} height={size} />
+				{#if IconComp}
+					<IconComp {color} width={size} height={size} />
+				{/if}
 			</a>
 		{/each}
 	</div>

@@ -4,7 +4,7 @@
 	import SideBySide from '$lib/components/SideBySide.svelte'
 	import SEO from 'svelte-seo'
 
-	export let data: PageData
+	let { data }: { data: PageData } = $props()
 
 	const { projects } = data.body
 

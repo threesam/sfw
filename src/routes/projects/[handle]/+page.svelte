@@ -4,9 +4,9 @@
 	import { PortableText } from '@portabletext/svelte'
 	import SEO from 'svelte-seo'
 
-	export let data: PageData
+	let { data }: { data: PageData } = $props()
 
-	$: ({ project } = data.body)
+	let project = $derived(data.body.project)
 
 	const getBackstage = (project) => project?.links.find(({ title }) => title === 'backstage')
 </script>
