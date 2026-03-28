@@ -2,7 +2,7 @@
   "name": "sfw",
   "version": "0.0.1",
   "private": true,
-  "packageManager": "pnpm@10",
+  "packageManager": "pnpm@10.11.0",
   "scripts": {
     "dev": "vite dev",
     "build": "vite build",
