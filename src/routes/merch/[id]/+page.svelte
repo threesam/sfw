@@ -13,22 +13,19 @@
 	const { product } = data.body
 	const { variants } = product
 
-	const { searchParams } = new URL($page.url)
-	let selectedVariantId = $derived(searchParams.get('v'))
+	let selectedVariantId = $derived(new URL($page.url).searchParams.get('v'))
 
 	let selectedVariant: (PrintfulSyncVariant & { quantity?: number }) | undefined = $derived(
 		variants.find((v) => String(v.id) === String(selectedVariantId)) ?? variants[0]
 	)
 
 	function getSize(name: string) {
-		const splitName = name.split(' - ')
-		return splitName[1] ?? 'one size'
+		const parts = name.split(' - ')
+		return parts.length > 1 ? parts[parts.length - 1] : 'one size'
 	}
 
-	function getSelectedVariant(id?: number | string | null) {
-		const variantId = id ?? variants[0].id
-		searchParams.set('v', String(variantId))
-		goto('?' + searchParams.toString())
+	function selectVariant(id: number | string) {
+		goto(`?v=${id}`, { replaceState: true, noScroll: true })
 	}
 
 	function addToCart({ variant }: { variant: PrintfulSyncVariant & { quantity?: number } }) {
@@ -56,7 +53,7 @@
 
 	$effect(() => {
 		if (!selectedVariantId) {
-			getSelectedVariant(null)
+			selectVariant(variants[0].id)
 		}
 	})
 </script>
@@ -92,7 +89,7 @@
 					<div class="flex gap-3">
 						{#each variants as variant}
 							<button
-								onclick={() => getSelectedVariant(variant.id)}
+								onclick={() => selectVariant(variant.id)}
 								class={`${
 									selectedVariant?.id === variant.id
 										? 'text-dark bg-gradient-to-tr from-slate-100 to-gray-500 font-extrabold'
