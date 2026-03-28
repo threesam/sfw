@@ -8,25 +8,23 @@
 </section>
 
 <style lang="scss">
-	:global {
-		.portable-text {
-			h1,
-			h2,
-			h3,
-			h4,
-			h5 {
-				@apply pb-3 font-thin;
-			}
-			p {
-				@apply pb-5;
-			}
+	:global(.portable-text) {
+		:global(h1),
+		:global(h2),
+		:global(h3),
+		:global(h4),
+		:global(h5) {
+			@apply pb-3 font-thin;
+		}
+		:global(p) {
+			@apply pb-5;
+		}
 
-			a {
-				@apply text-light border-b border-primary;
+		:global(a) {
+			@apply text-light border-b border-primary;
 
-				&:hover {
-					@apply text-primary border-transparent;
-				}
+			&:hover {
+				@apply text-primary border-transparent;
 			}
 		}
 	}
