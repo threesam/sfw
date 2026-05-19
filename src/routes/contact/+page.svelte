@@ -59,13 +59,16 @@
 			p5.background(249, 200, 76)
 
 			points.forEach(({ x, y, size, icon }, i) => {
+				const p = points[i]
+				if (!p) return
 				if (y < -size) {
-					points[i].y = p5.windowHeight + size
+					p.y = p5.windowHeight + size
 				} else {
-					points[i].y -= 1
+					p.y -= 1
 				}
 
-				p5.image(mapimgs[icon], x, y, size, size)
+				const img = mapimgs[icon]
+				if (img) p5.image(img, x, y, size, size)
 			})
 		}
 	}

@@ -27,8 +27,10 @@
 
 	function getSelectedVariant(id?: number | string | null) {
 		if (id === null) {
-			selectedVariant = variants[0]
-			searchParams.set('v', String(variants[0].id))
+			const first = variants[0]
+			if (!first) return
+			selectedVariant = first
+			searchParams.set('v', String(first.id))
 			goto('?' + searchParams.toString())
 		} else {
 			selectedVariant = variants.find((variant) => String(variant.id) === String(id))
@@ -111,7 +113,10 @@
 
 				<!-- ADD TO CART -->
 				<button
-					on:click={() => addToCart({ variant: selectedVariant ?? variants[0] })}
+					on:click={() => {
+						const v = selectedVariant ?? variants[0]
+						if (v) addToCart({ variant: v })
+					}}
 					class="hover:bg-primary hover:text-dark hover:border-primary flex w-full items-center justify-center border p-4 text-white opacity-90 transition-all duration-300 hover:font-bold"
 				>
 					<span class="font-display text-lg uppercase">Add To Cart</span>

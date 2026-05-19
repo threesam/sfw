@@ -109,7 +109,7 @@
 			<figure class="flex aspect-[3/4] w-full justify-center px-5 mb-32 lg:max-h-[50vh]">
 				<img
 					class="aspect-[3/4] lg:max-h-[50vh]"
-					src={project.posters[0].src}
+					src={project.posters[0]?.src}
 					alt={'poster for ' + project.title}
 				/>
 			</figure>

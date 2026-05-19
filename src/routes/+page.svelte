@@ -38,7 +38,7 @@
 
 <h4 class="font-display p-5 text-4xl lg:px-10">Merch</h4>
 <div class="bg-dark mb-10 grid gap-10 lg:grid-cols-3 lg:gap-2 lg:px-10">
-	{#each products.sort((a, b) => Number(b.variants[0].retail_price) - Number(a.variants[0].retail_price)) as product, i}
+	{#each products.sort((a, b) => Number(b.variants[0]?.retail_price ?? 0) - Number(a.variants[0]?.retail_price ?? 0)) as product, i}
 		<a href="/merch/{product.id}" class={`${i % 2 === 0 ? 'pl-5' : 'pr-5'} lg:p-0`}>
 			<img
 				class="mb-2 max-w-full bg-gradient-to-tr from-slate-700"
@@ -47,7 +47,7 @@
 			/>
 			<div class={`${i % 2 === 0 ? '' : 'pl-5'} lg:p-0`}>
 				<h4>{product.name}</h4>
-				<p>{product.variants[0].retail_price} - <span>{product.variants[0].currency}</span></p>
+				<p>{product.variants[0]?.retail_price} - <span>{product.variants[0]?.currency}</span></p>
 			</div>
 		</a>
 	{/each}

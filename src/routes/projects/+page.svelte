@@ -41,7 +41,7 @@
 		>
 			{#if slug}
 				<a href={'/projects/' + slug} class={`absolute inset-0 grayscale`}>
-					<Image src={image.src ?? posters?.[0].url} alt={image.alt} caption={image.caption} />
+					<Image src={image.src ?? posters?.[0]?.url} alt={image.alt} caption={image.caption} />
 				</a>
 
 				<div
