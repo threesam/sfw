@@ -7,90 +7,50 @@
 	import { page } from '$app/stores'
 	import type { Project } from '$types'
 	import { optimize } from '$lib/utils/img'
-
-	const SITE = 'https://skeletonflowersandwater.com'
+	import { canonical } from '$lib/utils/site'
+	import { extractGenres, formatStatus } from '$lib/utils/project'
 
 	let { data }: { data: PageData } = $props()
 
 	let project = $derived(data.body.project)
+	let pageUrl = $derived(canonical($page.url.pathname))
+	let ogImage = $derived(optimize(project?.image?.src, { w: 1200 }))
 
-	const getBackstage = (project: Project | null | undefined) =>
-		project?.links?.find(({ title }) => title === 'backstage')
+	const getBackstage = (p: Project | null | undefined) =>
+		p?.links?.find(({ title }) => title === 'backstage')
 
 	let backstage = $derived(getBackstage(project))
 
-	const STATUS_MAP: Record<string, string> = {
-		completed: 'Completed',
-		released: 'Released',
-		'post-production': 'Post-Production',
-		filming: 'Filming',
-		'pre-production': 'Pre-Production',
+	function personEntry(name: string, link: string | undefined) {
+		return { '@type': 'Person', name, ...(link ? { sameAs: [link] } : {}) }
 	}
 
-	// Genre phrases that recur in Sanity descriptions — surfaces structured
-	// genre data without needing a new CMS field.
-	const GENRE_PATTERNS = [
-		/dark comedy horror/i,
-		/rom-com\/horror/i,
-		/supernatural horror/i,
-		/neo-noir/i,
-		/period drama\/horror/i,
-		/romance thriller/i,
-		/romance drama/i,
-		/(?:college|high school) comedy\/drama/i,
-		/dramatic short/i,
-		/\b(?:horror|drama|comedy|romance|mystery|fantasy|thriller)\b/gi,
-	]
-
-	function extractGenres(text: string | undefined): string[] {
-		if (!text) return []
-		const found = new Set<string>()
-		for (const re of GENRE_PATTERNS) {
-			for (const m of text.matchAll(new RegExp(re.source, re.flags.includes('g') ? re.flags : re.flags + 'g'))) {
-				const v = m[0].trim()
-				if (v) found.add(v.charAt(0).toUpperCase() + v.slice(1).toLowerCase())
-			}
+	let movieLd = $derived.by(() => {
+		if (!project) return null
+		const genres = extractGenres(project.description)
+		const directors = (project.crew ?? []).filter((c) => /director/i.test(c.role))
+		return {
+			'@type': 'Movie',
+			name: project.title,
+			description: project.description,
+			url: pageUrl,
+			image: ogImage,
+			inLanguage: 'en',
+			countryOfOrigin: { '@type': 'Country', name: 'US' },
+			...(genres.length ? { genre: genres } : {}),
+			...(project._updatedAt ? { dateModified: project._updatedAt } : {}),
+			productionCompany: {
+				'@type': 'Organization',
+				name: 'Skeleton Flowers and Water',
+				url: canonical('/'),
+			},
+			actor: (project.cast ?? []).map((c) => personEntry(c.name, c.link)),
+			...(directors.length
+				? { director: directors.map((c) => personEntry(c.name, c.link)) }
+				: {}),
+			creativeWorkStatus: formatStatus(project.status),
 		}
-		return [...found]
-	}
-
-	let movieLd = $derived(
-		project
-			? {
-					'@type': 'Movie',
-					name: project.title,
-					description: project.description,
-					url: SITE + $page.url.pathname,
-					image: optimize(project.image?.src, { w: 1200 }),
-					inLanguage: 'en',
-					countryOfOrigin: { '@type': 'Country', name: 'US' },
-					genre: extractGenres(project.description),
-					dateModified: project._updatedAt,
-					productionCompany: {
-						'@type': 'Organization',
-						name: 'Skeleton Flowers and Water',
-						url: SITE,
-					},
-					actor: (project.cast ?? []).map((c) => ({
-						'@type': 'Person',
-						name: c.name,
-						sameAs: c.link ? [c.link] : undefined,
-					})),
-					...((project.crew ?? []).find((c) => /director/i.test(c.role))
-						? {
-								director: (project.crew ?? [])
-									.filter((c) => /director/i.test(c.role))
-									.map((c) => ({
-										'@type': 'Person',
-										name: c.name,
-										sameAs: c.link ? [c.link] : undefined,
-									})),
-							}
-						: {}),
-					creativeWorkStatus: STATUS_MAP[project.status ?? ''] ?? project.status,
-				}
-			: null,
-	)
+	})
 </script>
 
 {#if project}
@@ -100,9 +60,9 @@
 		openGraph={{
 			title: project.title,
 			description: project.description,
-			url: SITE + $page.url.pathname,
+			url: pageUrl,
 			type: 'video.movie',
-			images: project.image?.src ? [{ url: optimize(project.image.src, { w: 1200 }) ?? '' }] : [],
+			images: ogImage ? [{ url: ogImage }] : [],
 		}}
 	/>
 

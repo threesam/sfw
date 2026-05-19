@@ -1,12 +1,13 @@
 import type { RequestHandler } from './$types'
 import { getAllProjects } from '$utils/sanity/client'
 import { getProducts } from '$utils/printful'
+import { canonical } from '$lib/utils/site'
 
 export const prerender = true
 
-const SITE = 'https://skeletonflowersandwater.com'
+const STATIC_ROUTES = ['/', '/projects', '/about', '/contact', '/merch'] as const
 
-const staticRoutes = ['/', '/projects', '/about', '/contact']
+type Entry = { loc: string; priority?: number; lastmod?: string }
 
 export const GET: RequestHandler = async () => {
 	const [projects, products] = await Promise.all([
@@ -14,21 +15,27 @@ export const GET: RequestHandler = async () => {
 		getProducts().catch(() => []),
 	])
 
-	const urls: { loc: string; priority?: number }[] = [
-		...staticRoutes.map((r) => ({ loc: `${SITE}${r}`, priority: r === '/' ? 1 : 0.8 })),
+	const entries: Entry[] = [
+		...STATIC_ROUTES.map((r) => ({ loc: canonical(r), priority: r === '/' ? 1 : 0.8 })),
 		...projects
 			.filter((p) => p.slug)
-			.map((p) => ({ loc: `${SITE}/projects/${p.slug}`, priority: 0.7 })),
-		...products.map((p) => ({ loc: `${SITE}/merch/${p.id}`, priority: 0.6 })),
+			.map((p) => ({
+				loc: canonical(`/projects/${p.slug}`),
+				priority: 0.7,
+				lastmod: p._updatedAt,
+			})),
+		...products.map((p) => ({ loc: canonical(`/merch/${p.id}`), priority: 0.6 })),
 	]
 
 	const body = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${urls
-	.map(
-		({ loc, priority }) =>
-			`  <url><loc>${loc}</loc>${priority != null ? `<priority>${priority}</priority>` : ''}</url>`,
-	)
+${entries
+	.map(({ loc, priority, lastmod }) => {
+		const parts = [`<loc>${loc}</loc>`]
+		if (lastmod) parts.push(`<lastmod>${lastmod}</lastmod>`)
+		if (priority != null) parts.push(`<priority>${priority}</priority>`)
+		return `  <url>${parts.join('')}</url>`
+	})
 	.join('\n')}
 </urlset>
 `

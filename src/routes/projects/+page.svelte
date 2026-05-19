@@ -4,9 +4,8 @@
 	import SideBySide from '$lib/components/SideBySide.svelte'
 	import SEO from 'svelte-seo'
 	import JsonLd from '$lib/components/JsonLd.svelte'
+	import { canonical } from '$lib/utils/site'
 	import type { Project } from '$types'
-
-	const SITE = 'https://skeletonflowersandwater.com'
 
 	let { data }: { data: PageData } = $props()
 
@@ -29,7 +28,7 @@
 			.map((p, i) => ({
 				'@type': 'ListItem',
 				position: i + 1,
-				url: `${SITE}/projects/${p.slug}`,
+				url: canonical(`/projects/${p.slug}`),
 				name: p.title,
 			})),
 	}

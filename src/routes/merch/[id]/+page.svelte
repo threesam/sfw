@@ -7,9 +7,8 @@
 	import DescriptionToggle from '$components/DescriptionToggle.svelte'
 	import JsonLd from '$lib/components/JsonLd.svelte'
 	import SEO from 'svelte-seo'
+	import { canonical } from '$lib/utils/site'
 	import type { PrintfulSyncVariant } from '$types'
-
-	const SITE = 'https://skeletonflowersandwater.com'
 
 	let { data }: { data: PageData } = $props()
 
@@ -61,21 +60,31 @@
 		}
 	})
 
-	let productLd = $derived({
-		'@type': 'Product',
-		name: product.name,
-		description: `${product.name} — limited apparel from Skeleton Flowers and Water.`,
-		image: product.thumbnail_url,
-		brand: { '@type': 'Brand', name: 'Skeleton Flowers and Water' },
-		category: 'Apparel',
-		offers: variants.map((v) => ({
-			'@type': 'Offer',
-			sku: v.sku,
-			price: Number(v.retail_price) || 0,
-			priceCurrency: v.currency ?? 'USD',
-			availability: 'https://schema.org/InStock',
-			url: `${SITE}${$page.url.pathname}?v=${v.id}`,
-		})),
+	let productLd = $derived.by(() => {
+		const pageUrl = canonical($page.url.pathname)
+		const offers = variants
+			.map((v) => {
+				const price = Number(v.retail_price)
+				if (!Number.isFinite(price)) return null
+				return {
+					'@type': 'Offer' as const,
+					sku: v.sku,
+					price,
+					priceCurrency: v.currency ?? 'USD',
+					availability: 'https://schema.org/InStock',
+					url: `${pageUrl}?v=${v.id}`,
+				}
+			})
+			.filter((o): o is NonNullable<typeof o> => o !== null)
+		return {
+			'@type': 'Product',
+			name: product.name,
+			description: `${product.name} — limited apparel from Skeleton Flowers and Water.`,
+			image: product.thumbnail_url,
+			brand: { '@type': 'Brand', name: 'Skeleton Flowers and Water' },
+			category: 'Apparel',
+			offers,
+		}
 	})
 </script>
 
