@@ -4,20 +4,13 @@
 	import Icons from '$components/Icons.svelte'
 	import { cartQuantity, showCart, showMenu } from '$store'
 
-	let { links = [
-		{
-			title: 'projects',
-			href: '/projects'
-		},
-		{
-			title: 'about',
-			href: '/about'
-		},
-		{
-			title: 'contact',
-			href: '/contact'
-		}
-	] } = $props()
+	let {
+		links = [
+			{ title: 'films', href: '/projects' },
+			{ title: 'about', href: '/about' },
+			{ title: 'contact', href: '/contact' },
+		],
+	} = $props()
 
 	let currentRoute = $derived($page.url.pathname)
 
