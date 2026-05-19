@@ -1,24 +1,25 @@
 <script lang="ts">
-	export let slides = []
-	export let title = ''
-
 	import Image from '$components/Image.svelte'
 	import Icons from '$components/Icons.svelte'
 	import { register } from 'swiper/element/bundle'
+	import type { Project } from '$types'
+
+	export let slides: Project[] = []
+	export let title = ''
 
 	register()
 
-	let clientWidth: number
+	let clientWidth = 0
 	let swiperEl: any
 	const spaceBetween = 0
 
-	let slideWidth
+	let slideWidth = 0
 
 	$: isBeginning = false
 	$: isEnd = true
 
-	const onProgress = (e) => {
-		const [swiper, progress] = e.detail
+	const onProgress = (e: CustomEvent<[{ isBeginning: boolean; isEnd: boolean }, number]>) => {
+		const [swiper] = e.detail
 		isBeginning = swiper.isBeginning
 		isEnd = swiper.isEnd
 	}

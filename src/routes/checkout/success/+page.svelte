@@ -9,7 +9,7 @@
 <section class="relative flex h-screen items-center justify-center">
 	<img
 		class="absolute inset-0 mx-auto object-contain opacity-5"
-		src={settings.image.asset.url}
+		src={settings?.image?.asset?.url}
 		alt=""
 	/>
 	<div class="relative z-0 mb-20 max-w-4xl">

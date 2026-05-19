@@ -1,15 +1,15 @@
 <script lang="ts">
 	import Icons from './Icons.svelte'
-	import { showCart, cartItems } from '$store'
+	import { showCart, cartItems, type CartItem } from '$store'
 	import { fly, fade } from 'svelte/transition'
 	import { quintInOut } from 'svelte/easing'
 	import { trackCart } from '$lib/utils/umami'
 	import { goto } from '$app/navigation'
 	import { page } from '$app/stores'
 
-	let clientWidth
+	let clientWidth = 0
 
-	async function addOneItem(item) {
+	async function addOneItem(item: CartItem) {
 		$cartItems = $cartItems.map((variant) => {
 			if (variant.id === item.id) {
 				variant.quantity++
@@ -19,9 +19,9 @@
 
 		trackCart({ variant: item, type: 'add-to-cart' })
 	}
-	function removeOneItem(item) {
+	function removeOneItem(item: CartItem) {
 		$cartItems = $cartItems
-			.map((variant) => {
+			.map((variant): CartItem | undefined => {
 				if (variant.id === item.id) {
 					if (variant.quantity === 1) {
 						removeEntireItem(variant)
@@ -32,7 +32,7 @@
 				}
 				return variant
 			})
-			.filter((variant) => variant)
+			.filter((variant): variant is CartItem => Boolean(variant))
 
 		if ($cartItems.length === 0) {
 			$showCart = false
@@ -41,7 +41,7 @@
 		trackCart({ variant: item, type: 'remove-from-cart' })
 	}
 
-	function removeEntireItem(item) {
+	function removeEntireItem(item: CartItem) {
 		$cartItems = $cartItems.filter((variant) => variant.id !== item.id)
 
 		if ($cartItems.length === 0) {

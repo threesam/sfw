@@ -2,19 +2,11 @@
 	import SubscribeForm from './SubscribeForm.svelte'
 	import SocialLinks from './SocialLinks.svelte'
 	import { page } from '$app/stores'
+	import type { LayoutData } from '../../routes/$types'
 
-	export let data = {} as {
-		body: {
-			settings: {
-				links: {
-					title: string
-					href: string
-				}[]
-			}
-		}
-	}
+	export let data: LayoutData
 
-	const { settings } = data.body
+	$: ({ settings } = data.body)
 
 	$: route = $page?.route?.id || ''
 </script>

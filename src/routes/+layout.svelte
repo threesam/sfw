@@ -1,22 +1,24 @@
-<script>
+<script lang="ts">
 	import '../app.css'
 	import Cart from '$lib/components/Cart.svelte'
 	import Header from '$lib/components/Header.svelte'
 	import Footer from '$lib/components/Footer.svelte'
 	import { showCart } from '$lib/store'
 	import SEO from 'svelte-seo'
+	import type { LayoutData } from './$types'
 
-	export let data = {}
-	const { settings } = data.body
+	export let data: LayoutData
+
+	$: ({ settings } = data.body)
 </script>
 
 <SEO
-	title={settings.title}
-	description={settings.description}
+	title={settings?.title}
+	description={settings?.description}
 	openGraph={{
-		title: settings.title,
-		description: settings.description,
-		images: [{ url: settings.image.asset.url }]
+		title: settings?.title ?? '',
+		description: settings?.description ?? '',
+		images: [{ url: settings?.image?.asset?.url ?? '' }],
 	}}
 />
 

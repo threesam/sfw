@@ -8,6 +8,7 @@
 	import { trackCart } from '$utils/umami'
 	import DescriptionToggle from '$components/DescriptionToggle.svelte'
 	import type { PrintfulSyncVariant } from '$types'
+	import type { CartItem } from '$store'
 
 	export let data: PageData
 
@@ -38,7 +39,7 @@
 
 	function addToCart({ variant }: { variant: PrintfulSyncVariant & { quantity?: number } }) {
 		let isAlreadyAdded = false
-		const items = [] as any[]
+		const items: CartItem[] = []
 		$cartItems.forEach((item) => {
 			if (variant.id === item.id) {
 				isAlreadyAdded = true
@@ -49,7 +50,7 @@
 
 		if (!isAlreadyAdded) {
 			variant.quantity = 1
-			items.push(variant)
+			items.push(variant as CartItem)
 		}
 
 		$cartItems = items

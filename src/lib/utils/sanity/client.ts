@@ -1,12 +1,13 @@
 import { createClient } from '@sanity/client'
 import imageUrlBuilder from '@sanity/image-url'
 import { env } from '$env/dynamic/public'
+import type { Project, SiteSettings } from '$types'
 
 const client = createClient({
   projectId: env.PUBLIC_SANITY_PROJECT_ID,
   dataset: env.PUBLIC_SANITY_DATASET,
   apiVersion: '2021-10-21',
-  useCdn: false
+  useCdn: false,
 })
 
 const builder = imageUrlBuilder(client)
@@ -15,8 +16,8 @@ export function urlFor(source: string) {
   return builder.image(source)
 }
 
-export async function getProject({ handle }: { handle: string }) {
-  return await client.fetch(
+export async function getProject({ handle }: { handle: string }): Promise<Project | null> {
+  return await client.fetch<Project | null>(
     `*[_type == "project" && slug.current == $handle][0]{
       ...,
       title,
@@ -56,8 +57,8 @@ export async function getProject({ handle }: { handle: string }) {
   )
 }
 
-export async function getAllProjects() {
-  return await client.fetch(`*[_type == "project"]{
+export async function getAllProjects(): Promise<Project[]> {
+  return await client.fetch<Project[]>(`*[_type == "project"]{
     ...,
     title,
     description,
@@ -73,8 +74,8 @@ export async function getAllProjects() {
   }`)
 }
 
-export async function getSettings({ hostname }: { hostname: string }) {
-  return await client.fetch(
+export async function getSettings({ hostname }: { hostname: string }): Promise<SiteSettings | null> {
+  return await client.fetch<SiteSettings | null>(
     `*[_type == "siteSettings" && hostname == $hostname][0]{
       ...,
       "links": links[]{

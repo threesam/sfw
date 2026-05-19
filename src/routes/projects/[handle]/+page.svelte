@@ -1,14 +1,18 @@
 <script lang="ts">
 	import type { PageData } from './$types'
 	import SocialLinks from '$lib/components/SocialLinks.svelte'
-	import { PortableText } from '@portabletext/svelte'
+	import { PortableText, type InputValue } from '@portabletext/svelte'
 	import SEO from 'svelte-seo'
+	import type { Project } from '$types'
 
 	export let data: PageData
 
 	$: ({ project } = data.body)
 
-	const getBackstage = (project) => project?.links.find(({ title }) => title === 'backstage')
+	const getBackstage = (project: Project | null | undefined) =>
+		project?.links?.find(({ title }) => title === 'backstage')
+
+	$: backstage = getBackstage(project)
 </script>
 
 {#if project}
@@ -32,13 +36,13 @@
 	</section>
 
 	<section class="text-xl">
-		{#if project.status === 'pre-production' && getBackstage(project)}
+		{#if project.status === 'pre-production' && backstage}
 			<div
 				class="text-light shadow-primary mx-auto my-32 max-w-xl border border-slate-700 p-10 shadow-md"
 			>
 				This project is in active development, see available roles on <a
 					class="border-primary text-light border-b transition-all duration-300 hover:border-transparent"
-					href={getBackstage(project).href}>backstage</a
+					href={backstage.href}>backstage</a
 				>
 			</div>
 		{/if}
@@ -48,7 +52,7 @@
 				<h3 class="font-thin text-center text-2xl sm:text-4xl mb-3 font-normal">abstract</h3>
 
 				<div class="portable-text mb-32 text-center text-light font-extralight text-xl sm:text-2xl">
-					<PortableText value={project.body} />
+					<PortableText value={project.body as InputValue} />
 				</div>
 			{/if}
 

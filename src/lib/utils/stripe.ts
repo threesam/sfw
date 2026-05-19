@@ -4,8 +4,10 @@ import { getId } from './printful'
 import type { PrintfulProduct } from '$types'
 
 const stripe = new Stripe(STRIPE_SECRET_KEY, {
-  apiVersion: '2022-11-15'
+  apiVersion: '2026-04-22.dahlia',
 })
+
+type CheckoutLineItem = NonNullable<Stripe.Checkout.SessionCreateParams['line_items']>[number]
 
 export async function getAllProducts() {
   return await stripe.products.list({ active: true, limit: 100 })
@@ -14,11 +16,11 @@ export async function getAllProducts() {
 export async function createCheckoutSession({
   items = [] as (PrintfulProduct & { quantity: number })[],
   origin = '',
-  pathname = '/'
+  pathname = '/',
 }) {
   const { data: allProducts } = await getAllProducts()
 
-  const lineItems = [] as Stripe.Checkout.SessionCreateParams.LineItem[]
+  const lineItems: CheckoutLineItem[] = []
 
   allProducts.forEach((p) => {
     const item = items.find((item) => p.id.split('_')[2] === item.external_id)

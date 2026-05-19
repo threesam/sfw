@@ -1,3 +1,5 @@
+@import 'tailwindcss';
+
 @font-face {
   font-family: 'Staatliches';
   font-display: swap;
@@ -13,13 +15,36 @@
 @font-face {
   font-family: 'Montserrat';
   font-display: swap;
-  src: url('$lib/assets/fonts/Montserrat-VariableFont_wght.ttf'),
+  src:
+    url('$lib/assets/fonts/Montserrat-VariableFont_wght.ttf'),
     url('$lib/assets/fonts/Montserrat-Italic-VariableFont_wght.ttf');
 }
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@theme {
+  --color-primary: var(--primary);
+  --color-dark: #111111;
+  --color-light: #fcfcfc;
+
+  --font-display: 'Staatliches', monospace;
+  --font-sans: 'Montserrat', sans-serif;
+  --font-mono: 'Cherry', monospace;
+}
+
+@utility bg-gradient-fade {
+  background-image: linear-gradient(180deg, transparent 20%, black);
+}
+
+@utility bg-gradient-3 {
+  background-image:
+    radial-gradient(circle at top left, var(--primary), transparent 80%),
+    radial-gradient(circle at top right, rgba(226, 232, 240, 0.75), transparent 100%),
+    radial-gradient(at bottom left, rgba(148, 163, 184, 0.75), transparent 100%),
+    radial-gradient(at bottom right, var(--primary), transparent 80%);
+}
+
+@utility list-roman {
+  list-style-type: upper-roman;
+}
 
 @layer base {
   h1 {

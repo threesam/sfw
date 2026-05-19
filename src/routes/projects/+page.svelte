@@ -3,12 +3,13 @@
 	import Image from '$lib/components/Image.svelte'
 	import SideBySide from '$lib/components/SideBySide.svelte'
 	import SEO from 'svelte-seo'
+	import type { Project } from '$types'
 
 	export let data: PageData
 
 	const { projects } = data.body
 
-	let sortedProjects = []
+	const sortedProjects: Project[] = []
 	projects.forEach((project) => {
 		if (project.status === 'pre-production') {
 			sortedProjects.push(project)

@@ -17,6 +17,7 @@ export type CastMember = {
 export type CrewMember = {
   role: string
   name: string
+  link?: string
 }
 
 export type Image = {
@@ -233,6 +234,54 @@ export type ProjectData = {
   cast: CastMember[]
   crew: CrewMember[]
   posters: Image[]
+}
+
+export type ProjectImage = {
+  src: string | null
+  alt: string | null
+  caption: string | null
+  color: string | null
+}
+
+export type ProjectPoster = {
+  src?: string
+  url?: string
+  alt?: string
+  caption?: string
+}
+
+export type ProjectLink = { title: string; href: string }
+
+export type Project = {
+  _id?: string
+  title: string
+  description: string
+  body?: unknown
+  status: string
+  slug?: string
+  isFeatured?: boolean
+  image: ProjectImage
+  links?: ProjectLink[]
+  color?: string | null
+  cast?: CastMember[]
+  crew?: CrewMember[]
+  posters?: ProjectPoster[]
+}
+
+export type Founder = {
+  name: string
+  link?: string | null
+  image?: { asset?: { url?: string } }
+}
+
+export type SiteSettings = {
+  title?: string
+  description?: string
+  body?: unknown
+  image?: { asset?: { url?: string } }
+  links: ProjectLink[]
+  icons?: { src: string; alt: string; caption: string }[]
+  founders?: Founder[]
 }
 
 declare global {

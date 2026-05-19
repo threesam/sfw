@@ -1,5 +1,5 @@
 import adapter from '@sveltejs/adapter-vercel'
-import preprocess from 'svelte-preprocess'
+import { vitePreprocess } from '@sveltejs/vite-plugin-svelte'
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -9,14 +9,10 @@ const config = {
       $components: 'src/lib/components',
       $utils: 'src/lib/utils',
       $store: 'src/lib/store.ts',
-      $types: 'src/app.d.ts'
-    }
+      $types: 'src/app.d.ts',
+    },
   },
-  preprocess: [
-    preprocess({
-      postcss: true
-    })
-  ]
+  preprocess: [vitePreprocess()],
 }
 
 export default config

@@ -6,9 +6,11 @@
 
 	import { scale } from 'svelte/transition'
 
-	export let color = 'var(--background)'
+	export let color: string | null | undefined = 'var(--background)'
 	export let size = 69
 	export let links: Link[] = []
+
+	$: iconColor = color ?? undefined
 
 	import Backstage from './icons/Backstage.svelte'
 	import Facebook from './icons/Facebook.svelte'
@@ -47,7 +49,7 @@
 				{href}
 				aria-label={title}
 			>
-				<svelte:component this={getIconComponent(title)} {color} width={size} height={size} />
+				<svelte:component this={getIconComponent(title)} color={iconColor} width={size} height={size} />
 			</a>
 		{/each}
 	</div>
