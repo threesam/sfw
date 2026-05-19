@@ -1,120 +1,104 @@
 <script lang="ts">
 	import Image from '$components/Image.svelte'
 	import Icons from '$components/Icons.svelte'
-	import { register } from 'swiper/element/bundle'
 	import type { Project } from '$types'
+	import { onMount, tick } from 'svelte'
 
 	export let slides: Project[] = []
 	export let title = ''
 
-	register()
+	let track: HTMLDivElement
+	let isBeginning = true
+	let isEnd = false
 
-	let clientWidth = 0
-	let swiperEl: any
-	const spaceBetween = 0
-
-	let slideWidth = 0
-
-	$: isBeginning = false
-	$: isEnd = true
-
-	const onProgress = (e: CustomEvent<[{ isBeginning: boolean; isEnd: boolean }, number]>) => {
-		const [swiper] = e.detail
-		isBeginning = swiper.isBeginning
-		isEnd = swiper.isEnd
+	function update() {
+		if (!track) return
+		isBeginning = track.scrollLeft <= 1
+		isEnd = track.scrollLeft + track.clientWidth >= track.scrollWidth - 1
 	}
+
+	function scrollByDir(dir: 1 | -1) {
+		if (!track) return
+		const first = track.firstElementChild as HTMLElement | null
+		const step = first ? first.getBoundingClientRect().width : track.clientWidth * 0.8
+		track.scrollBy({ left: dir * step, behavior: 'smooth' })
+	}
+
+	onMount(async () => {
+		await tick()
+		update()
+	})
 </script>
 
-<section class="bg-dark relative py-10" bind:clientWidth>
-	{#if clientWidth}
-		<div class="lg:px-10">
-			<div class="flex justify-between p-5 lg:px-0">
-				{#if title}
-					<h2 class="font-display text-light shadow-primary drop-shadow-lg">{title}</h2>
-				{/if}
-				<a
-					class="hidden underline underline-offset-4 transition-all duration-300 hover:underline-offset-2 lg:block"
-					href="/projects">view all</a
-				>
-			</div>
+<section class="bg-dark relative py-10">
+	<div class="lg:px-10">
+		<div class="flex justify-between p-5 lg:px-0">
+			{#if title}
+				<h2 class="font-display text-light shadow-primary drop-shadow-lg">{title}</h2>
+			{/if}
+			<a
+				class="hidden underline underline-offset-4 transition-all duration-300 hover:underline-offset-2 lg:block"
+				href="/projects">view all</a
+			>
+		</div>
 
+		<div class="relative">
 			{#if !isBeginning}
 				<button
+					type="button"
+					aria-label="previous"
 					class="bg-dark absolute left-0 top-0 z-10 hidden h-full w-10 rotate-180 items-center justify-center lg:flex"
-					on:click={() => swiperEl.swiper.slidePrev()}
+					on:click={() => scrollByDir(-1)}
 				>
 					<Icons type="caretRight" strokeColor="var(--primary)" />
-					<span class="sr-only">next</span>
 				</button>
 			{/if}
 
-			<swiper-container
-				style="--swiper-pagination-color: var(--primary); --swiper-pagination-bullet-inactive-color: #fff; --swiper-pagination-bullet-border-radius: 0"
-				bind:this={swiperEl}
-				breakpoints={{
-					1024: {
-						slidesPerView: 3.3
-					},
-					640: {
-						slidesPerView: 2.3
-					}
-				}}
-				pagination={{
-					type: 'bullets',
-					clickable: true
-				}}
-				slides-per-view={1.3}
-				space-between={spaceBetween}
-				centered-slides={false}
-				on:progress={onProgress}
+			<div
+				bind:this={track}
+				on:scroll={update}
+				class="flex snap-x snap-mandatory overflow-x-auto scroll-smooth [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
 			>
-				{#each slides as { slug, title, image, posters }}
-					<swiper-slide class="mb-10" bind:clientWidth={slideWidth}>
-						{#if slideWidth}
-							<a href={`/projects/${slug}`} class="relative aspect-[3/4] bg-red-500">
-								<div class="grayscale">
-									<Image src={image?.src} alt={title} />
-								</div>
-								{#if posters?.[0]?.url}
-									<span
-										class="absolute inset-0 aspect-[3/4] h-full w-full bg-black opacity-0 hover:opacity-100"
-									>
-										<img
-											class="mx-auto h-full object-contain"
-											src={posters?.[0]?.url}
-											alt={title}
-										/>
-									</span>
-								{/if}
-								<h5 class={`h-full py-5 text-center`}>
-									{title}
-								</h5>
-							</a>
-						{/if}
-					</swiper-slide>
+				{#each slides as { slug, title: slideTitle, image, posters }}
+					<div
+						class="mb-10 w-[78vw] flex-none snap-start pr-2 sm:w-[44vw] lg:w-[30%]"
+					>
+						<a href={`/projects/${slug}`} class="relative block aspect-[3/4] bg-red-500">
+							<div class="grayscale">
+								<Image src={image?.src} alt={slideTitle} />
+							</div>
+							{#if posters?.[0]?.url}
+								<span
+									class="absolute inset-0 aspect-[3/4] h-full w-full bg-black opacity-0 hover:opacity-100"
+								>
+									<img class="mx-auto h-full object-contain" src={posters[0].url} alt={slideTitle} />
+								</span>
+							{/if}
+							<h5 class="h-full py-5 text-center">{slideTitle}</h5>
+						</a>
+					</div>
 				{/each}
-				<swiper-slide
-					class="border-primary bg-dark bg-gradient-3 text-dark relative mb-10 grid aspect-square h-full place-content-center border-2 lg:hidden"
+				<div
+					class="border-primary bg-dark bg-gradient-3 text-dark relative mb-10 grid w-[78vw] flex-none snap-start place-content-center border-2 pr-2 sm:w-[44vw] lg:hidden"
 				>
-					{#if slideWidth}
-						<a
-							href={`/projects/`}
-							class="absolute inset-0 grid place-content-center text-lg lowercase underline underline-offset-2"
-							>all projects</a
-						>
-					{/if}
-				</swiper-slide>
-			</swiper-container>
+					<a
+						href="/projects/"
+						class="absolute inset-0 grid place-content-center text-lg lowercase underline underline-offset-2"
+						>all projects</a
+					>
+				</div>
+			</div>
 
 			{#if !isEnd}
 				<button
+					type="button"
+					aria-label="next"
 					class="bg-dark absolute right-0 top-0 z-10 hidden h-full w-10 items-center justify-center lg:flex"
-					on:click={() => swiperEl.swiper.slideNext()}
+					on:click={() => scrollByDir(1)}
 				>
 					<Icons type="caretRight" strokeColor="var(--primary)" />
-					<span class="sr-only">previous</span>
 				</button>
 			{/if}
 		</div>
-	{/if}
+	</div>
 </section>

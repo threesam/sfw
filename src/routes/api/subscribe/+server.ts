@@ -1,27 +1,31 @@
-import client from '@mailchimp/mailchimp_marketing'
 import { env } from '$env/dynamic/private'
-import { error } from '@sveltejs/kit'
+import { error, json } from '@sveltejs/kit'
+import type { RequestHandler } from './$types'
 
-// configure mailchimp client
-client.setConfig({
-  apiKey: env.MAILCHIMP_API_KEY,
-  server: env.MAILCHIMP_SERVER_PREFIX
-})
+export const POST: RequestHandler = async ({ request }) => {
+	const { email, name } = (await request.json()) as { email?: string; name?: string }
 
-export async function POST({ request }: { request: Request }) {
-  const { email } = await request.json()
+	if (!email) error(400, 'email required')
 
-  // create member
-  try {
-    const event = await client.lists.setListMember(env.MAILCHIMP_LIST_ID, email, {
-      email_address: email,
-      status_if_new: 'pending'
-    })
+	const url = env.LISTMONK_URL
+	const listUuid = env.LISTMONK_LIST_UUID
+	if (!url || !listUuid) error(500, 'newsletter not configured')
 
-    console.log({ email, event })
-    return new Response(JSON.stringify({ email, event }, null, 2))
-  } catch (e) {
-    console.error(e)
-    throw error(500, e as Error)
-  }
+	const res = await fetch(`${url.replace(/\/$/, '')}/api/public/subscription`, {
+		method: 'POST',
+		headers: { 'content-type': 'application/json' },
+		body: JSON.stringify({
+			email,
+			name: name ?? email.split('@')[0],
+			list_uuids: [listUuid],
+		}),
+	})
+
+	if (!res.ok) {
+		const body = await res.text().catch(() => '')
+		console.error('listmonk', res.status, body)
+		error(502, 'newsletter signup failed')
+	}
+
+	return json({ ok: true })
 }
