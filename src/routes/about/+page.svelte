@@ -3,6 +3,7 @@
 	import PortableText from '$components/PortableText.svelte'
 	import type { PageData } from './$types'
 	import type { InputValue } from '@portabletext/svelte'
+	import { optimize } from '$lib/utils/img'
 
 	export let data: PageData
 	$: ({ settings } = data.body)
@@ -18,7 +19,15 @@
 <section class="mx-auto mb-20 grid max-w-2xl gap-5 p-5 lg:grid-cols-2">
 	{#each settings?.founders ?? [] as { name, image, link }}
 		<a href={link ?? '#'} class="relative aspect-square">
-			<img src={image?.asset?.url} alt="" />
+			<img
+				src={optimize(image?.asset?.url, { w: 600 })}
+				alt={name}
+				loading="lazy"
+				decoding="async"
+				width="600"
+				height="600"
+				class="h-full w-full object-cover"
+			/>
 			<div class="absolute inset-0 bg-black/50"></div>
 			<h4 class="bg-primary text-dark absolute left-0 top-0 p-3">{name}</h4>
 		</a>

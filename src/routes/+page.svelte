@@ -41,9 +41,13 @@
 	{#each products.sort((a, b) => Number(b.variants[0]?.retail_price ?? 0) - Number(a.variants[0]?.retail_price ?? 0)) as product, i}
 		<a href="/merch/{product.id}" class={`${i % 2 === 0 ? 'pl-5' : 'pr-5'} lg:p-0`}>
 			<img
-				class="mb-2 max-w-full bg-gradient-to-tr from-slate-700"
+				class="mb-2 aspect-square w-full bg-gradient-to-tr from-slate-700 object-cover"
 				src={product.thumbnail_url}
 				alt={product.name}
+				loading="lazy"
+				decoding="async"
+				width="600"
+				height="600"
 			/>
 			<div class={`${i % 2 === 0 ? '' : 'pl-5'} lg:p-0`}>
 				<h4>{product.name}</h4>

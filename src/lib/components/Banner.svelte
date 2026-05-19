@@ -16,10 +16,10 @@
 </script>
 
 <section
-	class="relative flex max-h-[94vh] flex-col items-start justify-start gap-0 overflow-hidden lg:flex-row lg:items-end lg:gap-8"
+	class="relative flex max-h-[94vh] min-h-[70vh] flex-col items-start justify-start gap-0 overflow-hidden lg:flex-row lg:items-end lg:gap-8"
 	style={height ? `height: ${height}` : ''}
 >
-	<Image {src} {alt} />
+	<Image {src} {alt} priority width={1600} />
 	<div class={`bg-gradient-fade absolute inset-0 ${height ? 'hidden' : ''}`} />
 	{#if title || description}
 		<div

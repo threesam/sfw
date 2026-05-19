@@ -3,6 +3,7 @@
 	import Icons from '$components/Icons.svelte'
 	import type { Project } from '$types'
 	import { onMount, tick } from 'svelte'
+	import { optimize } from '$lib/utils/img'
 
 	export let slides: Project[] = []
 	export let title = ''
@@ -64,14 +65,22 @@
 						class="mb-10 w-[78vw] flex-none snap-start pr-2 sm:w-[44vw] lg:w-[30%]"
 					>
 						<a href={`/projects/${slug}`} class="relative block aspect-[3/4] bg-red-500">
-							<div class="grayscale">
-								<Image src={image?.src} alt={slideTitle} />
+							<div class="absolute inset-0 grayscale">
+								<Image src={image?.src} alt={slideTitle} width={800} />
 							</div>
 							{#if posters?.[0]?.url}
 								<span
 									class="absolute inset-0 aspect-[3/4] h-full w-full bg-black opacity-0 hover:opacity-100"
 								>
-									<img class="mx-auto h-full object-contain" src={posters[0].url} alt={slideTitle} />
+									<img
+										class="mx-auto h-full object-contain"
+										src={optimize(posters[0].url, { w: 800 })}
+										alt={slideTitle}
+										loading="lazy"
+										decoding="async"
+										width="600"
+										height="800"
+									/>
 								</span>
 							{/if}
 							<h5 class="h-full py-5 text-center">{slideTitle}</h5>

@@ -4,6 +4,7 @@
 	import { PortableText, type InputValue } from '@portabletext/svelte'
 	import SEO from 'svelte-seo'
 	import type { Project } from '$types'
+	import { optimize } from '$lib/utils/img'
 
 	export let data: PageData
 
@@ -109,8 +110,12 @@
 			<figure class="flex aspect-[3/4] w-full justify-center px-5 mb-32 lg:max-h-[50vh]">
 				<img
 					class="aspect-[3/4] lg:max-h-[50vh]"
-					src={project.posters[0]?.src}
+					src={optimize(project.posters[0]?.src, { w: 900 })}
 					alt={'poster for ' + project.title}
+					loading="lazy"
+					decoding="async"
+					width="675"
+					height="900"
 				/>
 			</figure>
 		{/if}

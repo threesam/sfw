@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { PageData } from './$types'
+	import { optimize } from '$lib/utils/img'
 
 	export let data: PageData
 
@@ -9,8 +10,10 @@
 <section class="relative flex h-screen items-center justify-center">
 	<img
 		class="absolute inset-0 mx-auto object-contain opacity-5"
-		src={settings?.image?.asset?.url}
+		src={optimize(settings?.image?.asset?.url, { w: 1200 })}
 		alt=""
+		loading="lazy"
+		decoding="async"
 	/>
 	<div class="relative z-0 mb-20 max-w-4xl">
 		<h1 class="mb-5 text-4xl">Thanks for your order!</h1>
