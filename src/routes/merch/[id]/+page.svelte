@@ -5,7 +5,11 @@
 	import { goto } from '$app/navigation'
 	import { trackCart } from '$utils/umami'
 	import DescriptionToggle from '$components/DescriptionToggle.svelte'
+	import JsonLd from '$lib/components/JsonLd.svelte'
+	import SEO from 'svelte-seo'
 	import type { PrintfulSyncVariant } from '$types'
+
+	const SITE = 'https://skeletonflowersandwater.com'
 
 	let { data }: { data: PageData } = $props()
 
@@ -56,7 +60,35 @@
 			selectVariant(first.id)
 		}
 	})
+
+	let productLd = $derived({
+		'@type': 'Product',
+		name: product.name,
+		image: product.thumbnail_url,
+		brand: { '@type': 'Brand', name: 'Skeleton Flowers and Water' },
+		offers: {
+			'@type': 'AggregateOffer',
+			priceCurrency: variants[0]?.currency ?? 'USD',
+			lowPrice: Math.min(...variants.map((v) => Number(v.retail_price) || 0)),
+			highPrice: Math.max(...variants.map((v) => Number(v.retail_price) || 0)),
+			offerCount: variants.length,
+			availability: 'https://schema.org/InStock',
+			url: SITE + $page.url.pathname,
+		},
+	})
 </script>
+
+<SEO
+	title={`${product.name} — Skeleton Flowers and Water`}
+	description={`${product.name} — limited apparel from Skeleton Flowers and Water.`}
+	openGraph={{
+		title: product.name,
+		type: 'website',
+		images: product.thumbnail_url ? [{ url: product.thumbnail_url }] : [],
+	}}
+/>
+
+<JsonLd data={productLd} />
 
 <section class="mx-auto max-w-7xl p-5">
 	{#if product && selectedVariant}

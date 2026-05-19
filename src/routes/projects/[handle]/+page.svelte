@@ -1,10 +1,14 @@
 <script lang="ts">
 	import type { PageData } from './$types'
 	import SocialLinks from '$lib/components/SocialLinks.svelte'
+	import JsonLd from '$lib/components/JsonLd.svelte'
 	import { PortableText, type InputValue } from '@portabletext/svelte'
 	import SEO from 'svelte-seo'
+	import { page } from '$app/stores'
 	import type { Project } from '$types'
 	import { optimize } from '$lib/utils/img'
+
+	const SITE = 'https://skeletonflowersandwater.com'
 
 	let { data }: { data: PageData } = $props()
 
@@ -14,18 +18,66 @@
 		project?.links?.find(({ title }) => title === 'backstage')
 
 	let backstage = $derived(getBackstage(project))
+
+	const STATUS_MAP: Record<string, string> = {
+		completed: 'Completed',
+		released: 'Released',
+		'post-production': 'Post-Production',
+		filming: 'Filming',
+		'pre-production': 'Pre-Production',
+	}
+
+	let movieLd = $derived(
+		project
+			? {
+					'@type': 'Movie',
+					name: project.title,
+					description: project.description,
+					url: SITE + $page.url.pathname,
+					image: optimize(project.image?.src, { w: 1200 }),
+					productionCompany: {
+						'@type': 'Organization',
+						name: 'Skeleton Flowers and Water',
+						url: SITE,
+					},
+					actor: (project.cast ?? []).map((c) => ({
+						'@type': 'Person',
+						name: c.name,
+						sameAs: c.link ? [c.link] : undefined,
+					})),
+					...((project.crew ?? []).find((c) => /director/i.test(c.role))
+						? {
+								director: (project.crew ?? [])
+									.filter((c) => /director/i.test(c.role))
+									.map((c) => ({
+										'@type': 'Person',
+										name: c.name,
+										sameAs: c.link ? [c.link] : undefined,
+									})),
+							}
+						: {}),
+					creativeWorkStatus: STATUS_MAP[project.status ?? ''] ?? project.status,
+				}
+			: null,
+	)
 </script>
 
 {#if project}
 	<SEO
-		title={project.title}
+		title={`${project.title} — Skeleton Flowers and Water`}
 		description={project.description}
 		openGraph={{
 			title: project.title,
 			description: project.description,
-			images: [{ url: project?.image?.src ?? '' }]
+			url: SITE + $page.url.pathname,
+			type: 'video.movie',
+			images: project.image?.src ? [{ url: optimize(project.image.src, { w: 1200 }) ?? '' }] : [],
 		}}
 	/>
+
+	{#if movieLd}
+		<JsonLd data={movieLd} />
+	{/if}
 
 	<section
 		style="--primary: {project.image.color}"
