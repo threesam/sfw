@@ -5,7 +5,7 @@
 	import SEO from 'svelte-seo'
 	import type { Project } from '$types'
 
-	export let data: PageData
+	let { data }: { data: PageData } = $props()
 
 	const { projects } = data.body
 

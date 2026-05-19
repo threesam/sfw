@@ -7,10 +7,7 @@
   const SEO_IMAGE_WIDTH = 1200
   const SEO_IMAGE_HEIGHT = 1200
   const TWITTER_IMAGE_HEIGHT = 628
-  export let title = ''
-  export let description = ''
-  export let image = ''
-  export let alt = ''
+  let { title = '', description = '', image = '', alt = '' } = $props()
 </script>
 
 <SvelteSeo

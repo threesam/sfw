@@ -2,8 +2,7 @@
 	import { Container, Heading, Html, Hr, Img, Link, Preview, Text } from 'svelte-email'
 	import type { PrintfulOrder, PrintfulShipmentInfo } from '$types'
 
-	export let order: PrintfulOrder
-	export let shipment: PrintfulShipmentInfo
+	let { order, shipment }: { order: PrintfulOrder; shipment: PrintfulShipmentInfo } = $props()
 </script>
 
 <Html lang="en">

@@ -1,14 +1,17 @@
 <script lang="ts">
 	import { fly } from 'svelte/transition'
 
-	export let endpoint = '/api/subscribe'
-	export let darkMode = false
+	let {
+		endpoint = '/api/subscribe',
+		darkMode = false,
+	}: { endpoint?: string; darkMode?: boolean } = $props()
 
-	let email = ''
-	let status: 'idle' | 'submitting' | 'ok' | 'error' = 'idle'
-	let message = ''
+	let email = $state('')
+	let status = $state<'idle' | 'submitting' | 'ok' | 'error'>('idle')
+	let message = $state('')
 
-	async function submit() {
+	async function submit(e: SubmitEvent) {
+		e.preventDefault()
 		if (status === 'submitting') return
 		status = 'submitting'
 		try {
@@ -35,7 +38,7 @@
 
 <form
 	class="relative flex w-full flex-grow flex-col justify-start lg:flex-row lg:gap-0"
-	on:submit|preventDefault={submit}
+	onsubmit={submit}
 >
 	<label for="email">
 		<input

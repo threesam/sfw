@@ -7,7 +7,7 @@
 	import { goto } from '$app/navigation'
 	import { page } from '$app/stores'
 
-	let clientWidth = 0
+	let clientWidth = $state(0)
 
 	async function addOneItem(item: CartItem) {
 		$cartItems = $cartItems.map((variant) => {
@@ -51,11 +51,11 @@
 		trackCart({ variant: item, type: 'remove-from-cart' })
 	}
 
-	$: checkoutText = 'checkout'
+	let checkoutText = $state('checkout')
 	async function handleCheckout() {
 		const res = await fetch('/checkout/payment-intent', {
 			method: 'POST',
-			body: JSON.stringify({ items: $cartItems, pathname: $page.url.pathname })
+			body: JSON.stringify({ items: $cartItems, pathname: $page.url.pathname }),
 		})
 		const url = await res.text()
 		goto(url)
@@ -66,23 +66,24 @@
 <div class="fixed inset-0 z-50 flex h-screen max-h-screen w-full justify-end overflow-hidden">
 	<!-- OVERLAY -->
 	<button
+		aria-label="close cart"
 		transition:fade={{ duration: 700, easing: quintInOut }}
-		class="fixed inset-0 z-10 w-full bg-dark bg-opacity-70"
-		on:click={() => ($showCart = false)}
-	/>
+		class="bg-dark fixed inset-0 z-10 w-full bg-opacity-70"
+		onclick={() => ($showCart = false)}
+	></button>
 
 	<div
-		class="z-50 flex h-full w-full flex-col justify-between gap-6 bg-dark shadow-xl md:w-1/2 lg:w-1/3"
+		class="bg-dark z-50 flex h-full w-full flex-col justify-between gap-6 shadow-xl md:w-1/2 lg:w-1/3"
 		bind:clientWidth
 		transition:fly={{ x: clientWidth, opacity: 100, duration: 700, easing: quintInOut }}
 	>
 		<!-- HEADER -->
 		<div
-			class="flex h-16 w-full items-center justify-between border-b-2 border-dark bg-gradient-3 px-6 py-5"
+			class="border-dark bg-gradient-3 flex h-16 w-full items-center justify-between border-b-2 px-6 py-5"
 		>
-			<div class="font-display text-xl font-medium text-dark">cart</div>
+			<div class="font-display text-dark text-xl font-medium">cart</div>
 			<button
-				on:click={() => ($showCart = false)}
+				onclick={() => ($showCart = false)}
 				class="text-md font-medium lowercase text-black opacity-80 hover:opacity-100">close</button
 			>
 		</div>
@@ -91,7 +92,8 @@
 		{#if $cartItems.length === 0}
 			<div class="mt-20 flex w-full flex-col items-center justify-center overflow-hidden px-6">
 				<button
-					on:click={() => ($showCart = false)}
+					onclick={() => ($showCart = false)}
+					aria-label="close empty cart"
 					class="flex h-16 w-16 items-center justify-center"
 				>
 					<Icons type="cart" strokeColor="#fff" />
@@ -123,20 +125,18 @@
 				</div>
 				<div class="mb-6 flex w-full">
 					<button
-						on:click={() => removeEntireItem(item)}
+						onclick={() => removeEntireItem(item)}
 						class="mr-2 flex items-center justify-center"
 					>
-						<!-- <Icons type="close" strokeColor="#000" /> -->
 						<span
-							class="font-bold text-light underline underline-offset-4 duration-300 hover:text-red-500 hover:underline-offset-2"
+							class="text-light font-bold underline underline-offset-4 duration-300 hover:text-red-500 hover:underline-offset-2"
 							>remove</span
 						>
 					</button>
 					<div class="flex h-8 w-full">
 						<button
-							on:click={() => {
-								removeOneItem(item)
-							}}
+							onclick={() => removeOneItem(item)}
+							aria-label="remove one"
 							class="ml-auto flex h-8 w-8 items-center justify-center transition-all duration-300 hover:scale-125"
 						>
 							<Icons type="minus" strokeColor="#eee" />
@@ -145,9 +145,8 @@
 							{item.quantity}
 						</div>
 						<button
-							on:click={() => {
-								addOneItem(item)
-							}}
+							onclick={() => addOneItem(item)}
+							aria-label="add one"
 							class="flex h-8 w-8 items-center justify-center transition-all duration-300 hover:scale-125"
 						>
 							<Icons type="plus" strokeColor="#eee" />
@@ -160,7 +159,7 @@
 		<!-- CHECKOUT BUTTON -->
 		{#if $cartItems.length !== 0}
 			<div class="p-5">
-				<div class="text-ligh flex w-full justify-between pb-3">
+				<div class="text-light flex w-full justify-between pb-3">
 					<b>Subtotal</b>
 					<span
 						>{$cartItems.reduce((acc, curr) => {
@@ -168,12 +167,12 @@
 							return acc
 						}, 0) +
 							'.00 ' +
-							$cartItems[0]?.currency}</span
+							($cartItems[0]?.currency ?? '')}</span
 					>
 				</div>
 				<button
-					on:click={handleCheckout}
-					class="flex w-full items-center justify-center border p-4 font-display text-lg text-white opacity-90 transition-all duration-300 hover:border-primary hover:bg-primary hover:font-bold hover:text-dark"
+					onclick={handleCheckout}
+					class="font-display hover:border-primary hover:bg-primary hover:text-dark flex w-full items-center justify-center border p-4 text-lg text-white opacity-90 transition-all duration-300 hover:font-bold"
 				>
 					<span class="text-lg uppercase">{checkoutText}</span>
 				</button>

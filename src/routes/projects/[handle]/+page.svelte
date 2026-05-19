@@ -6,14 +6,14 @@
 	import type { Project } from '$types'
 	import { optimize } from '$lib/utils/img'
 
-	export let data: PageData
+	let { data }: { data: PageData } = $props()
 
-	$: ({ project } = data.body)
+	let project = $derived(data.body.project)
 
 	const getBackstage = (project: Project | null | undefined) =>
 		project?.links?.find(({ title }) => title === 'backstage')
 
-	$: backstage = getBackstage(project)
+	let backstage = $derived(getBackstage(project))
 </script>
 
 {#if project}

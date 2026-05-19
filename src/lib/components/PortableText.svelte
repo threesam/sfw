@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { PortableText, type InputValue } from '@portabletext/svelte'
 
-	export let blocks: InputValue = []
+	let { blocks = [] as InputValue }: { blocks?: InputValue } = $props()
 </script>
 
 <section class="portable-text mx-auto max-w-2xl p-5">
@@ -12,18 +12,18 @@
 	@reference '../../app.css';
 
 	:global(.portable-text) {
-		h1,
-		h2,
-		h3,
-		h4,
-		h5 {
+		:global(h1),
+		:global(h2),
+		:global(h3),
+		:global(h4),
+		:global(h5) {
 			@apply pb-3 font-thin;
 		}
-		p {
+		:global(p) {
 			@apply pb-5;
 		}
 
-		a {
+		:global(a) {
 			@apply text-light border-b border-primary;
 
 			&:hover {

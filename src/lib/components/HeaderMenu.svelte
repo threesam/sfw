@@ -5,11 +5,10 @@
 	import { showMenu } from '$store'
 	import type { ProjectLink } from '$types'
 
-	export let links: ProjectLink[] = []
+	let { links = [] as ProjectLink[] }: { links?: ProjectLink[] } = $props()
 
-	$: currentRoute = $page.url.pathname
-
-	let clientHeight = 0
+	let currentRoute = $derived($page.url.pathname)
+	let clientHeight = $state(0)
 
 	function closeMenu() {
 		$showMenu = false
@@ -31,8 +30,9 @@
 <div
 	role="button"
 	tabindex="0"
-	on:click={handleOverlayClick}
-	on:keydown={handleOverlayKey}
+	aria-label="close menu"
+	onclick={handleOverlayClick}
+	onkeydown={handleOverlayKey}
 	class="bg-dark/90 absolute inset-0 top-16 z-50 flex min-h-screen w-full justify-end overflow-hidden lg:hidden"
 >
 	<!-- MENU -->
@@ -45,7 +45,7 @@
 			{#each links as link (link.title)}
 				<a
 					href={link.href}
-					on:click={closeMenu}
+					onclick={closeMenu}
 					class:active={currentRoute === link.href}
 					class={`font-display rounded-lg text-2xl font-thin text-black hover:opacity-100 ${
 						currentRoute === link.href ? 'opacity-100' : 'opacity-75'

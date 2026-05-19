@@ -3,7 +3,7 @@
 	import Banner from '$lib/components/Banner.svelte'
 	import Swiper from '$components/Swiper.svelte'
 
-	export let data: PageData
+	let { data }: { data: PageData } = $props()
 
 	const { projects, products } = data.body
 
@@ -22,11 +22,11 @@
 		<p class="text-center lg:text-left">
 			Skeleton Flowers and Water is an American film and television production company founded by
 			director, screenwriter, producer, Laila Wolf, and director, producer Lisa Ann Wolf. The
-			company is named in honor of Laila Wolf’s favored flower, the perennial plant Diphylleia
+			company is named in honor of Laila Wolf's favored flower, the perennial plant Diphylleia
 			grayi, commonly known as the Skeleton Flower and famed for one very peculiar distinguishing
 			feature. Its white petals become transparent when touched by water. Once the delicate petals
 			dry their original color returns, hence Skeleton Flowers and Water. Perception, point of view,
-			perennials, what’s hidden underneath waiting to be seen? Come hither
+			perennials, what's hidden underneath waiting to be seen? Come hither
 		</p>
 	</div>
 </section> -->

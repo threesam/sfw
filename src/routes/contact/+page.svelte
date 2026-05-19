@@ -1,20 +1,18 @@
 <script lang="ts">
 	import type { PageData } from './$types'
 	import { fade } from 'svelte/transition'
-	import { onMount } from 'svelte'
 	import P5 from 'p5-svelte'
 	import type { Sketch } from 'p5-svelte'
 	import SubscribeForm from '$lib/components/SubscribeForm.svelte'
 	import SocialLinks from '$lib/components/SocialLinks.svelte'
 
-	export const prerender = true
-	export let data: PageData
+	let { data }: { data: PageData } = $props()
 
 	const { settings } = data.body
 	const icons = settings.icons as { src: string }[]
-	let show = false
+	let show = $state(false)
 
-	onMount(() => {
+	$effect(() => {
 		show = true
 	})
 

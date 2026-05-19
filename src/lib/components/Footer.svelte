@@ -4,11 +4,10 @@
 	import { page } from '$app/stores'
 	import type { LayoutData } from '../../routes/$types'
 
-	export let data: LayoutData
+	let { data }: { data: LayoutData } = $props()
 
-	$: ({ settings } = data.body)
-
-	$: route = $page?.route?.id || ''
+	let settings = $derived(data.body.settings)
+	let route = $derived($page?.route?.id || '')
 </script>
 
 {#if route !== '/contact'}
@@ -16,6 +15,6 @@
 		class="bg-primary flex flex-col items-center justify-between gap-5 p-5 lg:flex-row lg:gap-10 lg:p-10"
 	>
 		<SubscribeForm darkMode />
-		<SocialLinks links={settings.links} size={69} />
+		<SocialLinks links={settings?.links ?? []} size={69} />
 	</footer>
 {/if}

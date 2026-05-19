@@ -5,12 +5,11 @@
 	import { onMount, tick } from 'svelte'
 	import { optimize } from '$lib/utils/img'
 
-	export let slides: Project[] = []
-	export let title = ''
+	let { slides = [] as Project[], title = '' }: { slides?: Project[]; title?: string } = $props()
 
-	let track: HTMLDivElement
-	let isBeginning = true
-	let isEnd = false
+	let track = $state<HTMLDivElement | null>(null)
+	let isBeginning = $state(true)
+	let isEnd = $state(false)
 
 	function update() {
 		if (!track) return
@@ -49,7 +48,7 @@
 					type="button"
 					aria-label="previous"
 					class="bg-dark absolute left-0 top-0 z-10 hidden h-full w-10 rotate-180 items-center justify-center lg:flex"
-					on:click={() => scrollByDir(-1)}
+					onclick={() => scrollByDir(-1)}
 				>
 					<Icons type="caretRight" strokeColor="var(--primary)" />
 				</button>
@@ -57,13 +56,11 @@
 
 			<div
 				bind:this={track}
-				on:scroll={update}
-				class="flex snap-x snap-mandatory overflow-x-auto scroll-smooth [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+				onscroll={update}
+				class="flex snap-x snap-mandatory overflow-x-auto scroll-smooth [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
 			>
 				{#each slides as { slug, title: slideTitle, image, posters }}
-					<div
-						class="mb-10 w-[78vw] flex-none snap-start pr-2 sm:w-[44vw] lg:w-[30%]"
-					>
+					<div class="mb-10 w-[78vw] flex-none snap-start pr-2 sm:w-[44vw] lg:w-[30%]">
 						<a href={`/projects/${slug}`} class="relative block aspect-[3/4] bg-red-500">
 							<div class="absolute inset-0 grayscale">
 								<Image src={image?.src} alt={slideTitle} width={800} />
@@ -103,7 +100,7 @@
 					type="button"
 					aria-label="next"
 					class="bg-dark absolute right-0 top-0 z-10 hidden h-full w-10 items-center justify-center lg:flex"
-					on:click={() => scrollByDir(1)}
+					onclick={() => scrollByDir(1)}
 				>
 					<Icons type="caretRight" strokeColor="var(--primary)" />
 				</button>

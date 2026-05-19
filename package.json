@@ -2,6 +2,7 @@
   "name": "sfw",
   "version": "0.0.1",
   "private": true,
+  "packageManager": "pnpm@10.29.3",
   "scripts": {
     "dev": "vite dev",
     "build": "vite build",
@@ -10,8 +11,8 @@
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
     "test:unit": "vitest",
-    "lint": "prettier --plugin-search-dir . --check . && eslint .",
-    "format": "prettier --plugin-search-dir . --write ."
+    "lint": "prettier --check . && eslint .",
+    "format": "prettier --write ."
   },
   "type": "module",
   "dependencies": {

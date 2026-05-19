@@ -1,6 +1,6 @@
 <script>
 	import { fly } from 'svelte/transition'
-	export let text = ''
+	let { text = '' } = $props()
 </script>
 
 {#if text}

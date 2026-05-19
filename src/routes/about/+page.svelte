@@ -5,8 +5,8 @@
 	import type { InputValue } from '@portabletext/svelte'
 	import { optimize } from '$lib/utils/img'
 
-	export let data: PageData
-	$: ({ settings } = data.body)
+	let { data }: { data: PageData } = $props()
+	let settings = $derived(data.body.settings)
 </script>
 
 <div class="mx-auto max-w-3xl">

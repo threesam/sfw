@@ -2,7 +2,7 @@
 	import type { PageData } from './$types'
 	import { optimize } from '$lib/utils/img'
 
-	export let data: PageData
+	let { data }: { data: PageData } = $props()
 
 	const { settings } = data.body
 </script>

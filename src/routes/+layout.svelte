@@ -6,10 +6,11 @@
 	import { showCart } from '$lib/store'
 	import SEO from 'svelte-seo'
 	import type { LayoutData } from './$types'
+	import type { Snippet } from 'svelte'
 
-	export let data: LayoutData
+	let { data, children }: { data: LayoutData; children: Snippet } = $props()
 
-	$: ({ settings } = data.body)
+	let settings = $derived(data.body.settings)
 </script>
 
 <SEO
@@ -28,7 +29,7 @@
 {/if}
 
 <main class="min-h-screen pt-16">
-	<slot />
+	{@render children()}
 </main>
 
 <Footer {data} />

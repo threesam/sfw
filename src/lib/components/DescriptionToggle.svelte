@@ -2,14 +2,13 @@
 	import Icons from '$components/Icons.svelte'
 	import { slide } from 'svelte/transition'
 
-	export let title = ''
-	export let description = ''
+	let { title = '', description = '' } = $props()
 
-	let toggle = false
+	let toggle = $state(false)
 </script>
 
 <button
-	on:click={() => (toggle = !toggle)}
+	onclick={() => (toggle = !toggle)}
 	class="border-dark/50 flex w-full border-b py-4 text-sm"
 >
 	<div class={`rotate h-6 w-6 ${toggle ? 'down' : ''}`}>

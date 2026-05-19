@@ -1,17 +1,25 @@
 <script lang="ts">
 	import { fly } from 'svelte/transition'
-	import Badge from './Badge.svelte'
 	import Image from './Image.svelte'
 
-	export let height = ''
-	export let status = ''
-	export let title = ''
-	export let description = ''
-	export let slug = ''
-	export let path = '/'
-	export let image: any = {}
+	let {
+		height = '',
+		status = '',
+		title = '',
+		description = '',
+		slug = '',
+		path = '/',
+		image = {} as any,
+	}: {
+		height?: string
+		status?: string
+		title?: string
+		description?: string
+		slug?: string
+		path?: string
+		image?: { src?: string | null; alt?: string | null; color?: string | null }
+	} = $props()
 
-	const { src, alt, color } = image
 	const handle = path + slug
 </script>
 
@@ -19,16 +27,16 @@
 	class="relative flex max-h-[94vh] min-h-[70vh] flex-col items-start justify-start gap-0 overflow-hidden lg:flex-row lg:items-end lg:gap-8"
 	style={height ? `height: ${height}` : ''}
 >
-	<Image {src} {alt} priority width={1600} />
-	<div class={`bg-gradient-fade absolute inset-0 ${height ? 'hidden' : ''}`} />
+	<Image src={image.src} alt={image.alt} priority width={1600} />
+	<div class={`bg-gradient-fade absolute inset-0 ${height ? 'hidden' : ''}`}></div>
 	{#if title || description}
 		<div
-			style={color && `--primary: ${color}`}
+			style={image.color ? `--primary: ${image.color}` : ''}
 			in:fly={{ x: -50, duration: 400 }}
 			class="absolute bottom-0 left-0 max-w-lg p-5 lg:p-10"
 		>
-		<span class="text-sm text-gray-300 uppercase">{status.replace(/-/g, ' ')}</span>
-		<h1 class="font-display py-2 text-3xl lg:text-6xl" style="color: var(--primary);">{title}</h1>
+			<span class="text-sm uppercase text-gray-300">{status.replace(/-/g, ' ')}</span>
+			<h1 class="font-display py-2 text-3xl lg:text-6xl" style="color: var(--primary);">{title}</h1>
 			<p>{description}</p>
 			{#if slug}
 				<a

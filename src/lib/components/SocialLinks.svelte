@@ -1,17 +1,5 @@
 <script lang="ts">
-	type Link = {
-		title: string
-		href: string
-	}
-
 	import { scale } from 'svelte/transition'
-
-	export let color: string | null | undefined = 'var(--background)'
-	export let size = 69
-	export let links: Link[] = []
-
-	$: iconColor = color ?? undefined
-
 	import Backstage from './icons/Backstage.svelte'
 	import Facebook from './icons/Facebook.svelte'
 	import Imdb from './icons/Imdb.svelte'
@@ -21,6 +9,21 @@
 	import Website from './icons/Website.svelte'
 	import Youtube from './icons/Youtube.svelte'
 
+	type Link = {
+		title: string
+		href: string
+	}
+
+	let {
+		color = 'var(--background)',
+		size = 69,
+		links = [] as Link[],
+	}: {
+		color?: string | null
+		size?: number
+		links?: Link[]
+	} = $props()
+
 	const options = [
 		{ title: 'facebook', component: Facebook },
 		{ title: 'backstage', component: Backstage },
@@ -29,9 +32,10 @@
 		{ title: 'linkedin', component: LinkedIn },
 		{ title: 'tiktok', component: TikTok },
 		{ title: 'website', component: Website },
-		{ title: 'youtube', component: Youtube }
+		{ title: 'youtube', component: Youtube },
 	]
 
+	let iconColor = $derived(color ?? undefined)
 	const validLinks = links.filter((link) => options.map(({ title }) => title).includes(link.title))
 
 	function getIconComponent(title: string) {
@@ -42,6 +46,7 @@
 {#if links?.length}
 	<div class="flex justify-start gap-5">
 		{#each validLinks as { href, title }, i}
+			{@const Comp = getIconComponent(title)}
 			<a
 				class="transition-all duration-300 hover:scale-95"
 				style={`color: ${color};`}
@@ -49,7 +54,9 @@
 				{href}
 				aria-label={title}
 			>
-				<svelte:component this={getIconComponent(title)} color={iconColor} width={size} height={size} />
+				{#if Comp}
+					<Comp color={iconColor} width={size} height={size} />
+				{/if}
 			</a>
 		{/each}
 	</div>
