@@ -3,6 +3,8 @@
 	import Image from '$lib/components/Image.svelte'
 	import SideBySide from '$lib/components/SideBySide.svelte'
 	import SEO from 'svelte-seo'
+	import JsonLd from '$lib/components/JsonLd.svelte'
+	import { canonical } from '$lib/utils/site'
 	import type { Project } from '$types'
 
 	let { data }: { data: PageData } = $props()
@@ -17,9 +19,26 @@
 			sortedProjects.unshift(project)
 		}
 	})
+
+	const itemListLd = {
+		'@type': 'ItemList',
+		name: 'Films by Skeleton Flowers and Water',
+		itemListElement: sortedProjects
+			.filter((p) => p.slug)
+			.map((p, i) => ({
+				'@type': 'ListItem',
+				position: i + 1,
+				url: canonical(`/projects/${p.slug}`),
+				name: p.title,
+			})),
+	}
 </script>
 
-<SEO title="Projects" />
+<SEO
+	title="Films — Skeleton Flowers and Water"
+	description="The catalog: completed films, in production, and what's next from Skeleton Flowers and Water."
+/>
+<JsonLd data={itemListLd} />
 
 <section class="bg-dark bg-gradient-3 relative grid h-32 w-full place-content-center lg:h-64">
 	<h1 class="text-bold font-display text-dark relative z-0 text-center text-3xl lg:text-5xl">

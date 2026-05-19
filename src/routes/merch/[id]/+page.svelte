@@ -5,6 +5,9 @@
 	import { goto } from '$app/navigation'
 	import { trackCart } from '$utils/umami'
 	import DescriptionToggle from '$components/DescriptionToggle.svelte'
+	import JsonLd from '$lib/components/JsonLd.svelte'
+	import SEO from 'svelte-seo'
+	import { canonical } from '$lib/utils/site'
 	import type { PrintfulSyncVariant } from '$types'
 
 	let { data }: { data: PageData } = $props()
@@ -56,7 +59,46 @@
 			selectVariant(first.id)
 		}
 	})
+
+	let productLd = $derived.by(() => {
+		const pageUrl = canonical($page.url.pathname)
+		const offers = variants
+			.map((v) => {
+				const price = Number(v.retail_price)
+				if (!Number.isFinite(price)) return null
+				return {
+					'@type': 'Offer' as const,
+					sku: v.sku,
+					price,
+					priceCurrency: v.currency ?? 'USD',
+					availability: 'https://schema.org/InStock',
+					url: `${pageUrl}?v=${v.id}`,
+				}
+			})
+			.filter((o): o is NonNullable<typeof o> => o !== null)
+		return {
+			'@type': 'Product',
+			name: product.name,
+			description: `${product.name} — limited apparel from Skeleton Flowers and Water.`,
+			image: product.thumbnail_url,
+			brand: { '@type': 'Brand', name: 'Skeleton Flowers and Water' },
+			category: 'Apparel',
+			offers,
+		}
+	})
 </script>
+
+<SEO
+	title={`${product.name} — Skeleton Flowers and Water`}
+	description={`${product.name} — limited apparel from Skeleton Flowers and Water.`}
+	openGraph={{
+		title: product.name,
+		type: 'website',
+		images: product.thumbnail_url ? [{ url: product.thumbnail_url }] : [],
+	}}
+/>
+
+<JsonLd data={productLd} />
 
 <section class="mx-auto max-w-7xl p-5">
 	{#if product && selectedVariant}

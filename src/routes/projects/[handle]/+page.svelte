@@ -1,31 +1,74 @@
 <script lang="ts">
 	import type { PageData } from './$types'
 	import SocialLinks from '$lib/components/SocialLinks.svelte'
+	import JsonLd from '$lib/components/JsonLd.svelte'
 	import { PortableText, type InputValue } from '@portabletext/svelte'
 	import SEO from 'svelte-seo'
+	import { page } from '$app/stores'
 	import type { Project } from '$types'
 	import { optimize } from '$lib/utils/img'
+	import { canonical } from '$lib/utils/site'
+	import { extractGenres, formatStatus } from '$lib/utils/project'
 
 	let { data }: { data: PageData } = $props()
 
 	let project = $derived(data.body.project)
+	let pageUrl = $derived(canonical($page.url.pathname))
+	let ogImage = $derived(optimize(project?.image?.src, { w: 1200 }))
 
-	const getBackstage = (project: Project | null | undefined) =>
-		project?.links?.find(({ title }) => title === 'backstage')
+	const getBackstage = (p: Project | null | undefined) =>
+		p?.links?.find(({ title }) => title === 'backstage')
 
 	let backstage = $derived(getBackstage(project))
+
+	function personEntry(name: string, link: string | undefined) {
+		return { '@type': 'Person', name, ...(link ? { sameAs: [link] } : {}) }
+	}
+
+	let movieLd = $derived.by(() => {
+		if (!project) return null
+		const genres = extractGenres(project.description)
+		const directors = (project.crew ?? []).filter((c) => /director/i.test(c.role))
+		return {
+			'@type': 'Movie',
+			name: project.title,
+			description: project.description,
+			url: pageUrl,
+			image: ogImage,
+			inLanguage: 'en',
+			countryOfOrigin: { '@type': 'Country', name: 'US' },
+			...(genres.length ? { genre: genres } : {}),
+			...(project._updatedAt ? { dateModified: project._updatedAt } : {}),
+			productionCompany: {
+				'@type': 'Organization',
+				name: 'Skeleton Flowers and Water',
+				url: canonical('/'),
+			},
+			actor: (project.cast ?? []).map((c) => personEntry(c.name, c.link)),
+			...(directors.length
+				? { director: directors.map((c) => personEntry(c.name, c.link)) }
+				: {}),
+			creativeWorkStatus: formatStatus(project.status),
+		}
+	})
 </script>
 
 {#if project}
 	<SEO
-		title={project.title}
+		title={`${project.title} — Skeleton Flowers and Water`}
 		description={project.description}
 		openGraph={{
 			title: project.title,
 			description: project.description,
-			images: [{ url: project?.image?.src ?? '' }]
+			url: pageUrl,
+			type: 'video.movie',
+			images: ogImage ? [{ url: ogImage }] : [],
 		}}
 	/>
+
+	{#if movieLd}
+		<JsonLd data={movieLd} />
+	{/if}
 
 	<section
 		style="--primary: {project.image.color}"
