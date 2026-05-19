@@ -4,7 +4,6 @@
 	import { fly, fade } from 'svelte/transition'
 	import { quintInOut } from 'svelte/easing'
 	import { trackCart } from '$lib/utils/umami'
-	import { goto } from '$app/navigation'
 	import { page } from '$app/stores'
 
 	let clientWidth = $state(0)
@@ -53,12 +52,21 @@
 
 	let checkoutText = $state('checkout')
 	async function handleCheckout() {
-		const res = await fetch('/checkout/payment-intent', {
-			method: 'POST',
-			body: JSON.stringify({ items: $cartItems, pathname: $page.url.pathname }),
-		})
-		const url = await res.text()
-		goto(url)
+		checkoutText = 'redirecting…'
+		try {
+			const res = await fetch('/checkout/payment-intent', {
+				method: 'POST',
+				body: JSON.stringify({ items: $cartItems, pathname: $page.url.pathname }),
+			})
+			if (!res.ok) throw new Error('payment-intent ' + res.status)
+			const url = await res.text()
+			if (!url) throw new Error('empty checkout url')
+			// External URL — goto() in SvelteKit 2 only handles internal routes.
+			window.location.href = url
+		} catch (err) {
+			console.error(err)
+			checkoutText = 'try again'
+		}
 	}
 </script>
 
