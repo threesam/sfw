@@ -254,6 +254,7 @@ export type ProjectLink = { title: string; href: string }
 
 export type Project = {
   _id?: string
+  _updatedAt?: string
   title: string
   description: string
   body?: unknown

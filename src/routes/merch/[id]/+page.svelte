@@ -64,17 +64,18 @@
 	let productLd = $derived({
 		'@type': 'Product',
 		name: product.name,
+		description: `${product.name} — limited apparel from Skeleton Flowers and Water.`,
 		image: product.thumbnail_url,
 		brand: { '@type': 'Brand', name: 'Skeleton Flowers and Water' },
-		offers: {
-			'@type': 'AggregateOffer',
-			priceCurrency: variants[0]?.currency ?? 'USD',
-			lowPrice: Math.min(...variants.map((v) => Number(v.retail_price) || 0)),
-			highPrice: Math.max(...variants.map((v) => Number(v.retail_price) || 0)),
-			offerCount: variants.length,
+		category: 'Apparel',
+		offers: variants.map((v) => ({
+			'@type': 'Offer',
+			sku: v.sku,
+			price: Number(v.retail_price) || 0,
+			priceCurrency: v.currency ?? 'USD',
 			availability: 'https://schema.org/InStock',
-			url: SITE + $page.url.pathname,
-		},
+			url: `${SITE}${$page.url.pathname}?v=${v.id}`,
+		})),
 	})
 </script>
 

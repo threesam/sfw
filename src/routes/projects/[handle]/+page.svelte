@@ -27,6 +27,33 @@
 		'pre-production': 'Pre-Production',
 	}
 
+	// Genre phrases that recur in Sanity descriptions — surfaces structured
+	// genre data without needing a new CMS field.
+	const GENRE_PATTERNS = [
+		/dark comedy horror/i,
+		/rom-com\/horror/i,
+		/supernatural horror/i,
+		/neo-noir/i,
+		/period drama\/horror/i,
+		/romance thriller/i,
+		/romance drama/i,
+		/(?:college|high school) comedy\/drama/i,
+		/dramatic short/i,
+		/\b(?:horror|drama|comedy|romance|mystery|fantasy|thriller)\b/gi,
+	]
+
+	function extractGenres(text: string | undefined): string[] {
+		if (!text) return []
+		const found = new Set<string>()
+		for (const re of GENRE_PATTERNS) {
+			for (const m of text.matchAll(new RegExp(re.source, re.flags.includes('g') ? re.flags : re.flags + 'g'))) {
+				const v = m[0].trim()
+				if (v) found.add(v.charAt(0).toUpperCase() + v.slice(1).toLowerCase())
+			}
+		}
+		return [...found]
+	}
+
 	let movieLd = $derived(
 		project
 			? {
@@ -35,6 +62,10 @@
 					description: project.description,
 					url: SITE + $page.url.pathname,
 					image: optimize(project.image?.src, { w: 1200 }),
+					inLanguage: 'en',
+					countryOfOrigin: { '@type': 'Country', name: 'US' },
+					genre: extractGenres(project.description),
+					dateModified: project._updatedAt,
 					productionCompany: {
 						'@type': 'Organization',
 						name: 'Skeleton Flowers and Water',
