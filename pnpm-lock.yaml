@@ -38,27 +38,18 @@ importers:
       '@types/node':
         specifier: 25.9.0
         version: 25.9.0
-      '@types/p5':
-        specifier: 1.7.7
-        version: 1.7.7
       '@typescript-eslint/eslint-plugin':
         specifier: 8.59.4
         version: 8.59.4(@typescript-eslint/parser@8.59.4(eslint@10.4.0(jiti@2.7.0))(typescript@6.0.3))(eslint@10.4.0(jiti@2.7.0))(typescript@6.0.3)
       '@typescript-eslint/parser':
         specifier: 8.59.4
         version: 8.59.4(eslint@10.4.0(jiti@2.7.0))(typescript@6.0.3)
-      axios:
-        specifier: 1.16.1
-        version: 1.16.1
       eslint:
         specifier: 10.4.0
         version: 10.4.0(jiti@2.7.0)
       eslint-config-prettier:
         specifier: 10.1.8
         version: 10.1.8(eslint@10.4.0(jiti@2.7.0))
-      p5-svelte:
-        specifier: 3.1.2
-        version: 3.1.2(@types/p5@1.7.7)(p5@1.11.13)
       prettier:
         specifier: 3.8.3
         version: 3.8.3
@@ -776,9 +767,6 @@ packages:
 
   '@types/node@25.9.0':
     resolution: {integrity: sha512-AOQwYUNolgy3VosiRqXrACUXTN8nJUtPl7FJXMqZVyxiiCLhQuG3jXKvCS1ALr+Y2OmZhzzLVlYPEqJaiqkaJQ==}
-
-  '@types/p5@1.7.7':
-    resolution: {integrity: sha512-WFuP7jqc5CkkMtCK/NphgvMnJz1Qi9CMuK7t6xLu/tuXkRdGQA4q4AD0dUYcChC0Oibe8PE8gbKSFPNF0BqVNw==}
 
   '@types/trusted-types@2.0.7':
     resolution: {integrity: sha512-ScaPdn1dQczgbl0QFTeTOmVHFULt394XJgOQNoyVhZ6r2vLnMLJfBPd53SB52T/3G36VI1/g2MZaX0cwDuXsfw==}
@@ -1603,15 +1591,6 @@ packages:
   p-locate@5.0.0:
     resolution: {integrity: sha512-LaNjtRWUBY++zB5nE/NwcaoMylSPk+S+ZHNB1TzdbMJMny6dynpAGt7X/tl/QYq3TIeE6nxHppbo2LGymrG5Pw==}
     engines: {node: '>=10'}
-
-  p5-svelte@3.1.2:
-    resolution: {integrity: sha512-lcfWh+cJ1/wRdIXHnjpYmDgj2h3TCy1QJVQnf/cBcFWS8CSkvyAN5F8u8H2U8qBUtZ4XaD3nd+1NoYUMHaMExQ==}
-    peerDependencies:
-      '@types/p5': ^1.4.2
-      p5: ^1.4.0
-
-  p5@1.11.13:
-    resolution: {integrity: sha512-gfGo4AkyuNMs6Ko7UNFM9K2edqFRGyLrFaYUB+XXF127JVdEPu0BIaC5uDDNJpsRMOD9hJMUpsOH4HkfuNhvhA==}
 
   package-json-from-dist@1.0.1:
     resolution: {integrity: sha512-UEZIS3/by4OC8vL3P2dTXRETpebLI2NiI5vIrjaD/5UtrkFX/tNbwjTSRAGC/+7CAo2pIcBaRgWmcBBHcsaCIw==}
@@ -2600,8 +2579,6 @@ snapshots:
     dependencies:
       undici-types: 7.24.6
 
-  '@types/p5@1.7.7': {}
-
   '@types/trusted-types@2.0.7': {}
 
   '@typescript-eslint/eslint-plugin@8.59.4(@typescript-eslint/parser@8.59.4(eslint@10.4.0(jiti@2.7.0))(typescript@6.0.3))(eslint@10.4.0(jiti@2.7.0))(typescript@6.0.3)':
@@ -3429,13 +3406,6 @@ snapshots:
   p-locate@5.0.0:
     dependencies:
       p-limit: 3.1.0
-
-  p5-svelte@3.1.2(@types/p5@1.7.7)(p5@1.11.13):
-    dependencies:
-      '@types/p5': 1.7.7
-      p5: 1.11.13
-
-  p5@1.11.13: {}
 
   package-json-from-dist@1.0.1: {}
 
