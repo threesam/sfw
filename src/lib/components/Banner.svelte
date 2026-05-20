@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { fly } from 'svelte/transition'
 	import Image from './Image.svelte'
+	import { optimize } from '$lib/utils/img'
 
 	let {
 		height = '',
@@ -21,7 +22,14 @@
 	} = $props()
 
 	const handle = path + slug
+	const preloadSrc = optimize(image.src, { w: 1600 })
 </script>
+
+<svelte:head>
+	{#if preloadSrc}
+		<link rel="preload" as="image" href={preloadSrc} fetchpriority="high" />
+	{/if}
+</svelte:head>
 
 <section
 	class="relative flex max-h-[94vh] min-h-[70vh] flex-col items-start justify-start gap-0 overflow-hidden lg:flex-row lg:items-end lg:gap-8"
@@ -42,7 +50,7 @@
 				<a
 					href={handle}
 					class="hover:text-primary inline-block pt-5 underline underline-offset-4 transition-all duration-300 hover:underline-offset-1"
-					>learn more</a
+					>{title ? `Learn more about ${title}` : 'Learn more'}</a
 				>
 			{/if}
 		</div>

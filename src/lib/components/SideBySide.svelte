@@ -1,16 +1,21 @@
 <script lang="ts">
-	let { project, path = '/', buttonText = 'learn more', index = 0 } = $props()
+	import Image from './Image.svelte'
+
+	let { project, path = '/', buttonText = '', index = 0 } = $props()
 	const { title, description, slug, status, image, posters } = project ?? {}
 	const { src, alt, caption, color } = image ?? {}
 
-	import Image from './Image.svelte'
+	const linkLabel = buttonText || (title ? `Learn more about ${title}` : 'Learn more')
 </script>
 
 <section
 	style="--primary: {color}"
 	class="text-light mx-auto mb-10 flex max-w-full flex-col items-start lg:my-0 lg:grid lg:grid-cols-2 lg:items-center"
 >
-	<div class={`grayscale ${index % 2 === 0 ? 'lg:order-last' : ''}`}>
+	<!-- aspect-[3/4] reserves layout space before the image decodes — kills CLS on mobile -->
+	<div
+		class={`aspect-[3/4] w-full grayscale lg:aspect-auto ${index % 2 === 0 ? 'lg:order-last' : ''}`}
+	>
 		<Image src={src ?? posters?.[0].url} {alt} {caption} />
 	</div>
 
@@ -22,7 +27,7 @@
 		<div
 			class="flex w-full max-w-lg flex-col justify-center lg:mx-auto lg:items-center lg:text-center"
 		>
-		<span class="text-sm mb-2 text-gray-300 uppercase">{status.replace(/-/g, ' ')}</span>
+			<span class="mb-2 text-sm uppercase text-gray-300">{status.replace(/-/g, ' ')}</span>
 
 			<h3 class="font-display sm:text-2xl lg:text-5xl">{title}</h3>
 
@@ -31,7 +36,7 @@
 			{#if slug}
 				<a
 					class="hover:text-primary underline underline-offset-4 transition-all duration-300 hover:underline-offset-2"
-					href={path + slug}>{buttonText}</a
+					href={path + slug}>{linkLabel}</a
 				>
 			{/if}
 		</div>
