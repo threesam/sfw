@@ -67,6 +67,10 @@
 			if (!res.ok) throw new Error('payment-intent ' + res.status)
 			const url = await res.text()
 			if (!url) throw new Error('empty checkout url')
+			// This fires only once payment-intent creation actually succeeded — unlike
+			// a "purchase" event on the success page (no session id to verify against,
+			// see checkout/success), the browser really is leaving for Stripe here.
+			track('checkout-redirect', { value: subtotal })
 			// External URL — goto() in SvelteKit 2 only handles internal routes.
 			window.location.href = url
 		} catch (err) {

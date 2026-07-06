@@ -1,25 +1,14 @@
 <script lang="ts">
 	import type { PageData } from './$types'
 	import { optimize } from '$lib/utils/img'
-	import { track } from '$lib/utils/umami'
-	import { onMount } from 'svelte'
 
 	let { data }: { data: PageData } = $props()
 
 	const { settings } = data.body
 
-	// ponytail: success_url has no session_id / server verification (pre-existing —
-	// this URL isn't gated, so a refresh, direct visit, or bot can fire this same
-	// as a real Stripe redirect), so this can't cryptographically confirm a real
-	// purchase. A sessionStorage dedup guard was tried and reverted: without a
-	// unique id to key off, it can only distinguish "loaded this page again" —
-	// which silently swallows genuine repeat purchases in the same tab session,
-	// a worse failure mode than the rare refresh over-count it prevents. Real fix
-	// needs a session_id in success_url (stripe.ts) + a server-verified event
-	// (Stripe webhook, or a +page.server.ts load checking payment_status) —
-	// flagged as a CRO/data-integrity item, not implemented here (checkout-flow
-	// change, not tracking instrumentation).
-	onMount(() => track('purchase'))
+	// ponytail: deliberately untracked — success_url (stripe.ts) has no session_id,
+	// so this URL can't tell a real purchase from a refresh/direct-visit/bot. See
+	// PR "umami tracking robustness" for the session-verified upgrade path.
 </script>
 
 <section class="relative flex h-screen items-center justify-center">
