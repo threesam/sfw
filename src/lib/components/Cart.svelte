@@ -53,11 +53,12 @@
 	let subtotal = $derived(
 		$cartItems.reduce((acc, curr) => acc + Number(curr.retail_price) * curr.quantity, 0),
 	)
+	let unitCount = $derived($cartItems.reduce((acc, curr) => acc + curr.quantity, 0))
 
 	let checkoutText = $state('checkout')
 	async function handleCheckout() {
 		checkoutText = 'redirecting…'
-		track('begin-checkout', { items: $cartItems.length, value: subtotal })
+		track('begin-checkout', { items: unitCount, value: subtotal })
 		try {
 			const res = await fetch('/checkout/payment-intent', {
 				method: 'POST',

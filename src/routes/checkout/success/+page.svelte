@@ -9,23 +9,17 @@
 	const { settings } = data.body
 
 	// ponytail: success_url has no session_id / server verification (pre-existing —
-	// this URL isn't gated, so a direct visit, bot, or refresh can fire it too), so
-	// this can't cryptographically confirm a real purchase. Guarding sessionStorage
-	// only stops the common refresh-double-counts case. A real fix needs a
-	// session_id in success_url (stripe.ts) + a server-verified event (Stripe
-	// webhook, or a +page.server.ts load checking payment_status) — flagged as a
-	// CRO/data-integrity item, not implemented here (checkout-flow change, not
-	// tracking instrumentation).
-	onMount(() => {
-		try {
-			if (sessionStorage.getItem('sfw:purchase-tracked')) return
-			sessionStorage.setItem('sfw:purchase-tracked', '1')
-		} catch {
-			// ponytail: storage blocked (privacy mode/extension) — fall through and
-			// track anyway; losing the dedup is better than losing the event
-		}
-		track('purchase')
-	})
+	// this URL isn't gated, so a refresh, direct visit, or bot can fire this same
+	// as a real Stripe redirect), so this can't cryptographically confirm a real
+	// purchase. A sessionStorage dedup guard was tried and reverted: without a
+	// unique id to key off, it can only distinguish "loaded this page again" —
+	// which silently swallows genuine repeat purchases in the same tab session,
+	// a worse failure mode than the rare refresh over-count it prevents. Real fix
+	// needs a session_id in success_url (stripe.ts) + a server-verified event
+	// (Stripe webhook, or a +page.server.ts load checking payment_status) —
+	// flagged as a CRO/data-integrity item, not implemented here (checkout-flow
+	// change, not tracking instrumentation).
+	onMount(() => track('purchase'))
 </script>
 
 <section class="relative flex h-screen items-center justify-center">
