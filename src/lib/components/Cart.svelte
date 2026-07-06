@@ -71,6 +71,7 @@
 		} catch (err) {
 			console.error(err)
 			checkoutText = 'try again'
+			track('checkout-failed')
 		}
 	}
 </script>

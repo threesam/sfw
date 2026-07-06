@@ -8,10 +8,19 @@
 
 	const { settings } = data.body
 
-	// This route is only ever reached via a real Stripe redirect after payment —
-	// a distinct event here surfaces the actual conversion in Umami's events view,
-	// rather than requiring someone to filter pageviews by URL.
-	onMount(() => track('purchase'))
+	// ponytail: success_url has no session_id / server verification (pre-existing —
+	// this URL isn't gated, so a direct visit, bot, or refresh can fire it too), so
+	// this can't cryptographically confirm a real purchase. Guarding sessionStorage
+	// only stops the common refresh-double-counts case. A real fix needs a
+	// session_id in success_url (stripe.ts) + a server-verified event (Stripe
+	// webhook, or a +page.server.ts load checking payment_status) — flagged as a
+	// CRO/data-integrity item, not implemented here (checkout-flow change, not
+	// tracking instrumentation).
+	onMount(() => {
+		if (sessionStorage.getItem('sfw:purchase-tracked')) return
+		sessionStorage.setItem('sfw:purchase-tracked', '1')
+		track('purchase')
+	})
 </script>
 
 <section class="relative flex h-screen items-center justify-center">
