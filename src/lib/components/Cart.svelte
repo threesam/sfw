@@ -50,13 +50,14 @@
 		trackCart({ variant: item, type: 'remove-from-cart' })
 	}
 
+	let subtotal = $derived(
+		$cartItems.reduce((acc, curr) => acc + Number(curr.retail_price) * curr.quantity, 0),
+	)
+
 	let checkoutText = $state('checkout')
 	async function handleCheckout() {
 		checkoutText = 'redirecting…'
-		track('begin-checkout', {
-			items: $cartItems.length,
-			value: $cartItems.reduce((acc, curr) => acc + Number(curr.retail_price) * curr.quantity, 0),
-		})
+		track('begin-checkout', { items: $cartItems.length, value: subtotal })
 		try {
 			const res = await fetch('/checkout/payment-intent', {
 				method: 'POST',
@@ -173,13 +174,7 @@
 			<div class="p-5">
 				<div class="text-light flex w-full justify-between pb-3">
 					<b>Subtotal</b>
-					<span
-						>{$cartItems.reduce((acc, curr) => {
-							acc += Number(curr.retail_price) * curr.quantity
-							return acc
-						}, 0) +
-							'.00 ' +
-							($cartItems[0]?.currency ?? '')}</span
+					<span>{subtotal + '.00 ' + ($cartItems[0]?.currency ?? '')}</span
 					>
 				</div>
 				<button
