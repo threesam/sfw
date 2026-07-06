@@ -17,8 +17,13 @@
 	// CRO/data-integrity item, not implemented here (checkout-flow change, not
 	// tracking instrumentation).
 	onMount(() => {
-		if (sessionStorage.getItem('sfw:purchase-tracked')) return
-		sessionStorage.setItem('sfw:purchase-tracked', '1')
+		try {
+			if (sessionStorage.getItem('sfw:purchase-tracked')) return
+			sessionStorage.setItem('sfw:purchase-tracked', '1')
+		} catch {
+			// ponytail: storage blocked (privacy mode/extension) — fall through and
+			// track anyway; losing the dedup is better than losing the event
+		}
 		track('purchase')
 	})
 </script>
