@@ -1,5 +1,15 @@
 import type { PrintfulSyncVariant } from '$types'
 
+// Shared guard so every call site (cart, subscribe, checkout, ...) gets the same
+// "never let analytics break the UI it's attached to" protection in one place.
+export function track(event: string, data?: Record<string, string | number | boolean>) {
+  try {
+    if (window?.umami) window.umami.track(event, data)
+  } catch {
+    // ponytail: swallow — a tracking failure must never surface as a user-facing error
+  }
+}
+
 export function trackCart({
   variant,
   type
@@ -7,16 +17,9 @@ export function trackCart({
   variant: PrintfulSyncVariant
   type: 'add-to-cart' | 'remove-from-cart'
 }) {
-  if (window?.umami) {
-    window.umami.track(type, {
-      // category: product?.productType ?? '',
-      // id: getId(product?.id) ?? '',
-      // imageURL: product?.images.edges[0].node.originalSrc ?? '',
-      name: variant?.name ?? '',
-      price: Number(variant.retail_price) ?? '',
-      // sku: variant.sku ?? '',
-      // variant: variant.node.title ?? '',
-      variant_id: variant.id ?? ''
-    })
-  }
+  track(type, {
+    name: variant?.name ?? '',
+    price: Number(variant.retail_price) ?? '',
+    variant_id: variant.id ?? ''
+  })
 }

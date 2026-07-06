@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { fly } from 'svelte/transition'
+	import { track } from '$lib/utils/umami'
 
 	let {
 		endpoint = '/api/subscribe',
@@ -23,6 +24,7 @@
 			if (!res.ok) throw new Error(String(res.status))
 			status = 'ok'
 			message = 'Thanks for subscribing!'
+			track('newsletter-subscribe')
 			setTimeout(() => {
 				email = ''
 				status = 'idle'

@@ -1,10 +1,17 @@
 <script lang="ts">
 	import type { PageData } from './$types'
 	import { optimize } from '$lib/utils/img'
+	import { track } from '$lib/utils/umami'
+	import { onMount } from 'svelte'
 
 	let { data }: { data: PageData } = $props()
 
 	const { settings } = data.body
+
+	// This route is only ever reached via a real Stripe redirect after payment —
+	// a distinct event here surfaces the actual conversion in Umami's events view,
+	// rather than requiring someone to filter pageviews by URL.
+	onMount(() => track('purchase'))
 </script>
 
 <section class="relative flex h-screen items-center justify-center">

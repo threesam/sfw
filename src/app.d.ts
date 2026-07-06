@@ -295,19 +295,7 @@ export type SiteSettings = {
 declare global {
   interface Window {
     umami: {
-      track: (
-        type: string,
-        {
-          // category: product?.productType ?? '',
-          // id: getId(product?.id) ?? '',
-          // imageURL: product?.images.edges[0].node.originalSrc ?? '',
-          name: string,
-          price: number,
-          // sku: variant.sku ?? '',
-          // variant: variant.node.title ?? '',
-          variant_id: string
-        }
-      ) => void
+      track: (type: string, data?: Record<string, string | number | boolean>) => void
     }
   }
 }

@@ -3,7 +3,7 @@
 	import { showCart, cartItems, type CartItem } from '$store'
 	import { fly, fade } from 'svelte/transition'
 	import { quintInOut } from 'svelte/easing'
-	import { trackCart } from '$lib/utils/umami'
+	import { trackCart, track } from '$lib/utils/umami'
 	import { page } from '$app/stores'
 
 	let clientWidth = $state(0)
@@ -53,6 +53,10 @@
 	let checkoutText = $state('checkout')
 	async function handleCheckout() {
 		checkoutText = 'redirecting…'
+		track('begin-checkout', {
+			items: $cartItems.length,
+			value: $cartItems.reduce((acc, curr) => acc + Number(curr.retail_price) * curr.quantity, 0),
+		})
 		try {
 			const res = await fetch('/checkout/payment-intent', {
 				method: 'POST',
