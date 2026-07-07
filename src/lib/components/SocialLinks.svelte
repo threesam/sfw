@@ -53,6 +53,8 @@
 				in:scale={{ delay: (i + 1) * 100, start: 0 }}
 				{href}
 				aria-label={title}
+				data-umami-event="social-click"
+				data-umami-event-platform={title}
 			>
 				{#if Comp}
 					<Comp color={iconColor} width={size} height={size} />

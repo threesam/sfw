@@ -5,6 +5,10 @@
 	let { data }: { data: PageData } = $props()
 
 	const { settings } = data.body
+
+	// ponytail: deliberately untracked — success_url (stripe.ts) has no session_id,
+	// so this URL can't tell a real purchase from a refresh/direct-visit/bot. See
+	// PR "umami tracking robustness" for the session-verified upgrade path.
 </script>
 
 <section class="relative flex h-screen items-center justify-center">

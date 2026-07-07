@@ -3,7 +3,7 @@
 	import { showCart, cartItems, type CartItem } from '$store'
 	import { fly, fade } from 'svelte/transition'
 	import { quintInOut } from 'svelte/easing'
-	import { trackCart } from '$lib/utils/umami'
+	import { trackCart, track } from '$lib/utils/umami'
 	import { page } from '$app/stores'
 
 	let clientWidth = $state(0)
@@ -50,9 +50,15 @@
 		trackCart({ variant: item, type: 'remove-from-cart' })
 	}
 
+	let subtotal = $derived(
+		$cartItems.reduce((acc, curr) => acc + Number(curr.retail_price) * curr.quantity, 0),
+	)
+	let unitCount = $derived($cartItems.reduce((acc, curr) => acc + curr.quantity, 0))
+
 	let checkoutText = $state('checkout')
 	async function handleCheckout() {
 		checkoutText = 'redirecting…'
+		track('begin-checkout', { items: unitCount, value: subtotal })
 		try {
 			const res = await fetch('/checkout/payment-intent', {
 				method: 'POST',
@@ -61,11 +67,16 @@
 			if (!res.ok) throw new Error('payment-intent ' + res.status)
 			const url = await res.text()
 			if (!url) throw new Error('empty checkout url')
+			// This fires only once payment-intent creation actually succeeded — unlike
+			// a "purchase" event on the success page (no session id to verify against,
+			// see checkout/success), the browser really is leaving for Stripe here.
+			track('checkout-redirect', { value: subtotal })
 			// External URL — goto() in SvelteKit 2 only handles internal routes.
 			window.location.href = url
 		} catch (err) {
 			console.error(err)
 			checkoutText = 'try again'
+			track('checkout-failed')
 		}
 	}
 </script>
@@ -169,13 +180,7 @@
 			<div class="p-5">
 				<div class="text-light flex w-full justify-between pb-3">
 					<b>Subtotal</b>
-					<span
-						>{$cartItems.reduce((acc, curr) => {
-							acc += Number(curr.retail_price) * curr.quantity
-							return acc
-						}, 0) +
-							'.00 ' +
-							($cartItems[0]?.currency ?? '')}</span
+					<span>{subtotal + '.00 ' + ($cartItems[0]?.currency ?? '')}</span
 					>
 				</div>
 				<button

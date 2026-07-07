@@ -28,7 +28,13 @@
 		{#each products
 			.sort((a, b) => Number(b.variants[0]?.retail_price ?? 0) - Number(a.variants[0]?.retail_price ?? 0))
 			.slice(0, 3) as product}
-			<a href="/merch/{product.id}" class="block">
+			<a
+				href="/merch/{product.id}"
+				class="block"
+				data-umami-event="product-click"
+				data-umami-event-id={product.id}
+				data-umami-event-name={product.name}
+			>
 				<img
 					class="mb-2 aspect-square w-full bg-gradient-to-tr from-slate-700 object-cover"
 					src={product.thumbnail_url}
