@@ -129,8 +129,8 @@
 	{/if}
 	<div class="bg-dark border-dark text-dark relative border-2 p-5 font-bold lg:p-10">
 		<h2 class="text-light mb-2 font-sans text-2xl">Subscribe</h2>
-		<SubscribeForm />
+		<SubscribeForm location="contact" />
 		<h2 class="text-light mb-2 mt-8 font-sans text-2xl">Follow</h2>
-		<SocialLinks links={settings.links} color="var(--primary)" size={60} />
+		<SocialLinks links={settings.links} color="var(--primary)" size={60} location="contact" />
 	</div>
 </section>

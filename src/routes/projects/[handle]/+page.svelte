@@ -86,7 +86,10 @@
 			>
 				This project is in active development, see available roles on <a
 					class="border-primary text-light border-b transition-all duration-300 hover:border-transparent"
-					href={backstage.href}>backstage</a
+					href={backstage.href}
+					data-umami-event="social-click"
+					data-umami-event-platform="backstage"
+					data-umami-event-location="project-notice">backstage</a
 				>
 			</div>
 		{/if}
@@ -145,7 +148,7 @@
 
 		{#if project.links?.length}
 			<div class="flex w-full items-center justify-center mb-32">
-				<SocialLinks size={40} links={project.links} color={project.image.color} />
+				<SocialLinks size={40} links={project.links} color={project.image.color} location="project" />
 			</div>
 		{/if}
 
