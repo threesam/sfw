@@ -5,6 +5,7 @@
 	import Swiper from '$components/Swiper.svelte'
 	import SubscribeForm from '$lib/components/SubscribeForm.svelte'
 	import SocialLinks from '$lib/components/SocialLinks.svelte'
+	import { track } from '$lib/utils/umami'
 
 	let { data }: { data: PageData } = $props()
 
@@ -31,9 +32,12 @@
 			<a
 				href="/merch/{product.id}"
 				class="block"
-				data-umami-event="product-click"
-				data-umami-event-id={product.id}
-				data-umami-event-name={product.name}
+				onclick={() =>
+					// JS track instead of data-umami-event: the auto-tracker preventDefaults
+					// tagged same-tab anchors and re-navigates via location.href, which would
+					// turn this internal link into a full page reload. Same payload as before
+					// (attribute values arrive as strings, hence String(id)).
+					track('product-click', { id: String(product.id), name: product.name })}
 			>
 				<img
 					class="mb-2 aspect-square w-full bg-gradient-to-tr from-slate-700 object-cover"
