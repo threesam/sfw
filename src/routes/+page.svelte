@@ -60,11 +60,11 @@
 		Release dates, behind-the-scenes, and the occasional dispatch.
 	</p>
 	<div class="mx-auto max-w-md">
-		<SubscribeForm darkMode />
+		<SubscribeForm darkMode location="home" />
 	</div>
 	{#if settings?.links?.length}
 		<div class="mt-12 flex justify-center">
-			<SocialLinks links={settings.links} color="var(--dark)" size={40} />
+			<SocialLinks links={settings.links} color="var(--dark)" size={40} location="home" />
 		</div>
 	{/if}
 </section>

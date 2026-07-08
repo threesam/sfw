@@ -5,7 +5,8 @@
 	let {
 		endpoint = '/api/subscribe',
 		darkMode = false,
-	}: { endpoint?: string; darkMode?: boolean } = $props()
+		location = undefined,
+	}: { endpoint?: string; darkMode?: boolean; location?: string } = $props()
 
 	let email = $state('')
 	let status = $state<'idle' | 'submitting' | 'ok' | 'error'>('idle')
@@ -59,6 +60,8 @@
 	<button
 		type="submit"
 		disabled={status === 'submitting'}
+		data-umami-event="subscribe-click"
+		data-umami-event-location={location}
 		class={`bg-primary text-dark rounded-none border-2 p-5 lg:pl-5 disabled:opacity-60 ${
 			darkMode ? 'border-dark' : 'border-primary'
 		}`}

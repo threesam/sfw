@@ -18,10 +18,12 @@
 		color = 'var(--background)',
 		size = 69,
 		links = [] as Link[],
+		location = undefined,
 	}: {
 		color?: string | null
 		size?: number
 		links?: Link[]
+		location?: string
 	} = $props()
 
 	const options = [
@@ -55,6 +57,7 @@
 				aria-label={title}
 				data-umami-event="social-click"
 				data-umami-event-platform={title}
+				data-umami-event-location={location}
 			>
 				{#if Comp}
 					<Comp color={iconColor} width={size} height={size} />
