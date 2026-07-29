@@ -7,6 +7,10 @@ const client = createClient({
 	projectId: public_env.PUBLIC_SANITY_PROJECT_ID,
 	dataset: public_env.PUBLIC_SANITY_DATASET,
 	apiVersion: '2021-10-21',
+	// Stays false deliberately: this client is token-authenticated and writes
+	// (asset uploads from the Printful webhook). The CDN is read-only and does
+	// not serve authenticated requests, so it cannot be used here. Low volume —
+	// webhook-triggered, not per-visitor — so it is not what exhausts the quota.
 	useCdn: false,
 	token: private_env.SANITY_TOKEN,
 })
