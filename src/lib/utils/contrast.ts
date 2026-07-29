@@ -44,26 +44,37 @@ const toHex = (rgb: [number, number, number]) =>
 	'#' + rgb.map((v) => Math.round(v).toString(16).padStart(2, '0')).join('')
 
 /**
- * Return `color` if it already reads against `bg`, otherwise the same hue lifted
- * toward white until it does. Falls back to white for unparseable input.
+ * Return `color` if it already reads against `bg`, otherwise the same hue pushed
+ * away from `bg` until it does. Falls back to whichever pole contrasts with `bg`
+ * for unparseable input.
+ *
+ * The direction is chosen from the background, not assumed: lightening toward
+ * white is right against this site's near-black page, but against a light ground
+ * it would make contrast worse and hand back the least readable answer possible.
  */
 export function readableOn(color: string | undefined | null, bg = PAGE_DARK): string {
-	const fg = color ? parseHex(color) : null
 	const ground = parseHex(bg)
-	if (!fg || !ground) return '#ffffff'
+	if (!ground) return '#ffffff'
+
+	// Push away from the ground: toward white on a dark ground, toward black on a
+	// light one. The far pole is always a valid terminal answer in that direction.
+	const towardWhite = luminance(ground) < 0.5
+	const pole = towardWhite ? 255 : 0
+	const fallback = towardWhite ? '#ffffff' : '#000000'
+
+	const fg = color ? parseHex(color) : null
+	if (!fg) return fallback
 	if (ratio(fg, ground) >= MIN_RATIO) return color as string
 
-	// Blend toward white in fixed steps. 20 steps is finer than the eye resolves
-	// across this range, and terminating at pure white is always a valid answer
-	// since white maximises contrast against any ground dark enough to fail.
+	// 20 steps is finer than the eye resolves across this range.
 	for (let i = 1; i <= 20; i++) {
 		const t = i / 20
-		const lifted: [number, number, number] = [
-			fg[0] + (255 - fg[0]) * t,
-			fg[1] + (255 - fg[1]) * t,
-			fg[2] + (255 - fg[2]) * t,
+		const shifted: [number, number, number] = [
+			fg[0] + (pole - fg[0]) * t,
+			fg[1] + (pole - fg[1]) * t,
+			fg[2] + (pole - fg[2]) * t,
 		]
-		if (ratio(lifted, ground) >= MIN_RATIO) return toHex(lifted)
+		if (ratio(shifted, ground) >= MIN_RATIO) return toHex(shifted)
 	}
-	return '#ffffff'
+	return fallback
 }
