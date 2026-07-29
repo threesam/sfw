@@ -34,7 +34,7 @@
 		} catch (err) {
 			console.error(err)
 			status = 'error'
-			message = 'Something went wrong — try again later.'
+			message = 'Something went wrong. Try again later.'
 		}
 	}
 </script>

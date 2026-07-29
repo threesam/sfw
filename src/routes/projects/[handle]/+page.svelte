@@ -55,7 +55,7 @@
 
 {#if project}
 	<SEO
-		title={`${project.title} — Skeleton Flowers and Water`}
+		title={`${project.title} - Skeleton Flowers and Water`}
 		description={project.description}
 		openGraph={{
 			title: project.title,

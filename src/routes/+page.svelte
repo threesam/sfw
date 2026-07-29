@@ -5,7 +5,7 @@
 	import Swiper from '$components/Swiper.svelte'
 	import SubscribeForm from '$lib/components/SubscribeForm.svelte'
 	import SocialLinks from '$lib/components/SocialLinks.svelte'
-	import { track } from '$lib/utils/umami'
+	import ProductTile from '$lib/components/ProductTile.svelte'
 
 	let { data }: { data: PageData } = $props()
 
@@ -29,31 +29,13 @@
 		{#each products
 			.sort((a, b) => Number(b.variants[0]?.retail_price ?? 0) - Number(a.variants[0]?.retail_price ?? 0))
 			.slice(0, 3) as product}
-			<a
-				href="/merch/{product.id}"
-				class="block"
-				onclick={() =>
-					// JS track instead of data-umami-event: the auto-tracker preventDefaults
-					// tagged same-tab anchors and re-navigates via location.href, which would
-					// turn this internal link into a full page reload. Same payload as before
-					// (attribute values arrive as strings, hence String(id)).
-					track('product-click', { id: String(product.id), name: product.name })}
-			>
-				<img
-					class="mb-2 aspect-square w-full bg-gradient-to-tr from-slate-700 object-cover"
-					src={product.thumbnail_url}
-					alt={product.name}
-					loading="lazy"
-					decoding="async"
-					width="600"
-					height="600"
-				/>
-				<h3 class="font-display text-2xl">{product.name}</h3>
-				<p class="text-sm">
-					{product.variants[0]?.retail_price}
-					<span class="opacity-70">{product.variants[0]?.currency}</span>
-				</p>
-			</a>
+			<ProductTile
+				id={product.id}
+				name={product.name}
+				thumbnail_url={product.thumbnail_url}
+				price={product.variants[0]?.retail_price}
+				currency={product.variants[0]?.currency}
+			/>
 		{/each}
 	</div>
 </section>
