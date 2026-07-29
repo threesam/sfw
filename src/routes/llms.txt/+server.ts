@@ -17,7 +17,7 @@ export const GET: RequestHandler = async () => {
 
 	const body = `# Skeleton Flowers and Water
 
-> American film and television production company founded in 2020 by Laila Wolf and Lisa Ann Wolf. Stories where something is hidden underneath — neo-noir, dark comedy horror, period gothic, and romance drama.
+> American film and television production company founded in 2020 by Laila Wolf and Lisa Ann Wolf. Stories where something is hidden underneath: neo-noir, dark comedy horror, period gothic, and romance drama.
 
 The name comes from the perennial plant Diphylleia grayi, the Skeleton Flower, whose white petals turn transparent when touched by water.
 

@@ -35,7 +35,7 @@
 </script>
 
 <SEO
-	title="Films — Skeleton Flowers and Water"
+	title="Films - Skeleton Flowers and Water"
 	description="The catalog: completed films, in production, and what's next from Skeleton Flowers and Water."
 />
 <JsonLd data={itemListLd} />

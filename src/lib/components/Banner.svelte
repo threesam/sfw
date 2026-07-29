@@ -2,6 +2,7 @@
 	import { fly } from 'svelte/transition'
 	import Image from './Image.svelte'
 	import { optimize } from '$lib/utils/img'
+	import { readableOn } from '$lib/utils/contrast'
 
 	let {
 		height = '',
@@ -23,6 +24,12 @@
 
 	const handle = path + slug
 	const preloadSrc = optimize(image.src, { w: 1600 })
+
+	// The film title is set in the poster's dominant color against the near-black
+	// page, and nothing bounds what Sanity returns - a dark poster yields an
+	// unreadable title. Keep the raw value for the decorative gradient, and set
+	// type in a contrast-guaranteed version of the same hue.
+	const titleColor = $derived(readableOn(image.color))
 </script>
 
 <svelte:head>
@@ -44,7 +51,7 @@
 			class="absolute bottom-0 left-0 max-w-lg p-5 lg:p-10"
 		>
 			<span class="text-sm uppercase text-gray-300">{status.replace(/-/g, ' ')}</span>
-			<h1 class="font-display py-2 text-3xl lg:text-6xl" style="color: var(--primary);">{title}</h1>
+			<h1 class="font-display py-2 text-3xl lg:text-6xl" style="color: {titleColor};">{title}</h1>
 			<p>{description}</p>
 			{#if slug}
 				<a

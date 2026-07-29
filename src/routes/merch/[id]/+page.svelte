@@ -79,7 +79,7 @@
 		return {
 			'@type': 'Product',
 			name: product.name,
-			description: `${product.name} — limited apparel from Skeleton Flowers and Water.`,
+			description: `${product.name}. Limited apparel from Skeleton Flowers and Water.`,
 			image: product.thumbnail_url,
 			brand: { '@type': 'Brand', name: 'Skeleton Flowers and Water' },
 			category: 'Apparel',
@@ -89,8 +89,8 @@
 </script>
 
 <SEO
-	title={`${product.name} — Skeleton Flowers and Water`}
-	description={`${product.name} — limited apparel from Skeleton Flowers and Water.`}
+	title={`${product.name} - Skeleton Flowers and Water`}
+	description={`${product.name}. Limited apparel from Skeleton Flowers and Water.`}
 	openGraph={{
 		title: product.name,
 		type: 'website',

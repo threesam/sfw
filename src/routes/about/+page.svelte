@@ -11,7 +11,7 @@
 </script>
 
 <SEO
-	title="About — Skeleton Flowers and Water"
+	title="About - Skeleton Flowers and Water"
 	description={settings?.description}
 />
 

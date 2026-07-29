@@ -12,20 +12,26 @@
   src: url('$lib/assets/fonts/Cherry Monospace-Light.woff2') format('woff2');
 }
 
+/* Body face. Schibsted Grotesk was drawn for a newspaper group, so it is built
+   for reading at small sizes - the job Montserrat was doing badly here. It is
+   narrower and more vertical than Montserrat's wide geometric circles, so it
+   sits under Staatliches instead of competing with it, and its sturdier stems
+   survive the #111111 ground where Montserrat's thin strokes went muddy.
+   Axis is 400-900, so Tailwind's font-thin/font-extralight clamp to 400. */
 @font-face {
-  font-family: 'Montserrat';
+  font-family: 'Schibsted Grotesk';
   font-display: swap;
   font-style: normal;
-  font-weight: 100 900;
-  src: url('$lib/assets/fonts/Montserrat-VariableFont_wght.woff2') format('woff2-variations');
+  font-weight: 400 900;
+  src: url('$lib/assets/fonts/SchibstedGrotesk-VariableFont_wght.woff2') format('woff2-variations');
 }
 
 @font-face {
-  font-family: 'Montserrat';
+  font-family: 'Schibsted Grotesk';
   font-display: swap;
   font-style: italic;
-  font-weight: 100 900;
-  src: url('$lib/assets/fonts/Montserrat-Italic-VariableFont_wght.woff2') format('woff2-variations');
+  font-weight: 400 900;
+  src: url('$lib/assets/fonts/SchibstedGrotesk-Italic-VariableFont_wght.woff2') format('woff2-variations');
 }
 
 @theme {
@@ -34,7 +40,7 @@
   --color-light: #fcfcfc;
 
   --font-display: 'Staatliches', monospace;
-  --font-sans: 'Montserrat', sans-serif;
+  --font-sans: 'Schibsted Grotesk', sans-serif;
   --font-mono: 'Cherry', monospace;
 }
 
