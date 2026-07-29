@@ -7,7 +7,11 @@ const client = createClient({
   projectId: env.PUBLIC_SANITY_PROJECT_ID,
   dataset: env.PUBLIC_SANITY_DATASET,
   apiVersion: '2021-10-21',
-  useCdn: false,
+  // Read path for every visitor request. The live API is metered and starts
+  // returning 402 once the plan's request quota is hit, which took this site
+  // down; the CDN has its own far larger allowance. Published content only,
+  // no token, so the CDN is the right endpoint here.
+  useCdn: true,
 })
 
 const builder = imageUrlBuilder(client)
