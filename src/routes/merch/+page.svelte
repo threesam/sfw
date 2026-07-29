@@ -3,7 +3,7 @@
 	import SEO from 'svelte-seo'
 	import JsonLd from '$lib/components/JsonLd.svelte'
 	import { canonical } from '$lib/utils/site'
-	import { track } from '$lib/utils/umami'
+	import ProductTile from '$lib/components/ProductTile.svelte'
 
 	let { data }: { data: PageData } = $props()
 
@@ -37,29 +37,14 @@
 	{#if products.length}
 		<div class="grid gap-10 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
 			{#each products as product}
-				<a
-					href="/merch/{product.id}"
-					class="block"
-					onclick={() =>
-						// Same event name and payload as the homepage tile so the two entry
-						// points aggregate together in umami rather than splitting the funnel.
-						track('product-click', { id: String(product.id), name: product.name })}
-				>
-					<img
-						class="mb-2 aspect-square w-full bg-gradient-to-tr from-slate-700 object-cover"
-						src={product.thumbnail_url}
-						alt={product.name}
-						loading="lazy"
-						decoding="async"
-						width="600"
-						height="600"
-					/>
-					<h2 class="font-display text-2xl">{product.name}</h2>
-					<p class="text-sm">
-						{product.variants[0]?.retail_price}
-						<span class="opacity-70">{product.variants[0]?.currency}</span>
-					</p>
-				</a>
+				<ProductTile
+					id={product.id}
+					name={product.name}
+					thumbnail_url={product.thumbnail_url}
+					price={product.variants[0]?.retail_price}
+					currency={product.variants[0]?.currency}
+					headingLevel={2}
+				/>
 			{/each}
 		</div>
 	{:else}
