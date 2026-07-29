@@ -56,9 +56,15 @@ export function readableOn(color: string | undefined | null, bg = PAGE_DARK): st
 	const ground = parseHex(bg)
 	if (!ground) return '#ffffff'
 
-	// Push away from the ground: toward white on a dark ground, toward black on a
-	// light one. The far pole is always a valid terminal answer in that direction.
-	const towardWhite = luminance(ground) < 0.5
+	// Pick the pole by measured contrast rather than a luminance threshold. White
+	// only reaches the floor when the ground's luminance is <= ~0.183, so a naive
+	// "is it darker than mid-grey" test sends mid-dark grounds toward white and
+	// terminates at a #ffffff that still fails. The two poles' ranges overlap
+	// (white works <= 0.183, black works >= 0.175), so whichever measures higher
+	// is always a terminal answer that clears the floor.
+	const white: [number, number, number] = [255, 255, 255]
+	const black: [number, number, number] = [0, 0, 0]
+	const towardWhite = ratio(white, ground) >= ratio(black, ground)
 	const pole = towardWhite ? 255 : 0
 	const fallback = towardWhite ? '#ffffff' : '#000000'
 
@@ -66,13 +72,16 @@ export function readableOn(color: string | undefined | null, bg = PAGE_DARK): st
 	if (!fg) return fallback
 	if (ratio(fg, ground) >= MIN_RATIO) return color as string
 
-	// 20 steps is finer than the eye resolves across this range.
+	// 20 steps is finer than the eye resolves across this range. Round to the
+	// 8-bit channel value BEFORE measuring: checking the unrounded float and then
+	// rounding on the way out can shed enough contrast to land just under the
+	// floor, which an exhaustive sweep of grey grounds put at 4.48:1.
 	for (let i = 1; i <= 20; i++) {
 		const t = i / 20
 		const shifted: [number, number, number] = [
-			fg[0] + (pole - fg[0]) * t,
-			fg[1] + (pole - fg[1]) * t,
-			fg[2] + (pole - fg[2]) * t,
+			Math.round(fg[0] + (pole - fg[0]) * t),
+			Math.round(fg[1] + (pole - fg[1]) * t),
+			Math.round(fg[2] + (pole - fg[2]) * t),
 		]
 		if (ratio(shifted, ground) >= MIN_RATIO) return toHex(shifted)
 	}
