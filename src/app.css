@@ -31,7 +31,8 @@
   font-display: swap;
   font-style: italic;
   font-weight: 400 900;
-  src: url('$lib/assets/fonts/SchibstedGrotesk-Italic-VariableFont_wght.woff2') format('woff2-variations');
+  src: url('$lib/assets/fonts/SchibstedGrotesk-Italic-VariableFont_wght.woff2')
+    format('woff2-variations');
 }
 
 @theme {
