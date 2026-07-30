@@ -26,7 +26,18 @@
 	}
 </script>
 
-<header class="bg-dark fixed z-10 flex w-full flex-col items-center">
+<!--
+	z-index scale for this app, so these stay deliberate rather than ad hoc:
+	  0  page content and hero layers
+	 10  controls inside a section (the Swiper's prev/next arrows)
+	 40  this fixed header
+	 50  overlays that must cover the header (cart drawer, mobile menu)
+
+	The header sat at z-10, the same level as the Swiper arrows. Equal z-index
+	falls back to DOM order, and the Swiper comes later in the document, so its
+	arrows painted over the fixed cart button whenever the slider was on screen.
+-->
+<header class="bg-dark fixed z-40 flex w-full flex-col items-center">
 	<div class="flex h-16 w-full items-center justify-between px-5 lg:px-10">
 		<div class="relative z-10 hidden gap-5 lg:flex">
 			{#each links as { href, title }}

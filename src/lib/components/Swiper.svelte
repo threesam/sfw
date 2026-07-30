@@ -80,7 +80,7 @@
 									/>
 								</span>
 							{/if}
-							<h5 class="h-full py-5 text-center">{slideTitle}</h5>
+							<h3 class="h-full py-5 text-center">{slideTitle}</h3>
 						</a>
 					</div>
 				{/each}
