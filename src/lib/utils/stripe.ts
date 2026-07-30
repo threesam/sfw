@@ -4,7 +4,7 @@ import { getId } from './printful'
 import type { PrintfulProduct } from '$types'
 
 const stripe = new Stripe(STRIPE_SECRET_KEY, {
-  apiVersion: '2026-04-22.dahlia'
+  apiVersion: '2026-06-24.dahlia'
 })
 
 type CheckoutLineItem = NonNullable<Stripe.Checkout.SessionCreateParams['line_items']>[number]
@@ -70,7 +70,12 @@ export async function upsertProduct({ product }: { product: PrintfulProduct }) {
         images: product.thumbnail_url ? [product.thumbnail_url] : [],
         default_price_data: {
           currency: variant.currency,
-          unit_amount: +variant.retail_price * 100
+          // Round: Stripe wants an integer number of cents, and float maths does
+          // not give one for plenty of ordinary prices (19.99 * 100 is
+          // 1998.9999999999998, 0.29 * 100 is 28.999999999999996). Today's
+          // catalogue is whole dollars so this has not bitten yet, but the first
+          // .99 price would either be rejected or lose a cent.
+          unit_amount: Math.round(+variant.retail_price * 100)
         }
       })
     })
