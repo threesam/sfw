@@ -11,7 +11,7 @@ const client = createClient({
   // returning 402 once the plan's request quota is hit, which took this site
   // down; the CDN has its own far larger allowance. Published content only,
   // no token, so the CDN is the right endpoint here.
-  useCdn: true,
+  useCdn: true
 })
 
 const builder = imageUrlBuilder(client)
@@ -78,7 +78,11 @@ export async function getAllProjects(): Promise<Project[]> {
   }`)
 }
 
-export async function getSettings({ hostname }: { hostname: string }): Promise<SiteSettings | null> {
+export async function getSettings({
+  hostname
+}: {
+  hostname: string
+}): Promise<SiteSettings | null> {
   return await client.fetch<SiteSettings | null>(
     `*[_type == "siteSettings" && hostname == $hostname][0]{
       ...,

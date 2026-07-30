@@ -5,17 +5,17 @@ import { canonical } from '$lib/utils/site'
 export const prerender = true
 
 export const GET: RequestHandler = async () => {
-	const projects = await getAllProjects().catch(() => [])
+  const projects = await getAllProjects().catch(() => [])
 
-	const released = projects.filter((p) => ['completed', 'released'].includes(p.status ?? ''))
-	const upcoming = projects.filter((p) =>
-		['filming', 'post-production', 'pre-production'].includes(p.status ?? ''),
-	)
+  const released = projects.filter((p) => ['completed', 'released'].includes(p.status ?? ''))
+  const upcoming = projects.filter((p) =>
+    ['filming', 'post-production', 'pre-production'].includes(p.status ?? '')
+  )
 
-	const renderFilm = (p: (typeof projects)[number]) =>
-		`- [${p.title}](${canonical(`/projects/${p.slug}`)}): ${p.description?.trim() ?? ''}`
+  const renderFilm = (p: (typeof projects)[number]) =>
+    `- [${p.title}](${canonical(`/projects/${p.slug}`)}): ${p.description?.trim() ?? ''}`
 
-	const body = `# Skeleton Flowers and Water
+  const body = `# Skeleton Flowers and Water
 
 > American film and television production company founded in 2020 by Laila Wolf and Lisa Ann Wolf. Stories where something is hidden underneath: neo-noir, dark comedy horror, period gothic, and romance drama.
 
@@ -39,7 +39,7 @@ ${upcoming.map(renderFilm).join('\n')}
 - [Merch](${canonical('/merch')}): Apparel, posters, and limited goods.
 `
 
-	return new Response(body, {
-		headers: { 'content-type': 'text/plain; charset=utf-8' },
-	})
+  return new Response(body, {
+    headers: { 'content-type': 'text/plain; charset=utf-8' }
+  })
 }
