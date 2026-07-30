@@ -253,11 +253,7 @@ export type ProjectPoster = {
 export type ProjectLink = { title: string; href: string }
 
 export type ProjectStatus =
-  | 'pre-production'
-  | 'filming'
-  | 'post-production'
-  | 'completed'
-  | 'released'
+  'pre-production' | 'filming' | 'post-production' | 'completed' | 'released'
 
 export type Project = {
   _id?: string
