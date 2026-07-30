@@ -4,7 +4,7 @@ import { getId } from './printful'
 import type { PrintfulProduct } from '$types'
 
 const stripe = new Stripe(STRIPE_SECRET_KEY, {
-  apiVersion: '2026-04-22.dahlia'
+  apiVersion: '2026-06-24.dahlia'
 })
 
 type CheckoutLineItem = NonNullable<Stripe.Checkout.SessionCreateParams['line_items']>[number]
