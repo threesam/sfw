@@ -1,157 +1,68 @@
 <script lang="ts">
-	import { cartItems, showCart, type CartItem } from '$store'
-	import type { PageData } from './$types'
-	import { page } from '$app/stores'
-	import { goto } from '$app/navigation'
-	import { trackCart } from '$utils/umami'
-	import DescriptionToggle from '$components/DescriptionToggle.svelte'
-	import JsonLd from '$lib/components/JsonLd.svelte'
-	import SEO from 'svelte-seo'
-	import { canonical } from '$lib/utils/site'
-	import type { PrintfulSyncVariant } from '$types'
+  import type { PageData } from './$types'
+  import { page } from '$app/stores'
+  import { goto } from '$app/navigation'
+  import ProductDetail from '$lib/components/ProductDetail.svelte'
+  import JsonLd from '$lib/components/JsonLd.svelte'
+  import SEO from 'svelte-seo'
+  import { canonical } from '$lib/utils/site'
 
-	let { data }: { data: PageData } = $props()
+  let { data }: { data: PageData } = $props()
 
-	const { product } = data.body
-	const { variants } = product
+  const { product } = data.body
+  const { variants } = product
 
-	let selectedVariantId = $derived(new URL($page.url).searchParams.get('v'))
+  // This page still exists and still server-renders: it is what a shared link, a
+  // reload, or a crawler gets. In-app tile clicks open the sheet over the grid
+  // instead, via shallow routing, and both end up on the same URL.
+  let initialVariantId = $derived(new URL($page.url).searchParams.get('v'))
 
-	let selectedVariant: (PrintfulSyncVariant & { quantity?: number }) | undefined = $derived(
-		variants.find((v) => String(v.id) === String(selectedVariantId)) ?? variants[0]
-	)
+  // Mirror the choice into ?v= so a variant stays shareable. replaceState so
+  // picking sizes does not stack history entries the back button has to unwind.
+  function onvariantchange(id: number | string) {
+    goto(`?v=${id}`, { replaceState: true, noScroll: true, keepFocus: true })
+  }
 
-	function getSize(variant: PrintfulSyncVariant) {
-		const parenMatch = variant.product?.name?.match(/\(.*\/\s*(.+?)\)/)
-		if (parenMatch) return parenMatch[1]
-		const parts = variant.name.split(' - ')
-		return parts.length > 1 ? parts[parts.length - 1] : 'one size'
-	}
-
-	function selectVariant(id: number | string) {
-		goto(`?v=${id}`, { replaceState: true, noScroll: true })
-	}
-
-	function addToCart({ variant }: { variant: PrintfulSyncVariant & { quantity?: number } }) {
-		let isAlreadyAdded = false
-		const items: CartItem[] = []
-		$cartItems.forEach((item) => {
-			if (variant.id === item.id) {
-				isAlreadyAdded = true
-				item.quantity++
-			}
-			items.push(item)
-		})
-
-		if (!isAlreadyAdded) {
-			variant.quantity = 1
-			items.push(variant as CartItem)
-		}
-
-		$cartItems = items
-		$showCart = true
-		trackCart({ variant, type: 'add-to-cart' })
-	}
-
-	$effect(() => {
-		const first = variants[0]
-		if (!selectedVariantId && first) {
-			selectVariant(first.id)
-		}
-	})
-
-	let productLd = $derived.by(() => {
-		const pageUrl = canonical($page.url.pathname)
-		const offers = variants
-			.map((v) => {
-				const price = Number(v.retail_price)
-				if (!Number.isFinite(price)) return null
-				return {
-					'@type': 'Offer' as const,
-					sku: v.sku,
-					price,
-					priceCurrency: v.currency ?? 'USD',
-					availability: 'https://schema.org/InStock',
-					url: `${pageUrl}?v=${v.id}`,
-				}
-			})
-			.filter((o): o is NonNullable<typeof o> => o !== null)
-		return {
-			'@type': 'Product',
-			name: product.name,
-			description: `${product.name}. Limited apparel from Skeleton Flowers and Water.`,
-			image: product.thumbnail_url,
-			brand: { '@type': 'Brand', name: 'Skeleton Flowers and Water' },
-			category: 'Apparel',
-			offers,
-		}
-	})
+  let productLd = $derived.by(() => {
+    const pageUrl = canonical($page.url.pathname)
+    const offers = variants
+      .map((v) => {
+        const price = Number(v.retail_price)
+        if (!Number.isFinite(price)) return null
+        return {
+          '@type': 'Offer' as const,
+          sku: v.sku,
+          price,
+          priceCurrency: v.currency ?? 'USD',
+          availability: 'https://schema.org/InStock',
+          url: `${pageUrl}?v=${v.id}`
+        }
+      })
+      .filter((o): o is NonNullable<typeof o> => o !== null)
+    return {
+      '@type': 'Product',
+      name: product.name,
+      description: `${product.name}. Limited apparel from Skeleton Flowers and Water.`,
+      image: product.thumbnail_url,
+      brand: { '@type': 'Brand', name: 'Skeleton Flowers and Water' },
+      category: 'Apparel',
+      offers
+    }
+  })
 </script>
 
 <SEO
-	title={`${product.name} - Skeleton Flowers and Water`}
-	description={`${product.name}. Limited apparel from Skeleton Flowers and Water.`}
-	openGraph={{
-		title: product.name,
-		type: 'website',
-		images: product.thumbnail_url ? [{ url: product.thumbnail_url }] : [],
-	}}
+  title={`${product.name} - Skeleton Flowers and Water`}
+  description={`${product.name}. Limited apparel from Skeleton Flowers and Water.`}
+  openGraph={{
+    title: product.name,
+    type: 'website',
+    images: product.thumbnail_url ? [{ url: product.thumbnail_url }] : []
+  }}
 />
 
 <JsonLd data={productLd} />
 
 <section class="mx-auto max-w-7xl p-5">
-	{#if product && selectedVariant}
-		<div class="flex max-w-full flex-col md:flex-row">
-			<img
-				class="bg-gradient-to-tr from-slate-700 md:w-2/3"
-				src={product.thumbnail_url}
-				alt="product - {product.name}"
-			/>
-
-			<div class="h-full md:w-1/3 lg:pl-10">
-				<h1 class="font-display pt-5 text-4xl">{product.name}</h1>
-
-				<p class="mb-3 text-lg">
-					<b>{selectedVariant.retail_price}</b>
-					{selectedVariant.currency}
-				</p>
-
-				<div class="mb-8 pt-5">
-					<h4 class="mb-2 text-base font-semibold uppercase tracking-wide">Size</h4>
-					<div class="flex gap-3">
-						{#each variants as variant}
-							<button
-								onclick={() => selectVariant(variant.id)}
-								class={`${
-									selectedVariant?.id === variant.id
-										? 'text-dark bg-gradient-to-tr from-slate-100 to-gray-500 font-extrabold'
-										: ''
-								} flex h-12 w-24 items-center justify-center border transition duration-300 ease-in-out hover:scale-95 hover:opacity-100`}
-							>
-								{getSize(variant)}
-							</button>
-						{/each}
-					</div>
-				</div>
-
-				<button
-					onclick={() => {
-						const v = selectedVariant ?? variants[0]
-						if (v) addToCart({ variant: v })
-					}}
-					class="hover:bg-primary hover:text-dark hover:border-primary flex w-full items-center justify-center border p-4 text-white opacity-90 transition-all duration-300 hover:font-bold"
-				>
-					<span class="font-display text-lg uppercase">Add To Cart</span>
-				</button>
-				<p class="py-3 text-xs italic text-red-500">
-					<b class="uppercase">final sale:</b> custom item not subject to returns.
-				</p>
-				<DescriptionToggle
-					title="Shipping Details"
-					description="US Orders only, shipping included for limited time."
-				/>
-			</div>
-		</div>
-	{/if}
+  <ProductDetail {product} {initialVariantId} {onvariantchange} headingLevel={1} />
 </section>

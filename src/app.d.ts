@@ -1,12 +1,9 @@
 // See https://kit.svelte.dev/docs/types#app
 // for information about these interfaces
 // and what to do when importing types
-declare namespace App {
-  // interface Error {}
-  // interface Locals {}
-  // interface PageData {}
-  // interface Platform {}
-}
+// NOTE: this file has top-level `export type`, which makes it a module, so a bare
+// `declare namespace App` here would be module-scoped and silently ignored.
+// SvelteKit's App interfaces have to be augmented inside `declare global` below.
 
 export type CastMember = {
   castname: string
@@ -289,6 +286,18 @@ export type SiteSettings = {
 }
 
 declare global {
+  namespace App {
+    /**
+     * Shallow-routing state. A product tile pushes the product's own URL with the
+     * already-loaded page data attached, so the sheet opens without a navigation
+     * while the address bar still reads /merch/<id>. Empty during SSR and on a
+     * first load, which is why a direct hit renders the real page instead.
+     */
+    interface PageState {
+      product?: { body: { product: PrintfulProduct } }
+    }
+  }
+
   interface Window {
     umami: {
       track: (type: string, data?: Record<string, string | number | boolean>) => void
