@@ -2,7 +2,9 @@
   import { cartItems, showCart, type CartItem } from '$store'
   import { trackCart } from '$utils/umami'
   import DescriptionToggle from '$components/DescriptionToggle.svelte'
-  import type { PrintfulProduct, PrintfulSyncVariant } from '$types'
+  import type { PrintfulSyncVariant } from '$types'
+  import type { ProductWithImage } from '$lib/utils/products'
+  import { optimize } from '$lib/utils/img'
 
   // The product body, shared by the /merch/[id] page and the sheet that opens
   // over the grid. Variant selection is LOCAL state with an optional callback,
@@ -16,7 +18,7 @@
     headingLevel = 1,
     imageClass = 'md:w-2/3'
   }: {
-    product: PrintfulProduct
+    product: ProductWithImage
     initialVariantId?: string | null
     onvariantchange?: (id: number | string) => void
     /** 1 on its own page; 2 inside the sheet, whose dialog label is the product name. */
@@ -70,7 +72,7 @@
   <div class="flex max-w-full flex-col md:flex-row">
     <img
       class="bg-gradient-to-tr from-slate-700 {imageClass}"
-      src={product.thumbnail_url}
+      src={optimize(product.sanityImageUrl ?? product.thumbnail_url, { w: 1000 })}
       alt="product - {product.name}"
     />
 

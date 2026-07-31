@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { track } from '$lib/utils/umami'
 	import { preloadData, pushState, goto } from '$app/navigation'
+	import { optimize } from '$lib/utils/img'
 
 	// The homepage preview and the /merch index both render this. Sharing the
 	// component is what actually keeps the two entry points identical, and it
@@ -10,6 +11,7 @@
 		id,
 		name,
 		thumbnail_url,
+		sanityImageUrl,
 		price,
 		currency,
 		headingLevel = 3,
@@ -19,6 +21,8 @@
 		name: string
 		/** Printful returns null when a product has no preview rendered yet. */
 		thumbnail_url?: string | null
+		/** Sanity-hosted copy. Preferred: no third-party cookie, and transformable. */
+		sanityImageUrl?: string | null
 		price?: string | number | null
 		currency?: string | null
 		/** 3 under the homepage's "Shop" h2; 2 on /merch where the h1 is the page title. */
@@ -65,7 +69,7 @@
 <a href="/merch/{id}" class="block" {onclick}>
 	<img
 		class="mb-2 aspect-square w-full bg-gradient-to-tr from-slate-700 object-cover"
-		src={thumbnail_url}
+		src={optimize(sanityImageUrl ?? thumbnail_url, { w: 600 })}
 		alt={name}
 		loading="lazy"
 		decoding="async"

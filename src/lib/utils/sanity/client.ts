@@ -110,3 +110,24 @@ export async function getSettings({
     }
   )
 }
+
+/**
+ * Map of Printful external_id -> the Sanity-hosted copy of that product's image.
+ *
+ * The Printful webhook already uploads every product thumbnail into Sanity
+ * (createOrReplacePrintfulProduct), so these assets exist; the storefront simply
+ * was not using them. Serving them from Sanity instead of files.cdn.printful.com
+ * removes the site's only third-party cookie (Cloudflare's __cf_bm) and unlocks
+ * Sanity's image transforms, which take a product tile from a 336KB png to a
+ * 22KB webp.
+ */
+export async function getProductImageMap(): Promise<Record<string, string>> {
+  const rows = await client.fetch<{ id: string; image: string | null }[]>(
+    `*[_type == "product"]{ "id": _id, "image": variants[0].image.asset->url }`
+  )
+  const map: Record<string, string> = {}
+  for (const row of rows ?? []) {
+    if (row?.id && row.image) map[row.id] = row.image
+  }
+  return map
+}

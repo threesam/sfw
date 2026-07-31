@@ -33,6 +33,7 @@
 				id={product.id}
 				name={product.name}
 				thumbnail_url={product.thumbnail_url}
+					sanityImageUrl={product.sanityImageUrl}
 				price={product.variants[0]?.retail_price}
 				currency={product.variants[0]?.currency}
 			/>
