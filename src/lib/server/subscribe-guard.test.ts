@@ -3,7 +3,7 @@ import { guardSubmission, isRateLimited, resetGuardForTests } from './subscribe-
 
 // A submission that should pass every layer. Each test below changes exactly
 // one field, so a failure names the layer that rejected it.
-const good = () => ({ email: 'reader@example.com', company: '' })
+const good = () => ({ email: 'reader@example.com', honeypot: '' })
 
 describe('subscribe guard', () => {
   beforeEach(resetGuardForTests)
@@ -42,8 +42,8 @@ describe('subscribe guard', () => {
   it('a filled honeypot fails SILENTLY, so the bot cannot tell it was caught', () => {
     // The one check a real visitor cannot trip, which is what makes a silent
     // rejection safe here and nowhere else.
-    for (const company of ['Acme', '  ']) {
-      expect(guardSubmission({ ...good(), company })).toMatchObject({
+    for (const honeypot of ['Acme', '  ']) {
+      expect(guardSubmission({ ...good(), honeypot })).toMatchObject({
         pass: false,
         silent: true
       })
@@ -56,8 +56,8 @@ describe('subscribe guard', () => {
     // is the point — but silently would tell a real visitor on a stale page
     // that they subscribed when they did not, which is the failure mode this
     // whole guard exists to avoid. Visible means a refresh fixes it.
-    for (const company of [undefined, null, 123, {}]) {
-      expect(guardSubmission({ ...good(), company })).toMatchObject({
+    for (const honeypot of [undefined, null, 123, {}]) {
+      expect(guardSubmission({ ...good(), honeypot })).toMatchObject({
         pass: false,
         silent: false,
         status: 400

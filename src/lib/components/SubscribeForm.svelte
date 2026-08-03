@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { fly } from 'svelte/transition'
 	import { track } from '$lib/utils/umami'
+	import { HONEYPOT_FIELD } from '$lib/honeypot'
 
 	let {
 		endpoint = '/api/subscribe',
@@ -21,12 +22,14 @@
 		// assigns `.value` directly — which is exactly what the cheap ones do —
 		// never fires one, so the bound copy would still read empty and the trap
 		// would pass it straight through.
-		const company = String(new FormData(e.currentTarget as HTMLFormElement).get('company') ?? '')
+		const honeypot = String(
+			new FormData(e.currentTarget as HTMLFormElement).get(HONEYPOT_FIELD) ?? ''
+		)
 		try {
 			const res = await fetch(endpoint, {
 				method: 'POST',
 				headers: { 'content-type': 'application/json' },
-				body: JSON.stringify({ email, company }),
+				body: JSON.stringify({ email, [HONEYPOT_FIELD]: honeypot }),
 			})
 			if (!res.ok) throw new Error(String(res.status))
 			status = 'ok'
@@ -40,7 +43,9 @@
 		} catch (err) {
 			console.error(err)
 			status = 'error'
-			message = 'Something went wrong. Try again later.'
+			// Names the recovery, because one of the server's refusals is "this page
+			// predates the current deploy" and a refresh is the whole fix for it.
+			message = 'Something went wrong. Refresh and try again.'
 		}
 	}
 </script>
@@ -63,8 +68,8 @@
 		aria-hidden="true"
 		class="pointer-events-none absolute left-[-9999px] top-0 h-0 w-0 overflow-hidden"
 	>
-		company
-		<input type="text" name="company" tabindex="-1" autocomplete="off" />
+		referral code
+		<input type="text" name={HONEYPOT_FIELD} tabindex="-1" autocomplete="off" />
 	</label>
 	<label for="email">
 		<input
