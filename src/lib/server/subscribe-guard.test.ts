@@ -33,6 +33,30 @@ describe('subscribe guard', () => {
     })
   })
 
+  it('returns a controlled rejection for non-string json rather than throwing', () => {
+    // The `as` cast at the call site is erased at runtime, so the body can hold
+    // anything at all. Before these were type-checked, {"email":123} reached
+    // .trim() and threw — a 500 out of the layer whose entire purpose is to
+    // return controlled rejections, triggerable by three bytes of JSON.
+    expect(guardSubmission({ ...good(), email: 123, ip: '192.0.2.1' })).toMatchObject({
+      status: 400
+    })
+    expect(guardSubmission({ ...good(), email: {}, ip: '192.0.2.2' })).toMatchObject({
+      status: 400
+    })
+    expect(guardSubmission({ ...good(), email: null, ip: '192.0.2.3' })).toMatchObject({
+      status: 400
+    })
+    // A non-string honeypot is not this form either, so it fails silently.
+    expect(guardSubmission({ ...good(), company: {}, ip: '192.0.2.4' })).toMatchObject({
+      silent: true
+    })
+    // Whitespace used to be trimmed to empty and let through.
+    expect(guardSubmission({ ...good(), company: '  ', ip: '192.0.2.5' })).toMatchObject({
+      silent: true
+    })
+  })
+
   it('counts every request toward the limit, whatever layer would catch it', () => {
     const now = 1_700_000_000_000
     // Five malformed submissions. Each is rejected on shape — and each still
