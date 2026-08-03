@@ -21,13 +21,27 @@ describe('subscribe guard', () => {
   })
 
   it('rejects a missing or malformed address before listmonk sees it', () => {
-    for (const email of [undefined, '', '   ', 'x', 'no-at-sign.com', 'two@@at.com', 'a@b']) {
-      expect(guardSubmission({ ...good(), email })).toMatchObject({
+    // A distinct address per case. The rate limit runs first now, so sharing
+    // one would make the sixth case come back 429 and stop testing shape.
+    const cases = [undefined, '', '   ', 'x', 'no-at-sign.com', 'two@@at.com', 'a@b']
+    cases.forEach((email, i) => {
+      expect(guardSubmission({ ...good(), email, ip: `203.0.113.${i}` })).toMatchObject({
         pass: false,
         silent: false,
         status: 400
       })
-    }
+    })
+  })
+
+  it('counts every request toward the limit, whatever layer would catch it', () => {
+    const now = 1_700_000_000_000
+    // Five malformed submissions. Each is rejected on shape — and each still
+    // ticks the counter, which is the whole point of the rate limit running
+    // first. Were it last, these five would return early without counting and
+    // the sixth would come back 400, meaning a bot sending garbage (or bare
+    // {"email":"..."} with no elapsed count) could spray forever unlimited.
+    for (let i = 0; i < 5; i++) guardSubmission({ ...good(), email: 'nope', now: now + i })
+    expect(guardSubmission({ ...good(), now: now + 5 })).toMatchObject({ status: 429 })
   })
 
   it('rejects an oversized address', () => {
@@ -43,12 +57,13 @@ describe('subscribe guard', () => {
   })
 
   it('rejects a submission with no elapsed count — it did not come from the form', () => {
-    for (const elapsedMs of [undefined, NaN, Infinity]) {
-      expect(guardSubmission({ ...good(), elapsedMs })).toMatchObject({
+    const cases = [undefined, NaN, Infinity]
+    cases.forEach((elapsedMs, i) => {
+      expect(guardSubmission({ ...good(), elapsedMs, ip: `198.51.100.${i}` })).toMatchObject({
         pass: false,
         silent: true
       })
-    }
+    })
   })
 
   it('rejects a submission faster than a human, and accepts one at the threshold', () => {
