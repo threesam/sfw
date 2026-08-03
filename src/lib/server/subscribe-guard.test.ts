@@ -1,12 +1,11 @@
 import { beforeEach, describe, expect, it } from 'vitest'
-import { MIN_SUBMIT_MS, guardSubmission, resetGuardForTests } from './subscribe-guard'
+import { guardSubmission, resetGuardForTests } from './subscribe-guard'
 
 // A submission that should pass every layer. Each test below changes exactly
 // one field, so a failure names the layer that rejected it.
 const good = () => ({
   email: 'reader@example.com',
   company: '',
-  elapsedMs: MIN_SUBMIT_MS + 1,
   ip: '203.0.113.7',
   now: 1_700_000_000_000
 })
@@ -33,6 +32,11 @@ describe('subscribe guard', () => {
     })
   })
 
+  it('rejects an oversized address', () => {
+    const email = `${'a'.repeat(250)}@example.com`
+    expect(guardSubmission({ ...good(), email })).toMatchObject({ pass: false, status: 400 })
+  })
+
   it('returns a controlled rejection for non-string json rather than throwing', () => {
     // The `as` cast at the call site is erased at runtime, so the body can hold
     // anything at all. Before these were type-checked, {"email":123} reached
@@ -57,22 +61,6 @@ describe('subscribe guard', () => {
     })
   })
 
-  it('counts every request toward the limit, whatever layer would catch it', () => {
-    const now = 1_700_000_000_000
-    // Five malformed submissions. Each is rejected on shape — and each still
-    // ticks the counter, which is the whole point of the rate limit running
-    // first. Were it last, these five would return early without counting and
-    // the sixth would come back 400, meaning a bot sending garbage (or bare
-    // {"email":"..."} with no elapsed count) could spray forever unlimited.
-    for (let i = 0; i < 5; i++) guardSubmission({ ...good(), email: 'nope', now: now + i })
-    expect(guardSubmission({ ...good(), now: now + 5 })).toMatchObject({ status: 429 })
-  })
-
-  it('rejects an oversized address', () => {
-    const email = `${'a'.repeat(250)}@example.com`
-    expect(guardSubmission({ ...good(), email })).toMatchObject({ pass: false, status: 400 })
-  })
-
   it('a filled honeypot fails silently, so the bot cannot tell it was caught', () => {
     expect(guardSubmission({ ...good(), company: 'Acme' })).toMatchObject({
       pass: false,
@@ -80,20 +68,25 @@ describe('subscribe guard', () => {
     })
   })
 
-  it('rejects a submission with no elapsed count — it did not come from the form', () => {
-    const cases = [undefined, NaN, Infinity]
-    cases.forEach((elapsedMs, i) => {
-      expect(guardSubmission({ ...good(), elapsedMs, ip: `198.51.100.${i}` })).toMatchObject({
-        pass: false,
-        silent: true
-      })
-    })
+  it('accepts a submission with no honeypot field at all', () => {
+    // A page that was already open when a deploy lands still posts the old
+    // payload. Rejecting an ABSENT honeypot would fail those visitors silently
+    // — told they subscribed, never subscribed. Absent is tolerated;
+    // present-and-non-empty is not.
+    const { company, ...withoutHoneypot } = good()
+    void company
+    expect(guardSubmission(withoutHoneypot).pass).toBe(true)
   })
 
-  it('rejects a submission faster than a human, and accepts one at the threshold', () => {
-    expect(guardSubmission({ ...good(), elapsedMs: 40 }).pass).toBe(false)
-    expect(guardSubmission({ ...good(), elapsedMs: MIN_SUBMIT_MS - 1 }).pass).toBe(false)
-    expect(guardSubmission({ ...good(), elapsedMs: MIN_SUBMIT_MS }).pass).toBe(true)
+  it('counts every request toward the limit, whatever layer would catch it', () => {
+    const now = 1_700_000_000_000
+    // Five malformed submissions. Each is rejected on shape — and each still
+    // ticks the counter, which is the whole point of the rate limit running
+    // first. Were it last, these five would return early without counting and
+    // the sixth would come back 400, meaning a bot sending garbage could spray
+    // the endpoint forever without ever being limited.
+    for (let i = 0; i < 5; i++) guardSubmission({ ...good(), email: 'nope', now: now + i })
+    expect(guardSubmission({ ...good(), now: now + 5 })).toMatchObject({ status: 429 })
   })
 
   it('rate-limits a burst from one address, and lets a different one through', () => {
