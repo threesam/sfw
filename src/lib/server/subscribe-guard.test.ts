@@ -1,14 +1,9 @@
 import { beforeEach, describe, expect, it } from 'vitest'
-import { guardSubmission, resetGuardForTests } from './subscribe-guard'
+import { guardSubmission, isRateLimited, resetGuardForTests } from './subscribe-guard'
 
 // A submission that should pass every layer. Each test below changes exactly
 // one field, so a failure names the layer that rejected it.
-const good = () => ({
-  email: 'reader@example.com',
-  company: '',
-  ip: '203.0.113.7',
-  now: 1_700_000_000_000
-})
+const good = () => ({ email: 'reader@example.com', company: '' })
 
 describe('subscribe guard', () => {
   beforeEach(resetGuardForTests)
@@ -20,16 +15,13 @@ describe('subscribe guard', () => {
   })
 
   it('rejects a missing or malformed address before listmonk sees it', () => {
-    // A distinct address per case. The rate limit runs first now, so sharing
-    // one would make the sixth case come back 429 and stop testing shape.
-    const cases = [undefined, '', '   ', 'x', 'no-at-sign.com', 'two@@at.com', 'a@b']
-    cases.forEach((email, i) => {
-      expect(guardSubmission({ ...good(), email, ip: `203.0.113.${i}` })).toMatchObject({
+    for (const email of [undefined, '', '   ', 'x', 'no-at-sign.com', 'two@@at.com', 'a@b']) {
+      expect(guardSubmission({ ...good(), email })).toMatchObject({
         pass: false,
         silent: false,
         status: 400
       })
-    })
+    }
   })
 
   it('rejects an oversized address', () => {
@@ -42,72 +34,52 @@ describe('subscribe guard', () => {
     // anything at all. Before these were type-checked, {"email":123} reached
     // .trim() and threw — a 500 out of the layer whose entire purpose is to
     // return controlled rejections, triggerable by three bytes of JSON.
-    expect(guardSubmission({ ...good(), email: 123, ip: '192.0.2.1' })).toMatchObject({
-      status: 400
-    })
-    expect(guardSubmission({ ...good(), email: {}, ip: '192.0.2.2' })).toMatchObject({
-      status: 400
-    })
-    expect(guardSubmission({ ...good(), email: null, ip: '192.0.2.3' })).toMatchObject({
-      status: 400
-    })
-    // A non-string honeypot is not this form either, so it fails silently.
-    expect(guardSubmission({ ...good(), company: {}, ip: '192.0.2.4' })).toMatchObject({
-      silent: true
-    })
-    // Whitespace used to be trimmed to empty and let through.
-    expect(guardSubmission({ ...good(), company: '  ', ip: '192.0.2.5' })).toMatchObject({
-      silent: true
-    })
+    for (const email of [123, {}, null, [], true]) {
+      expect(guardSubmission({ ...good(), email })).toMatchObject({ status: 400 })
+    }
   })
 
-  it('a filled honeypot fails silently, so the bot cannot tell it was caught', () => {
-    expect(guardSubmission({ ...good(), company: 'Acme' })).toMatchObject({
-      pass: false,
-      silent: true
-    })
+  it('a filled honeypot fails SILENTLY, so the bot cannot tell it was caught', () => {
+    // The one check a real visitor cannot trip, which is what makes a silent
+    // rejection safe here and nowhere else.
+    for (const company of ['Acme', '  ']) {
+      expect(guardSubmission({ ...good(), company })).toMatchObject({
+        pass: false,
+        silent: true
+      })
+    }
   })
 
-  it('accepts a submission with no honeypot field at all', () => {
-    // A page that was already open when a deploy lands still posts the old
-    // payload. Rejecting an ABSENT honeypot would fail those visitors silently
-    // — told they subscribed, never subscribed. Absent is tolerated;
-    // present-and-non-empty is not.
-    const { company, ...withoutHoneypot } = good()
-    void company
-    expect(guardSubmission(withoutHoneypot).pass).toBe(true)
-  })
-
-  it('counts every request toward the limit, whatever layer would catch it', () => {
-    const now = 1_700_000_000_000
-    // Five malformed submissions. Each is rejected on shape — and each still
-    // ticks the counter, which is the whole point of the rate limit running
-    // first. Were it last, these five would return early without counting and
-    // the sixth would come back 400, meaning a bot sending garbage could spray
-    // the endpoint forever without ever being limited.
-    for (let i = 0; i < 5; i++) guardSubmission({ ...good(), email: 'nope', now: now + i })
-    expect(guardSubmission({ ...good(), now: now + 5 })).toMatchObject({ status: 429 })
+  it('a MISSING honeypot is refused visibly, not silently', () => {
+    // Two senders arrive without it: a direct API caller that never knew the
+    // field existed, and a page open since before this deployed. Refusing both
+    // is the point — but silently would tell a real visitor on a stale page
+    // that they subscribed when they did not, which is the failure mode this
+    // whole guard exists to avoid. Visible means a refresh fixes it.
+    for (const company of [undefined, null, 123, {}]) {
+      expect(guardSubmission({ ...good(), company })).toMatchObject({
+        pass: false,
+        silent: false,
+        status: 400
+      })
+    }
   })
 
   it('rate-limits a burst from one address, and lets a different one through', () => {
     const now = 1_700_000_000_000
     for (let i = 0; i < 5; i++) {
-      expect(guardSubmission({ ...good(), now: now + i }).pass).toBe(true)
+      expect(isRateLimited('203.0.113.7', now + i)).toBe(false)
     }
-    expect(guardSubmission({ ...good(), now: now + 5 })).toMatchObject({
-      pass: false,
-      silent: false,
-      status: 429
-    })
+    expect(isRateLimited('203.0.113.7', now + 5)).toBe(true)
 
-    // A rate limit that leaked across IPs would take the whole list offline
+    // A limit that leaked across addresses would take the whole list offline
     // the moment one bot showed up.
-    expect(guardSubmission({ ...good(), ip: '198.51.100.4', now: now + 5 }).pass).toBe(true)
+    expect(isRateLimited('198.51.100.4', now + 5)).toBe(false)
   })
 
   it('forgets a burst once the window has passed', () => {
     const now = 1_700_000_000_000
-    for (let i = 0; i < 6; i++) guardSubmission({ ...good(), now: now + i })
-    expect(guardSubmission({ ...good(), now: now + 61_000 }).pass).toBe(true)
+    for (let i = 0; i < 6; i++) isRateLimited('203.0.113.7', now + i)
+    expect(isRateLimited('203.0.113.7', now + 61_000)).toBe(false)
   })
 })
