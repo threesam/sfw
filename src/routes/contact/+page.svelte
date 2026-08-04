@@ -3,7 +3,6 @@
 	import { fade } from 'svelte/transition'
 	import SubscribeForm from '$lib/components/SubscribeForm.svelte'
 	import SocialLinks from '$lib/components/SocialLinks.svelte'
-	import { onMount } from 'svelte'
 
 	let { data }: { data: PageData } = $props()
 	const { settings } = data.body
@@ -17,7 +16,12 @@
 		show = true
 	})
 
-	onMount(() => {
+	// Keyed on the bound elements, not onMount. The canvas is behind {#if show},
+	// and show only flips in the effect above, so at onMount time `canvas` was
+	// still null and this whole block returned early: no resize, no image load,
+	// no frame loop. The canvas rendered at its default 300x150 and stayed blank.
+	// As an effect this re-runs once bind:this populates them.
+	$effect(() => {
 		if (!canvas || !stage) return
 		const ctx = canvas.getContext('2d')
 		if (!ctx) return
