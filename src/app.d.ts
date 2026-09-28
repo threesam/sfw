@@ -20,12 +20,6 @@ export type CrewMember = {
   link?: string
 }
 
-export type Image = {
-  src: string
-  alt: string
-  captiom: string
-}
-
 export type PrintfulCustomer = {
   name: string | null
   company: string | null
@@ -222,18 +216,6 @@ export type PrintfulWebhook = {
       is_ignored: boolean | null
     }
   }
-}
-
-export type ProjectData = {
-  title: string
-  src: string
-  alt: string
-  caption: string
-  image: Image
-  body: []
-  cast: CastMember[]
-  crew: CrewMember[]
-  posters: Image[]
 }
 
 export type ProjectImage = {

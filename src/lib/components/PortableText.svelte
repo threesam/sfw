@@ -20,7 +20,7 @@
 	<PortableText value={visible} />
 </section>
 
-<style lang="scss">
+<style>
 	@reference '../../app.css';
 
 	:global(.portable-text) {
