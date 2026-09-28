@@ -57,10 +57,6 @@
     radial-gradient(at bottom right, var(--primary), transparent 80%);
 }
 
-@utility list-roman {
-  list-style-type: upper-roman;
-}
-
 @layer base {
   h1 {
     @apply text-5xl text-primary;

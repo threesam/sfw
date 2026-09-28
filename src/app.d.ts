@@ -20,12 +20,6 @@ export type CrewMember = {
   link?: string
 }
 
-export type Image = {
-  src: string
-  alt: string
-  captiom: string
-}
-
 export type PrintfulCustomer = {
   name: string | null
   company: string | null
