@@ -1,5 +1,4 @@
 import { createClient } from '@sanity/client'
-import imageUrlBuilder from '@sanity/image-url'
 import { env } from '$env/dynamic/public'
 import type { Project, SiteSettings } from '$types'
 
@@ -13,12 +12,6 @@ const client = createClient({
   // no token, so the CDN is the right endpoint here.
   useCdn: true
 })
-
-const builder = imageUrlBuilder(client)
-
-export function urlFor(source: string) {
-  return builder.image(source)
-}
 
 export async function getProject({ handle }: { handle: string }): Promise<Project | null> {
   return await client.fetch<Project | null>(
