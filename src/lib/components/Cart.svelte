@@ -9,8 +9,8 @@
 
 	let clientWidth = $state(0)
 
-	// Native modal <dialog>: showModal() gives the focus trap, Escape-to-close and
-	// inert page behind it for free. Focus goes back to whatever opened the cart.
+	// Native modal <dialog>: showModal() gives the focus trap, Escape and the inert
+	// page behind it for free. Focus goes back to whatever opened the cart.
 	function modal(dialog: HTMLDialogElement) {
 		const opener = document.activeElement as HTMLElement | null
 		dialog.showModal()
@@ -87,6 +87,12 @@
 <dialog
 	{@attach modal}
 	aria-labelledby="cart-title"
+	oncancel={(e) => {
+		// Escape: keep the dialog open (top layer, inert page) while the outro runs;
+		// unmounting removes it. onclose still covers any close we don't intercept.
+		e.preventDefault()
+		closeCart()
+	}}
 	onclose={closeCart}
 	class="text-light m-0 flex h-full max-h-none w-full max-w-none justify-end overflow-hidden bg-transparent p-0 backdrop:bg-transparent"
 >
