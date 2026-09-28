@@ -224,18 +224,6 @@ export type PrintfulWebhook = {
   }
 }
 
-export type ProjectData = {
-  title: string
-  src: string
-  alt: string
-  caption: string
-  image: Image
-  body: []
-  cast: CastMember[]
-  crew: CrewMember[]
-  posters: Image[]
-}
-
 export type ProjectImage = {
   src: string | null
   alt: string | null
