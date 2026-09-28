@@ -50,6 +50,23 @@ colour, which is unbounded content data.
 - expect a submit control that is enabled
 - do NOT submit
 
+## 6. Cart (LOCAL ONLY, Stripe TEST keys)
+
+Run only against a local server whose `.env` has a `sk_test_` key. Never against
+prod or a preview. Stops at the Stripe redirect; no payment is ever entered.
+
+- go to /merch, open the first product that has more than one size
+- expect a size group whose buttons expose aria-pressed; select the second size
+- click "add to cart"
+- expect the cart dialog open with focus inside it
+- click "add one" → expect quantity 2 and subtotal = 2 × unit price
+- expect the header cart button to be named "cart, 2 items"
+- click "remove one" → expect quantity 1
+- press Escape → expect the dialog gone and focus back on "add to cart"
+- reopen the cart, click "checkout" → expect POST /checkout/payment-intent 200 and a
+  navigation to checkout.stripe.com/c/pay/cs_test_… (abort it there)
+- go to /merch (the cart is not persisted) and open the cart → expect "Your cart is empty."
+
 ## Notes
 
 - `/merch` and `/merch/[id]` are server-rendered (Printful data).
