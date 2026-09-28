@@ -8,6 +8,8 @@
 </script>
 
 <button
+	type="button"
+	aria-expanded={toggle}
 	onclick={() => (toggle = !toggle)}
 	class="border-dark/50 flex w-full border-b py-4 text-sm"
 >

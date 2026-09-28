@@ -2,10 +2,10 @@
 	import Image from './Image.svelte'
 
 	let { project, path = '/', buttonText = '', index = 0 } = $props()
-	const { title, description, slug, status, image, posters } = project ?? {}
-	const { src, alt, caption, color } = image ?? {}
+	let { title, description, slug, status, image, posters } = $derived(project ?? {})
+	let { src, alt, caption, color } = $derived(image ?? {})
 
-	const linkLabel = buttonText || (title ? `Learn more about ${title}` : 'Learn more')
+	let linkLabel = $derived(buttonText || (title ? `Learn more about ${title}` : 'Learn more'))
 </script>
 
 <section
@@ -29,7 +29,7 @@
 		>
 			<span class="mb-2 text-sm uppercase text-gray-300">{status.replace(/-/g, ' ')}</span>
 
-			<h3 class="font-display sm:text-2xl lg:text-5xl">{title}</h3>
+			<h2 class="font-display text-3xl sm:text-2xl lg:text-5xl">{title}</h2>
 
 			<p class="pb-3 lg:py-3">{description}</p>
 

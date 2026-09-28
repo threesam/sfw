@@ -59,11 +59,12 @@
 				onscroll={update}
 				class="flex snap-x snap-mandatory overflow-x-auto scroll-smooth [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
 			>
-				{#each slides as { slug, title: slideTitle, image, posters }}
+				{#each slides as slide (slide)}
+					{@const { slug, title: slideTitle, image, posters } = slide}
 					<div class="mb-10 w-[78vw] flex-none snap-start pr-2 sm:w-[44vw] lg:w-[30%]">
 						<a href={`/projects/${slug}`} class="relative block aspect-[3/4] bg-red-500">
 							<div class="absolute inset-0 grayscale">
-								<Image src={image?.src} alt={slideTitle} width={800} />
+								<Image src={image?.src} alt="" width={800} />
 							</div>
 							{#if posters?.[0]?.url}
 								<span
@@ -72,7 +73,7 @@
 									<img
 										class="mx-auto h-full object-contain"
 										src={optimize(posters[0].url, { w: 800 })}
-										alt={slideTitle}
+										alt=""
 										loading="lazy"
 										decoding="async"
 										width="600"
@@ -80,7 +81,7 @@
 									/>
 								</span>
 							{/if}
-							<h5 class="h-full py-5 text-center">{slideTitle}</h5>
+							<h3 class="h-full py-5 text-center text-xl">{slideTitle}</h3>
 						</a>
 					</div>
 				{/each}

@@ -21,13 +21,14 @@
 
 <PortableText blocks={settings?.body as InputValue} />
 
-<h3 class="mx-auto max-w-2xl px-5 font-thin">Founders</h3>
+<h2 class="mx-auto max-w-2xl px-5 text-3xl font-thin">Founders</h2>
 <section class="mx-auto mb-20 grid max-w-2xl gap-5 p-5 lg:grid-cols-2">
-	{#each settings?.founders ?? [] as { name, image, link }}
+	{#each settings?.founders ?? [] as founder (founder)}
+		{@const { name, image, link } = founder}
 		<a href={link ?? '#'} class="relative aspect-square">
 			<img
 				src={optimize(image?.asset?.url, { w: 600 })}
-				alt={name}
+				alt=""
 				loading="lazy"
 				decoding="async"
 				width="600"
@@ -35,7 +36,7 @@
 				class="h-full w-full object-cover"
 			/>
 			<div class="absolute inset-0 bg-black/50"></div>
-			<h4 class="bg-primary text-dark absolute left-0 top-0 p-3">{name}</h4>
+			<h3 class="bg-primary text-dark absolute left-0 top-0 p-3 text-2xl">{name}</h3>
 		</a>
 	{/each}
 </section>

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { track } from '$lib/utils/umami'
+	import { optimize } from '$lib/utils/img'
 
 	// The homepage preview and the /merch index both render this. Sharing the
 	// component is what actually keeps the two entry points identical, and it
@@ -35,7 +36,7 @@
 >
 	<img
 		class="mb-2 aspect-square w-full bg-gradient-to-tr from-slate-700 object-cover"
-		src={thumbnail_url}
+		src={optimize(thumbnail_url, { w: 640 })}
 		alt={name}
 		loading="lazy"
 		decoding="async"

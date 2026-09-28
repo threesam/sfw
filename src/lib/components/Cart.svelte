@@ -1,14 +1,27 @@
 <script lang="ts">
 	import Icons from './Icons.svelte'
-	import { showCart, cartItems, type CartItem } from '$store'
+	import { showCart, cartItems, cartQuantity, type CartItem } from '$store'
 	import { fly, fade } from 'svelte/transition'
 	import { quintInOut } from 'svelte/easing'
 	import { trackCart, track } from '$lib/utils/umami'
 	import { page } from '$app/stores'
+	import { optimize } from '$lib/utils/img'
 
 	let clientWidth = $state(0)
 
-	async function addOneItem(item: CartItem) {
+	// Native modal <dialog>: showModal() gives the focus trap, Escape-to-close and
+	// inert page behind it for free. Focus goes back to whatever opened the cart.
+	function modal(dialog: HTMLDialogElement) {
+		const opener = document.activeElement as HTMLElement | null
+		dialog.showModal()
+		return () => opener?.focus()
+	}
+
+	function closeCart() {
+		$showCart = false
+	}
+
+	function addOneItem(item: CartItem) {
 		$cartItems = $cartItems.map((variant) => {
 			if (variant.id === item.id) {
 				variant.quantity++
@@ -18,24 +31,14 @@
 
 		trackCart({ variant: item, type: 'add-to-cart' })
 	}
-	function removeOneItem(item: CartItem) {
-		$cartItems = $cartItems
-			.map((variant): CartItem | undefined => {
-				if (variant.id === item.id) {
-					if (variant.quantity === 1) {
-						removeEntireItem(variant)
-						return
-					} else {
-						variant.quantity--
-					}
-				}
-				return variant
-			})
-			.filter((variant): variant is CartItem => Boolean(variant))
 
-		if ($cartItems.length === 0) {
-			$showCart = false
-		}
+	function removeOneItem(item: CartItem) {
+		if (item.quantity <= 1) return removeEntireItem(item)
+
+		$cartItems = $cartItems.map((variant) => {
+			if (variant.id === item.id) variant.quantity--
+			return variant
+		})
 
 		trackCart({ variant: item, type: 'remove-from-cart' })
 	}
@@ -44,7 +47,7 @@
 		$cartItems = $cartItems.filter((variant) => variant.id !== item.id)
 
 		if ($cartItems.length === 0) {
-			$showCart = false
+			closeCart()
 		}
 
 		trackCart({ variant: item, type: 'remove-from-cart' })
@@ -53,12 +56,11 @@
 	let subtotal = $derived(
 		$cartItems.reduce((acc, curr) => acc + Number(curr.retail_price) * curr.quantity, 0),
 	)
-	let unitCount = $derived($cartItems.reduce((acc, curr) => acc + curr.quantity, 0))
 
 	let checkoutText = $state('checkout')
 	async function handleCheckout() {
 		checkoutText = 'redirecting…'
-		track('begin-checkout', { items: unitCount, value: subtotal })
+		track('begin-checkout', { items: $cartQuantity, value: subtotal })
 		try {
 			const res = await fetch('/checkout/payment-intent', {
 				method: 'POST',
@@ -82,13 +84,19 @@
 </script>
 
 <!-- CART -->
-<div class="fixed inset-0 z-50 flex h-screen max-h-screen w-full justify-end overflow-hidden">
-	<!-- OVERLAY -->
+<dialog
+	{@attach modal}
+	aria-labelledby="cart-title"
+	onclose={closeCart}
+	class="text-light m-0 flex h-full max-h-none w-full max-w-none justify-end overflow-hidden bg-transparent p-0 backdrop:bg-transparent"
+>
+	<!-- OVERLAY: mouse convenience; keyboard users have Escape and the close button -->
 	<button
 		aria-label="close cart"
+		tabindex="-1"
 		transition:fade={{ duration: 700, easing: quintInOut }}
-		class="bg-dark fixed inset-0 z-10 w-full bg-opacity-70"
-		onclick={() => ($showCart = false)}
+		class="bg-dark/70 fixed inset-0 z-10 w-full"
+		onclick={closeCart}
 	></button>
 
 	<div
@@ -100,9 +108,9 @@
 		<div
 			class="border-dark bg-gradient-3 flex h-16 w-full items-center justify-between border-b-2 px-6 py-5"
 		>
-			<div class="font-display text-dark text-xl font-medium">cart</div>
+			<h2 id="cart-title" class="font-display text-dark text-xl font-medium">cart</h2>
 			<button
-				onclick={() => ($showCart = false)}
+				onclick={closeCart}
 				class="text-md font-medium lowercase text-black opacity-80 hover:opacity-100">close</button
 			>
 		</div>
@@ -111,85 +119,88 @@
 		{#if $cartItems.length === 0}
 			<div class="mt-20 flex w-full flex-col items-center justify-center overflow-hidden px-6">
 				<button
-					onclick={() => ($showCart = false)}
+					onclick={closeCart}
 					aria-label="close empty cart"
 					class="flex h-16 w-16 items-center justify-center"
 				>
 					<Icons type="cart" strokeColor="#fff" />
 				</button>
-				<div class="mt-6 text-center text-2xl font-bold">Your cart is empty.</div>
+				<p class="mt-6 text-center text-2xl font-bold">Your cart is empty.</p>
 			</div>
 		{/if}
 
 		<!-- CART ITEMS -->
-		<div class="overflow-y-auto px-6" style="height: 80%;">
-			{#each $cartItems as item, i (i)}
-				<div class="mb-1 flex w-full">
-					<img
-						alt={item.name}
-						decoding="async"
-						loading="lazy"
-						class="h-24 w-24 flex-none bg-gradient-to-tr from-slate-700"
-						src={item.product.thumbnail_url}
-					/>
-					<div class="ml-4 flex w-full flex-col justify-between">
-						<div class="flex w-full justify-between">
-							<div>
-								<p class="font-display text-xl font-medium">{item.name.split(' - ')[0]}</p>
-								<p class="text-sm">{item.name.split(' - ')[1] ?? ''}</p>
+		<ul class="overflow-y-auto px-6" style="height: 80%;">
+			{#each $cartItems as item (item.id)}
+				<li>
+					<div class="mb-1 flex w-full">
+						<img
+							alt=""
+							decoding="async"
+							loading="lazy"
+							class="h-24 w-24 flex-none bg-gradient-to-tr from-slate-700"
+							src={optimize(item.product.thumbnail_url, { w: 256 })}
+						/>
+						<div class="ml-4 flex w-full flex-col justify-between">
+							<div class="flex w-full justify-between">
+								<div>
+									<p class="font-display text-xl font-medium">{item.name.split(' - ')[0]}</p>
+									<p class="text-sm">{item.name.split(' - ')[1] ?? ''}</p>
+								</div>
+								<p class="font-medium">{item.retail_price} {item.currency}</p>
 							</div>
-							<p class="font-medium">{item.retail_price} {item.currency}</p>
 						</div>
 					</div>
-				</div>
-				<div class="mb-6 flex w-full">
-					<button
-						onclick={() => removeEntireItem(item)}
-						class="mr-2 flex items-center justify-center"
-					>
-						<span
-							class="text-light font-bold underline underline-offset-4 duration-300 hover:text-red-500 hover:underline-offset-2"
-							>remove</span
-						>
-					</button>
-					<div class="flex h-8 w-full">
+					<div class="mb-6 flex w-full">
 						<button
-							onclick={() => removeOneItem(item)}
-							aria-label="remove one"
-							class="ml-auto flex h-8 w-8 items-center justify-center transition-all duration-300 hover:scale-125"
+							onclick={() => removeEntireItem(item)}
+							aria-label="remove {item.name}"
+							class="mr-2 flex items-center justify-center"
 						>
-							<Icons type="minus" strokeColor="#eee" />
+							<span
+								class="text-light font-bold underline underline-offset-4 duration-300 hover:text-red-500 hover:underline-offset-2"
+								>remove</span
+							>
 						</button>
-						<div class="flex h-full items-center px-2">
-							{item.quantity}
+						<div class="flex h-8 w-full">
+							<button
+								onclick={() => removeOneItem(item)}
+								aria-label="remove one {item.name}"
+								class="ml-auto flex h-8 w-8 items-center justify-center transition-all duration-300 hover:scale-125"
+							>
+								<Icons type="minus" strokeColor="#eee" />
+							</button>
+							<div class="flex h-full items-center px-2">
+								<span class="sr-only">quantity</span>
+								{item.quantity}
+							</div>
+							<button
+								onclick={() => addOneItem(item)}
+								aria-label="add one {item.name}"
+								class="flex h-8 w-8 items-center justify-center transition-all duration-300 hover:scale-125"
+							>
+								<Icons type="plus" strokeColor="#eee" />
+							</button>
 						</div>
-						<button
-							onclick={() => addOneItem(item)}
-							aria-label="add one"
-							class="flex h-8 w-8 items-center justify-center transition-all duration-300 hover:scale-125"
-						>
-							<Icons type="plus" strokeColor="#eee" />
-						</button>
 					</div>
-				</div>
+				</li>
 			{/each}
-		</div>
+		</ul>
 
 		<!-- CHECKOUT BUTTON -->
 		{#if $cartItems.length !== 0}
 			<div class="p-5">
 				<div class="text-light flex w-full justify-between pb-3">
 					<b>Subtotal</b>
-					<span>{subtotal + '.00 ' + ($cartItems[0]?.currency ?? '')}</span
-					>
+					<span>{subtotal.toFixed(2) + ' ' + ($cartItems[0]?.currency ?? '')}</span>
 				</div>
 				<button
 					onclick={handleCheckout}
 					class="font-display hover:border-primary hover:bg-primary hover:text-dark flex w-full items-center justify-center border p-4 text-lg text-white opacity-90 transition-all duration-300 hover:font-bold"
 				>
-					<span class="text-lg uppercase">{checkoutText}</span>
+					<span class="text-lg uppercase" aria-live="polite">{checkoutText}</span>
 				</button>
 			</div>
 		{/if}
 	</div>
-</div>
+</dialog>

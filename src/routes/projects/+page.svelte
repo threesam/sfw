@@ -9,18 +9,19 @@
 
 	let { data }: { data: PageData } = $props()
 
-	const { projects } = data.body
-
-	const sortedProjects: Project[] = []
-	projects.forEach((project) => {
-		if (project.status === 'pre-production') {
-			sortedProjects.push(project)
-		} else {
-			sortedProjects.unshift(project)
-		}
+	let sortedProjects = $derived.by(() => {
+		const sorted: Project[] = []
+		data.body.projects.forEach((project) => {
+			if (project.status === 'pre-production') {
+				sorted.push(project)
+			} else {
+				sorted.unshift(project)
+			}
+		})
+		return sorted
 	})
 
-	const itemListLd = {
+	let itemListLd = $derived({
 		'@type': 'ItemList',
 		name: 'Films by Skeleton Flowers and Water',
 		itemListElement: sortedProjects
@@ -31,7 +32,7 @@
 				url: canonical(`/projects/${p.slug}`),
 				name: p.title,
 			})),
-	}
+	})
 </script>
 
 <SEO
@@ -47,21 +48,24 @@
 </section>
 
 <div class="flex flex-col lg:hidden">
-	{#each sortedProjects as project, index}
+	{#each sortedProjects as project, index (project)}
 		<SideBySide {project} {index} path="/projects/" />
 	{/each}
 </div>
 
 <div class="hidden grid-cols-2 lg:grid">
-	{#each sortedProjects as { title, description, slug, status, image, posters }}
+	{#each sortedProjects as project (project)}
+		{@const { title, description, slug, status, image, posters } = project}
 		<div
 			style="--primary: {image.color}"
 			class="text-light relative mx-auto mb-10 flex aspect-square h-full w-full flex-col items-start"
 		>
 			{#if slug}
-				<a href={'/projects/' + slug} class={`absolute inset-0 grayscale`}>
+				<!-- Not a link: the hover panel below sits on top of it, so it was never clickable,
+				     only a nameless extra tab stop. "learn more" is the link. -->
+				<div class="absolute inset-0 grayscale">
 					<Image src={image.src ?? posters?.[0]?.url} alt={image.alt} caption={image.caption} />
-				</a>
+				</div>
 
 				<div
 					class="z-0 flex h-full w-full flex-col items-start justify-center bg-black/80 px-5 pb-10 pt-5 opacity-0 transition-all duration-300 hover:opacity-100 lg:items-center"
@@ -71,13 +75,13 @@
 					>
 					<span class="text-sm mb-2 text-gray-300 uppercase">{status.replace(/-/g, ' ')}</span>
 
-						<h3 class="font-display sm:text-2xl lg:text-5xl">{title}</h3>
+						<h2 class="font-display sm:text-2xl lg:text-5xl">{title}</h2>
 
 						<p class="pb-3 lg:py-3">{description}</p>
 
 						<a
 							class="hover:text-primary underline underline-offset-4 transition-all duration-300 hover:underline-offset-2"
-							href={'/projects/' + slug}>learn more</a
+							href={'/projects/' + slug}>learn more<span class="sr-only"> about {title}</span></a
 						>
 					</div>
 				</div>

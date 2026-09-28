@@ -22,8 +22,8 @@
 		image?: { src?: string | null; alt?: string | null; color?: string | null }
 	} = $props()
 
-	const handle = path + slug
-	const preloadSrc = optimize(image.src, { w: 1600 })
+	let handle = $derived(path + slug)
+	let preloadSrc = $derived(optimize(image.src, { w: 1600 }))
 
 	// The film title is set in the poster's dominant color against the near-black
 	// page, and nothing bounds what Sanity returns - a dark poster yields an
