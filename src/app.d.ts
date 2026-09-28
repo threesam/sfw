@@ -289,6 +289,8 @@ export type SiteSettings = {
 }
 
 declare global {
+  /** True when built on Vercel, where /_vercel/image exists (see vite.config.js). */
+  const __VERCEL_IMAGES__: boolean
   interface Window {
     umami: {
       track: (type: string, data?: Record<string, string | number | boolean>) => void

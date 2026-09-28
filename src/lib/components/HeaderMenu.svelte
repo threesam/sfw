@@ -18,25 +18,24 @@
 		if (event.target === event.currentTarget) closeMenu()
 	}
 
-	function handleOverlayKey(event: KeyboardEvent) {
-		if (event.key === 'Escape' || event.key === 'Enter' || event.key === ' ') {
-			event.preventDefault()
-			closeMenu()
-		}
+	function handleKey(event: KeyboardEvent) {
+		if (event.key === 'Escape') closeMenu()
 	}
 </script>
 
-<!-- OVERLAY -->
+<svelte:window onkeydown={handleKey} />
+
+<!-- OVERLAY: click-outside is a mouse convenience; keyboard closes with Escape or the toggle.
+     Not role="button" — a button wrapping the nav links hides them from assistive tech. -->
+<!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_static_element_interactions -->
 <div
-	role="button"
-	tabindex="0"
-	aria-label="close menu"
+	id="mobile-menu"
 	onclick={handleOverlayClick}
-	onkeydown={handleOverlayKey}
 	class="bg-dark/90 absolute inset-0 top-16 z-50 flex min-h-screen w-full justify-end overflow-hidden lg:hidden"
 >
 	<!-- MENU -->
-	<div
+	<nav
+		aria-label="main"
 		bind:clientHeight
 		in:fly={{ y: -clientHeight, opacity: 100, duration: 400, easing: quintInOut }}
 		class="bg-dark z-30 w-full sm:w-max"
@@ -53,5 +52,5 @@
 				>
 			{/each}
 		</div>
-	</div>
+	</nav>
 </div>

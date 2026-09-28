@@ -19,7 +19,7 @@ export function trackCart({
 }) {
   track(type, {
     name: variant?.name ?? '',
-    price: Number(variant.retail_price) ?? '',
+    price: Number(variant.retail_price),
     variant_id: variant.id ?? ''
   })
 }

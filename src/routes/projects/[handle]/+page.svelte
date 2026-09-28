@@ -96,7 +96,7 @@
 
 		<div class="mx-auto max-w-2xl px-5 my-32" style={`--primary: ${project.image.color}`}>
 			{#if project.body}
-				<h3 class="font-thin text-center text-2xl sm:text-4xl mb-3 font-normal">abstract</h3>
+				<h2 class="font-thin text-center text-2xl sm:text-4xl mb-3 font-normal">abstract</h2>
 
 				<div class="portable-text mb-32 text-center text-light font-extralight text-xl sm:text-2xl">
 					<PortableText value={project.body as InputValue} />
@@ -104,10 +104,10 @@
 			{/if}
 
 			{#if project.cast}
-				<h4 class="font-thin mb-3 text-center text-2xl sm:text-4xl">cast</h4>
+				<h2 class="font-thin mb-3 text-center text-2xl sm:text-4xl">cast</h2>
 
 				<ul class="mb-32">
-					{#each project.cast as castMember}
+					{#each project.cast as castMember (castMember)}
 						<li class="grid grid-cols-2 gap-3 items-center text-left mb-2">
 							<span class="text-right text-gray-300 text-base">{castMember.castname}</span>
 
@@ -125,10 +125,10 @@
 			{/if}
 
 			{#if project.crew}
-				<h4 class="font-thin mb-3 text-center text-2xl sm:text-4xl">crew</h4>
+				<h2 class="font-thin mb-3 text-center text-2xl sm:text-4xl">crew</h2>
 
 				<ul>
-					{#each project.crew as crewMember}
+					{#each project.crew as crewMember (crewMember)}
 					<li class="grid grid-cols-2 gap-3 items-center text-left mb-2">
 						<span class="text-right text-gray-300 text-base">{crewMember.role}</span>
 
@@ -155,7 +155,7 @@
 		{#if project.posters}
 			<figure class="flex aspect-[3/4] w-full justify-center px-5 mb-32 lg:max-h-[50vh]">
 				<img
-					class="aspect-[3/4] lg:max-h-[50vh]"
+					class="aspect-[3/4] object-contain lg:max-h-[50vh]"
 					src={optimize(project.posters[0]?.src, { w: 900 })}
 					alt={'poster for ' + project.title}
 					loading="lazy"

@@ -9,11 +9,14 @@
 	import SEO from 'svelte-seo'
 	import { canonical } from '$lib/utils/site'
 	import type { PrintfulSyncVariant } from '$types'
+	import { optimize } from '$lib/utils/img'
 
 	let { data }: { data: PageData } = $props()
 
-	const { product } = data.body
-	const { variants } = product
+	// $derived, not a one-off destructure: /merch/a -> /merch/b reuses this component,
+	// and a plain const would keep showing product a.
+	let product = $derived(data.body.product)
+	let variants = $derived(product.variants)
 
 	let selectedVariantId = $derived(new URL($page.url).searchParams.get('v'))
 
@@ -105,8 +108,11 @@
 		<div class="flex max-w-full flex-col md:flex-row">
 			<img
 				class="bg-gradient-to-tr from-slate-700 md:w-2/3"
-				src={product.thumbnail_url}
+				src={optimize(product.thumbnail_url, { w: 800 })}
 				alt="product - {product.name}"
+				width="800"
+				height="800"
+				fetchpriority="high"
 			/>
 
 			<div class="h-full md:w-1/3 lg:pl-10">
@@ -118,10 +124,12 @@
 				</p>
 
 				<div class="mb-8 pt-5">
-					<h4 class="mb-2 text-base font-semibold uppercase tracking-wide">Size</h4>
-					<div class="flex gap-3">
-						{#each variants as variant}
+					<h2 id="size-label" class="mb-2 text-base font-semibold uppercase tracking-wide">Size</h2>
+					<div class="flex gap-3" role="group" aria-labelledby="size-label">
+						{#each variants as variant (variant.id)}
 							<button
+								type="button"
+								aria-pressed={selectedVariant?.id === variant.id}
 								onclick={() => selectVariant(variant.id)}
 								class={`${
 									selectedVariant?.id === variant.id

@@ -4,9 +4,21 @@
     <meta charset="utf-8" />
     <link rel="icon" href="%sveltekit.assets%/favicon.png" />
     <link rel="stylesheet" href="%sveltekit.assets%/global.css" />
-    <link rel="preconnect" href="https://cdn.sanity.io" crossorigin />
-    <link rel="preconnect" href="https://files.cdn.printful.com" crossorigin />
+    <link rel="preconnect" href="https://cdn.sanity.io" />
     <meta name="viewport" content="width=device-width" />
+    <script>
+      // testing eject: ?test flips umami's native kill switch for this
+      // browser (persistent); ?test=0 rejoins. The tracker checks
+      // localStorage before every send — no custom gating needed.
+      try {
+        var q = new URLSearchParams(location.search)
+        if (q.has('test')) {
+          q.get('test') === '0'
+            ? localStorage.removeItem('umami.disabled')
+            : localStorage.setItem('umami.disabled', '1')
+        }
+      } catch (e) {}
+    </script>
     <script
       defer
       src="https://analytics.sixtom.com/script.js"

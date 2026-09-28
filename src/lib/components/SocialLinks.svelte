@@ -38,7 +38,8 @@
 	]
 
 	let iconColor = $derived(color ?? undefined)
-	const validLinks = links.filter((link) => options.map(({ title }) => title).includes(link.title))
+	// $derived: /projects/a -> /projects/b reuses this component with new links.
+	let validLinks = $derived(links.filter((link) => options.some(({ title }) => title === link.title)))
 
 	function getIconComponent(title: string) {
 		return options.find((option) => option.title === title)?.component
@@ -47,7 +48,8 @@
 
 {#if links?.length}
 	<div class="flex justify-start gap-5">
-		{#each validLinks as { href, title }, i}
+		{#each validLinks as link, i (link)}
+			{@const { href, title } = link}
 			{@const Comp = getIconComponent(title)}
 			<a
 				class="transition-all duration-300 hover:scale-95"
