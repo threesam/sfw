@@ -30,7 +30,7 @@
 			stroke-linejoin="round"
 			fill="none"
 			shape-rendering="geometricPrecision"
-			class="hover:text-accent-3 h-6 w-6"><path d="M18 6L6 18" /><path d="M6 6l12 12" /></svg
+			class="h-6 w-6"><path d="M18 6L6 18" /><path d="M6 6l12 12" /></svg
 		>
 	{:else if type === 'minus'}
 		<span class="sr-only">decrement</span>
@@ -87,7 +87,7 @@
 			stroke-linejoin="round"
 			fill="none"
 			shape-rendering="geometricPrecision"
-			class="Collapse_icon__JsuEg"><path d="M9 18l6-6-6-6" /></svg
+			><path d="M9 18l6-6-6-6" /></svg
 		>
 	{/if}
 </div>
