@@ -1,18 +1,18 @@
-import { env as private_env } from '$env/dynamic/private'
-import { env as public_env } from '$env/dynamic/public'
+import { SANITY_TOKEN } from '$app/env/private'
+import { PUBLIC_SANITY_PROJECT_ID, PUBLIC_SANITY_DATASET } from '$app/env/public'
 import { createClient } from '@sanity/client'
 import type { PrintfulProduct } from '$types'
 
 const client = createClient({
-  projectId: public_env.PUBLIC_SANITY_PROJECT_ID,
-  dataset: public_env.PUBLIC_SANITY_DATASET,
+  projectId: PUBLIC_SANITY_PROJECT_ID,
+  dataset: PUBLIC_SANITY_DATASET,
   apiVersion: '2021-10-21',
   // Stays false deliberately: this client is token-authenticated and writes
   // (asset uploads from the Printful webhook). The CDN is read-only and does
   // not serve authenticated requests, so it cannot be used here. Low volume —
   // webhook-triggered, not per-visitor — so it is not what exhausts the quota.
   useCdn: false,
-  token: private_env.SANITY_TOKEN
+  token: SANITY_TOKEN
 })
 
 async function uploadImageFromUrl(url: string | null) {

@@ -1,7 +1,7 @@
 import type { RequestHandler } from './$types'
 import { getAllProjects } from '$utils/sanity/client'
 import { getProducts } from '$utils/printful'
-import { canonical } from '$lib/utils/site'
+import { canonical } from '#lib/utils/site.js'
 
 export const prerender = true
 

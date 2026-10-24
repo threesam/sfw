@@ -1,7 +1,7 @@
 /**
  * Sanity CDN URLs get resize/format params. Printful URLs go through Vercel's
  * image optimizer when deployed there (w must be one of the sizes in
- * svelte.config.js). Anything else is returned untouched.
+ * vite.config.js). Anything else is returned untouched.
  */
 export function optimize(
   src: string | null | undefined,

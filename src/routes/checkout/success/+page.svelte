@@ -1,15 +1,18 @@
 <script lang="ts">
 	import type { PageData } from './$types'
-	import { optimize } from '$lib/utils/img'
+	import PageSeo from '#lib/components/PageSeo.svelte'
+	import { optimize } from '#lib/utils/img.js'
 
 	let { data }: { data: PageData } = $props()
 
-	const { settings } = data.body
+	let settings = $derived(data.settings)
 
 	// ponytail: deliberately untracked — success_url (stripe.ts) has no session_id,
 	// so this URL can't tell a real purchase from a refresh/direct-visit/bot. See
 	// PR "umami tracking robustness" for the session-verified upgrade path.
 </script>
+
+<PageSeo title={settings?.title ?? 'Skeleton Flowers and Water'} />
 
 <section class="relative flex h-screen items-center justify-center">
 	<img

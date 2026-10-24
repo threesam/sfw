@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { page } from '$app/stores'
+	import { page } from '$app/state'
 	import HeaderMenu from '$components/HeaderMenu.svelte'
 	import Icons from '$components/Icons.svelte'
 	import { cartQuantity, showCart, showMenu } from '$store'
@@ -12,7 +12,7 @@
 		],
 	} = $props()
 
-	let currentRoute = $derived($page.url.pathname)
+	let currentRoute = $derived(page.url.pathname)
 
 	$effect(() => {
 		// Close menu on route change

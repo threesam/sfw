@@ -1,21 +1,19 @@
 <script lang="ts">
 	import '../app.css'
-	import Cart from '$lib/components/Cart.svelte'
-	import Header from '$lib/components/Header.svelte'
-	import Footer from '$lib/components/Footer.svelte'
-	import JsonLd from '$lib/components/JsonLd.svelte'
-	import { showCart } from '$lib/store'
-	import SEO from 'svelte-seo'
-	import { page } from '$app/stores'
-	import { optimize } from '$lib/utils/img'
-	import { canonical, SITE_URL } from '$lib/utils/site'
+	import Cart from '#lib/components/Cart.svelte'
+	import Header from '#lib/components/Header.svelte'
+	import Footer from '#lib/components/Footer.svelte'
+	import JsonLd from '#lib/components/JsonLd.svelte'
+	import { showCart } from '#lib/store.js'
+	import { page } from '$app/state'
+	import { optimize } from '#lib/utils/img.js'
+	import { SITE_URL } from '#lib/utils/site.js'
 	import type { LayoutData } from './$types'
 	import type { Snippet } from 'svelte'
 
 	let { data, children }: { data: LayoutData; children: Snippet } = $props()
 
-	let settings = $derived(data.body.settings)
-	let pageUrl = $derived(canonical($page.url.pathname))
+	let settings = $derived(data.settings)
 	let ogImage = $derived(optimize(settings?.image?.asset?.url, { w: 1200 }) ?? '')
 
 	let organizationLd = $derived({
@@ -32,26 +30,11 @@
 </script>
 
 <svelte:head>
-	<link rel="canonical" href={pageUrl} />
+	<!-- error pages render no PageSeo; give them the site title, not a canonical -->
+	{#if page.error}
+		<title>{settings?.title ?? 'Skeleton Flowers and Water'}</title>
+	{/if}
 </svelte:head>
-
-<SEO
-	title={settings?.title}
-	description={settings?.description}
-	openGraph={{
-		title: settings?.title ?? '',
-		description: settings?.description ?? '',
-		url: pageUrl,
-		type: 'website',
-		images: ogImage ? [{ url: ogImage, width: 1200, height: 1200 }] : [],
-	}}
-	twitter={{
-		card: 'summary_large_image',
-		title: settings?.title ?? '',
-		description: settings?.description ?? '',
-		image: ogImage,
-	}}
-/>
 
 <JsonLd data={organizationLd} />
 

@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { fly } from 'svelte/transition'
 	import Image from './Image.svelte'
-	import { optimize } from '$lib/utils/img'
-	import { readableOn } from '$lib/utils/contrast'
+	import { optimize } from '#lib/utils/img.js'
+	import { readableOn } from '#lib/utils/contrast.js'
 
 	let {
 		height = '',

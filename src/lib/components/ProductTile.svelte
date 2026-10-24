@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { track } from '$lib/utils/umami'
-	import { optimize } from '$lib/utils/img'
+	import { track } from '#lib/utils/umami.js'
+	import { optimize } from '#lib/utils/img.js'
 
 	// The homepage preview and the /merch index both render this. Sharing the
 	// component is what actually keeps the two entry points identical, and it
