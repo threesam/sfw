@@ -1,30 +1,34 @@
 <script lang="ts">
-	import type { PageData } from './$types';
-	import SocialLinks from '#lib/components/SocialLinks.svelte';
-	import JsonLd from '#lib/components/JsonLd.svelte';
-	import { PortableText, type InputValue } from '@portabletext/svelte';
-	import SEO from 'svelte-seo';
-	import { page } from '$app/state';
-	import type { Project } from '$types';
-	import { optimize } from '#lib/utils/img.js';
-	import { canonical } from '#lib/utils/site.js';
-	import { extractGenres, formatStatus } from '#lib/utils/project.js';
+	import type { PageData } from './$types'
+	import SocialLinks from '#lib/components/SocialLinks.svelte'
+	import JsonLd from '#lib/components/JsonLd.svelte'
+	import { PortableText, type InputValue } from '@portabletext/svelte'
+	import SEO from 'svelte-seo'
+	import { page } from '$app/state'
+	import type { Project } from '$types'
+	import { optimize } from '#lib/utils/img.js'
+	import { canonical } from '#lib/utils/site.js'
+	import { extractGenres, formatStatus } from '#lib/utils/project.js'
 
-	let { data }: { data: PageData } = $props();
-	let project = $derived(data.body.project);
-	let pageUrl = $derived(canonical(page.url.pathname));
-	let ogImage = $derived(optimize(project?.image?.src, { w: 1200 }));
-	const getBackstage = (p: Project | null | undefined) => p?.links?.find(({ title }) => title === 'backstage');
-	let backstage = $derived(getBackstage(project));
+	let { data }: { data: PageData } = $props()
+
+	let project = $derived(data.body.project)
+	let pageUrl = $derived(canonical(page.url.pathname))
+	let ogImage = $derived(optimize(project?.image?.src, { w: 1200 }))
+
+	const getBackstage = (p: Project | null | undefined) =>
+		p?.links?.find(({ title }) => title === 'backstage')
+
+	let backstage = $derived(getBackstage(project))
 
 	function personEntry(name: string, link: string | undefined) {
-		return { '@type': 'Person', name, ...link ? { sameAs: [link] } : {} };
+		return { '@type': 'Person', name, ...(link ? { sameAs: [link] } : {}) }
 	}
 
 	let movieLd = $derived.by(() => {
-		if (!project) return null;
-		const genres = extractGenres(project.description);
-		const directors = (project.crew ?? []).filter((c) => (/director/i).test(c.role));
+		if (!project) return null
+		const genres = extractGenres(project.description)
+		const directors = (project.crew ?? []).filter((c) => /director/i.test(c.role))
 		return {
 			'@type': 'Movie',
 			name: project.title,
@@ -33,20 +37,20 @@
 			image: ogImage,
 			inLanguage: 'en',
 			countryOfOrigin: { '@type': 'Country', name: 'US' },
-			...genres.length ? { genre: genres } : {},
-			...project._updatedAt ? { dateModified: project._updatedAt } : {},
+			...(genres.length ? { genre: genres } : {}),
+			...(project._updatedAt ? { dateModified: project._updatedAt } : {}),
 			productionCompany: {
 				'@type': 'Organization',
 				name: 'Skeleton Flowers and Water',
 				url: canonical('/'),
 			},
 			actor: (project.cast ?? []).map((c) => personEntry(c.name, c.link)),
-			...directors.length
+			...(directors.length
 				? { director: directors.map((c) => personEntry(c.name, c.link)) }
-				: {},
-			creativeWorkStatus: formatStatus(project.status)
-		};
-	});
+				: {}),
+			creativeWorkStatus: formatStatus(project.status),
+		}
+	})
 </script>
 
 {#if project}
