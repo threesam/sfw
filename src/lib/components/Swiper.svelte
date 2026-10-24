@@ -89,7 +89,7 @@
 					class="border-primary bg-dark bg-gradient-3 text-dark relative mb-10 grid w-[78vw] flex-none snap-start place-content-center border-2 pr-2 sm:w-[44vw] lg:hidden"
 				>
 					<a
-						href="/projects/"
+						href="/projects"
 						class="absolute inset-0 grid place-content-center text-lg lowercase underline underline-offset-2"
 						>all projects</a
 					>
