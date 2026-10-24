@@ -1,25 +1,28 @@
 <script lang="ts">
-	import { cartItems, showCart, type CartItem } from '$store';
-	import type { PageData } from './$types';
-	import { page } from '$app/state';
-	import { goto } from '$app/navigation';
-	import { trackCart } from '$utils/umami';
-	import DescriptionToggle from '$components/DescriptionToggle.svelte';
-	import JsonLd from '#lib/components/JsonLd.svelte';
-	import SEO from 'svelte-seo';
-	import { canonical } from '#lib/utils/site.js';
-	import type { PrintfulSyncVariant } from '$types';
-	import { optimize } from '#lib/utils/img.js';
+	import { cartItems, showCart, type CartItem } from '$store'
+	import type { PageData } from './$types'
+	import { page } from '$app/state'
+	import { goto } from '$app/navigation'
+	import { trackCart } from '$utils/umami'
+	import DescriptionToggle from '$components/DescriptionToggle.svelte'
+	import JsonLd from '#lib/components/JsonLd.svelte'
+	import SEO from 'svelte-seo'
+	import { canonical } from '#lib/utils/site.js'
+	import type { PrintfulSyncVariant } from '$types'
+	import { optimize } from '#lib/utils/img.js'
 
 	let { data }: { data: PageData } = $props()
 
 	// $derived, not a one-off destructure: /merch/a -> /merch/b reuses this component,
 	// and a plain const would keep showing product a.
-	let product = $derived(data.body.product);
+	let product = $derived(data.body.product)
+	let variants = $derived(product.variants)
 
-	let variants = $derived(product.variants);
-	let selectedVariantId = $derived(page.url.searchParams.get('v'));
-	let selectedVariant: (PrintfulSyncVariant & { quantity?: number }) | undefined = $derived(variants.find((v) => String(v.id) === String(selectedVariantId)) ?? variants[0]);
+	let selectedVariantId = $derived(page.url.searchParams.get('v'))
+
+	let selectedVariant: (PrintfulSyncVariant & { quantity?: number }) | undefined = $derived(
+		variants.find((v) => String(v.id) === String(selectedVariantId)) ?? variants[0]
+	)
 
 	function getSize(variant: PrintfulSyncVariant) {
 		const parenMatch = variant.product?.name?.match(/\(.*\/\s*(.+?)\)/)
@@ -61,19 +64,17 @@
 	})
 
 	let productLd = $derived.by(() => {
-		const pageUrl = canonical(page.url.pathname);
-
-		const offers = variants.map((v) => {
-			const price = Number(v.retail_price);
-
-			if (!Number.isFinite(price)) return null;
-
-			return {
-				'@type': 'Offer' as const,
-				sku: v.sku,
-				price,
-				priceCurrency: v.currency ?? 'USD',
-				availability: 'https://schema.org/InStock',
+		const pageUrl = canonical(page.url.pathname)
+		const offers = variants
+			.map((v) => {
+				const price = Number(v.retail_price)
+				if (!Number.isFinite(price)) return null
+				return {
+					'@type': 'Offer' as const,
+					sku: v.sku,
+					price,
+					priceCurrency: v.currency ?? 'USD',
+					availability: 'https://schema.org/InStock',
 					url: `${pageUrl}?v=${v.id}`,
 				}
 			})

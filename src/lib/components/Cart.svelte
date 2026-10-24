@@ -1,11 +1,11 @@
 <script lang="ts">
-	import Icons from './Icons.svelte';
-	import { showCart, cartItems, cartQuantity, type CartItem } from '$store';
-	import { fly, fade } from 'svelte/transition';
-	import { quintInOut } from 'svelte/easing';
-	import { trackCart, track } from '#lib/utils/umami.js';
-	import { page } from '$app/state';
-	import { optimize } from '#lib/utils/img.js';
+	import Icons from './Icons.svelte'
+	import { showCart, cartItems, cartQuantity, type CartItem } from '$store'
+	import { fly, fade } from 'svelte/transition'
+	import { quintInOut } from 'svelte/easing'
+	import { trackCart, track } from '#lib/utils/umami.js'
+	import { page } from '$app/state'
+	import { optimize } from '#lib/utils/img.js'
 
 	let clientWidth = $state(0)
 
@@ -26,23 +26,21 @@
 			if (variant.id === item.id) {
 				variant.quantity++
 			}
+			return variant
+		})
 
-			return variant;
-		});
-
-		trackCart({ variant: item, type: 'add-to-cart' });
+		trackCart({ variant: item, type: 'add-to-cart' })
 	}
 
 	function removeOneItem(item: CartItem) {
 		if (item.quantity <= 1) return removeEntireItem(item)
 
 		$cartItems = $cartItems.map((variant) => {
-			if (variant.id === item.id) variant.quantity--;
+			if (variant.id === item.id) variant.quantity--
+			return variant
+		})
 
-			return variant;
-		});
-
-		trackCart({ variant: item, type: 'remove-from-cart' });
+		trackCart({ variant: item, type: 'remove-from-cart' })
 	}
 
 	function removeEntireItem(item: CartItem) {
@@ -55,20 +53,22 @@
 		trackCart({ variant: item, type: 'remove-from-cart' })
 	}
 
-	let subtotal = $derived($cartItems.reduce((acc, curr) => acc + Number(curr.retail_price) * curr.quantity, 0));
-	let checkoutText = $state('checkout');
+	let subtotal = $derived(
+		$cartItems.reduce((acc, curr) => acc + Number(curr.retail_price) * curr.quantity, 0),
+	)
 
+	let checkoutText = $state('checkout')
 	async function handleCheckout() {
 		checkoutText = 'redirecting…'
 		track('begin-checkout', { items: $cartQuantity, value: subtotal })
 		try {
 			const res = await fetch('/checkout/payment-intent', {
 				method: 'POST',
-				body: JSON.stringify({ items: $cartItems, pathname: page.url.pathname })
-			});
-			if (!res.ok) throw new Error('payment-intent ' + res.status);
-			const url = await res.text();
-			if (!url) throw new Error('empty checkout url');
+				body: JSON.stringify({ items: $cartItems, pathname: page.url.pathname }),
+			})
+			if (!res.ok) throw new Error('payment-intent ' + res.status)
+			const url = await res.text()
+			if (!url) throw new Error('empty checkout url')
 			// This fires only once payment-intent creation actually succeeded — unlike
 			// a "purchase" event on the success page (no session id to verify against,
 			// see checkout/success), the browser really is leaving for Stripe here.
