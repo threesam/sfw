@@ -48,6 +48,8 @@ colour, which is unbounded content data.
 - go to /
 - expect an email input inside #subscribe or the newsletter section
 - expect a submit control that is enabled
+- expect social links under the homepage subscribe form (they silently vanished
+  when layout data was nested under the same `body` key the page returns)
 - do NOT submit
 
 ## 6. Cart (LOCAL ONLY, Stripe TEST keys)
