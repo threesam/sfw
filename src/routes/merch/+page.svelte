@@ -1,9 +1,9 @@
 <script lang="ts">
 	import type { PageData } from './$types'
 	import SEO from 'svelte-seo'
-	import JsonLd from '$lib/components/JsonLd.svelte'
-	import { canonical } from '$lib/utils/site'
-	import ProductTile from '$lib/components/ProductTile.svelte'
+	import JsonLd from '#lib/components/JsonLd.svelte'
+	import { canonical } from '#lib/utils/site.js'
+	import ProductTile from '#lib/components/ProductTile.svelte'
 
 	let { data }: { data: PageData } = $props()
 

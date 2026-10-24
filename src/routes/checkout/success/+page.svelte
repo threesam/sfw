@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { PageData } from './$types'
-	import { optimize } from '$lib/utils/img'
+	import { optimize } from '#lib/utils/img.js'
 
 	let { data }: { data: PageData } = $props()
 

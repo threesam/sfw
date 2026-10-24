@@ -3,9 +3,9 @@
 	import { showCart, cartItems, cartQuantity, type CartItem } from '$store'
 	import { fly, fade } from 'svelte/transition'
 	import { quintInOut } from 'svelte/easing'
-	import { trackCart, track } from '$lib/utils/umami'
-	import { page } from '$app/stores'
-	import { optimize } from '$lib/utils/img'
+	import { trackCart, track } from '#lib/utils/umami.js'
+	import { page } from '$app/state'
+	import { optimize } from '#lib/utils/img.js'
 
 	let clientWidth = $state(0)
 
@@ -64,7 +64,7 @@
 		try {
 			const res = await fetch('/checkout/payment-intent', {
 				method: 'POST',
-				body: JSON.stringify({ items: $cartItems, pathname: $page.url.pathname }),
+				body: JSON.stringify({ items: $cartItems, pathname: page.url.pathname }),
 			})
 			if (!res.ok) throw new Error('payment-intent ' + res.status)
 			const url = await res.text()

@@ -1,13 +1,13 @@
 <script lang="ts">
 	import { fly } from 'svelte/transition'
 	import { quintInOut } from 'svelte/easing'
-	import { page } from '$app/stores'
+	import { page } from '$app/state'
 	import { showMenu } from '$store'
 	import type { ProjectLink } from '$types'
 
 	let { links = [] as ProjectLink[] }: { links?: ProjectLink[] } = $props()
 
-	let currentRoute = $derived($page.url.pathname)
+	let currentRoute = $derived(page.url.pathname)
 	let clientHeight = $state(0)
 
 	function closeMenu() {

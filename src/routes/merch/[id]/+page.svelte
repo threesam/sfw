@@ -1,15 +1,15 @@
 <script lang="ts">
 	import { cartItems, showCart, type CartItem } from '$store'
 	import type { PageData } from './$types'
-	import { page } from '$app/stores'
+	import { page } from '$app/state'
 	import { goto } from '$app/navigation'
 	import { trackCart } from '$utils/umami'
 	import DescriptionToggle from '$components/DescriptionToggle.svelte'
-	import JsonLd from '$lib/components/JsonLd.svelte'
+	import JsonLd from '#lib/components/JsonLd.svelte'
 	import SEO from 'svelte-seo'
-	import { canonical } from '$lib/utils/site'
+	import { canonical } from '#lib/utils/site.js'
 	import type { PrintfulSyncVariant } from '$types'
-	import { optimize } from '$lib/utils/img'
+	import { optimize } from '#lib/utils/img.js'
 
 	let { data }: { data: PageData } = $props()
 
@@ -18,7 +18,7 @@
 	let product = $derived(data.body.product)
 	let variants = $derived(product.variants)
 
-	let selectedVariantId = $derived(new URL($page.url).searchParams.get('v'))
+	let selectedVariantId = $derived(page.url.searchParams.get('v'))
 
 	let selectedVariant: (PrintfulSyncVariant & { quantity?: number }) | undefined = $derived(
 		variants.find((v) => String(v.id) === String(selectedVariantId)) ?? variants[0]
@@ -32,7 +32,7 @@
 	}
 
 	function selectVariant(id: number | string) {
-		goto(`?v=${id}`, { replaceState: true, noScroll: true })
+		goto(`?v=${id}`, { replace: true, reset: false })
 	}
 
 	function addToCart({ variant }: { variant: PrintfulSyncVariant & { quantity?: number } }) {
@@ -64,7 +64,7 @@
 	})
 
 	let productLd = $derived.by(() => {
-		const pageUrl = canonical($page.url.pathname)
+		const pageUrl = canonical(page.url.pathname)
 		const offers = variants
 			.map((v) => {
 				const price = Number(v.retail_price)

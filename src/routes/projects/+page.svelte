@@ -1,10 +1,10 @@
 <script lang="ts">
 	import type { PageData } from './$types'
-	import Image from '$lib/components/Image.svelte'
-	import SideBySide from '$lib/components/SideBySide.svelte'
+	import Image from '#lib/components/Image.svelte'
+	import SideBySide from '#lib/components/SideBySide.svelte'
 	import SEO from 'svelte-seo'
-	import JsonLd from '$lib/components/JsonLd.svelte'
-	import { canonical } from '$lib/utils/site'
+	import JsonLd from '#lib/components/JsonLd.svelte'
+	import { canonical } from '#lib/utils/site.js'
 	import type { Project } from '$types'
 
 	let { data }: { data: PageData } = $props()

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { fade } from 'svelte/transition'
-	import { optimize } from '$lib/utils/img'
+	import { optimize } from '#lib/utils/img.js'
 
 	let {
 		src = '',

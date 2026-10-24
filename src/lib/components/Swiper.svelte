@@ -3,7 +3,7 @@
 	import Icons from '$components/Icons.svelte'
 	import type { Project } from '$types'
 	import { onMount, tick } from 'svelte'
-	import { optimize } from '$lib/utils/img'
+	import { optimize } from '#lib/utils/img.js'
 
 	let { slides = [] as Project[], title = '' }: { slides?: Project[]; title?: string } = $props()
 

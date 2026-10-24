@@ -1,19 +1,19 @@
 <script lang="ts">
 	import type { PageData } from './$types'
-	import SocialLinks from '$lib/components/SocialLinks.svelte'
-	import JsonLd from '$lib/components/JsonLd.svelte'
+	import SocialLinks from '#lib/components/SocialLinks.svelte'
+	import JsonLd from '#lib/components/JsonLd.svelte'
 	import { PortableText, type InputValue } from '@portabletext/svelte'
 	import SEO from 'svelte-seo'
-	import { page } from '$app/stores'
+	import { page } from '$app/state'
 	import type { Project } from '$types'
-	import { optimize } from '$lib/utils/img'
-	import { canonical } from '$lib/utils/site'
-	import { extractGenres, formatStatus } from '$lib/utils/project'
+	import { optimize } from '#lib/utils/img.js'
+	import { canonical } from '#lib/utils/site.js'
+	import { extractGenres, formatStatus } from '#lib/utils/project.js'
 
 	let { data }: { data: PageData } = $props()
 
 	let project = $derived(data.body.project)
-	let pageUrl = $derived(canonical($page.url.pathname))
+	let pageUrl = $derived(canonical(page.url.pathname))
 	let ogImage = $derived(optimize(project?.image?.src, { w: 1200 }))
 
 	const getBackstage = (p: Project | null | undefined) =>

@@ -1,8 +1,8 @@
 <script lang="ts">
 	import type { PageData } from './$types'
 	import { fade } from 'svelte/transition'
-	import SubscribeForm from '$lib/components/SubscribeForm.svelte'
-	import SocialLinks from '$lib/components/SocialLinks.svelte'
+	import SubscribeForm from '#lib/components/SubscribeForm.svelte'
+	import SocialLinks from '#lib/components/SocialLinks.svelte'
 	import { onMount } from 'svelte'
 
 	let { data }: { data: PageData } = $props()
