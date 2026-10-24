@@ -3,7 +3,7 @@
 	import SocialLinks from '#lib/components/SocialLinks.svelte'
 	import JsonLd from '#lib/components/JsonLd.svelte'
 	import { PortableText, type InputValue } from '@portabletext/svelte'
-	import SEO from 'svelte-seo'
+	import PageSeo from '#lib/components/PageSeo.svelte'
 	import { page } from '$app/state'
 	import type { Project } from '$types'
 	import { optimize } from '#lib/utils/img.js'
@@ -54,16 +54,12 @@
 </script>
 
 {#if project}
-	<SEO
+	<PageSeo
 		title={`${project.title} - Skeleton Flowers and Water`}
 		description={project.description}
-		openGraph={{
-			title: project.title,
-			description: project.description,
-			url: pageUrl,
-			type: 'video.movie',
-			images: ogImage ? [{ url: ogImage }] : [],
-		}}
+		ogTitle={project.title}
+		image={ogImage}
+		type="video.movie"
 	/>
 
 	{#if movieLd}

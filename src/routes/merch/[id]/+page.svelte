@@ -6,7 +6,7 @@
 	import { trackCart } from '$utils/umami'
 	import DescriptionToggle from '$components/DescriptionToggle.svelte'
 	import JsonLd from '#lib/components/JsonLd.svelte'
-	import SEO from 'svelte-seo'
+	import PageSeo from '#lib/components/PageSeo.svelte'
 	import { canonical } from '#lib/utils/site.js'
 	import type { PrintfulSyncVariant } from '$types'
 	import { optimize } from '#lib/utils/img.js'
@@ -91,14 +91,11 @@
 	})
 </script>
 
-<SEO
+<PageSeo
 	title={`${product.name} - Skeleton Flowers and Water`}
 	description={`${product.name}. Limited apparel from Skeleton Flowers and Water.`}
-	openGraph={{
-		title: product.name,
-		type: 'website',
-		images: product.thumbnail_url ? [{ url: product.thumbnail_url }] : [],
-	}}
+	ogTitle={product.name}
+	image={product.thumbnail_url}
 />
 
 <JsonLd data={productLd} />

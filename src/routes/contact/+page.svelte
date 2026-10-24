@@ -1,13 +1,14 @@
 <script lang="ts">
 	import type { PageData } from './$types'
+	import PageSeo from '#lib/components/PageSeo.svelte'
 	import { fade } from 'svelte/transition'
 	import SubscribeForm from '#lib/components/SubscribeForm.svelte'
 	import SocialLinks from '#lib/components/SocialLinks.svelte'
 	import { onMount } from 'svelte'
 
 	let { data }: { data: PageData } = $props()
-	const { settings } = data.body
-	const icons = (settings.icons ?? []) as { src: string }[]
+	let settings = $derived(data.settings)
+	let icons = $derived((settings.icons ?? []) as { src: string }[])
 
 	let canvas = $state<HTMLCanvasElement | null>(null)
 	let stage = $state<HTMLElement | null>(null)
@@ -116,6 +117,10 @@
 		}
 	})
 </script>
+
+<PageSeo title="Contact - Skeleton Flowers and Water" />
+
+<h1 class="sr-only">Contact</h1>
 
 <section
 	bind:this={stage}

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { PageData } from './$types'
-	import { page } from '$app/state'
+	import PageSeo from '#lib/components/PageSeo.svelte'
 	import Banner from '#lib/components/Banner.svelte'
 	import Swiper from '$components/Swiper.svelte'
 	import SubscribeForm from '#lib/components/SubscribeForm.svelte'
@@ -9,12 +9,14 @@
 
 	let { data }: { data: PageData } = $props()
 
-	const { projects, products } = data.body
-	let settings = $derived((page.data as { body?: { settings?: { links?: { title: string; href: string }[] } } }).body?.settings ?? null)
+	let { projects, products } = $derived(data.body)
+	let settings = $derived(data.settings)
 
-	const featuredProject = projects.find(({ isFeatured }) => isFeatured) ?? projects[0]
-	const visibleProjects = projects.filter(({ status }) => status !== 'pre-production')
+	let featuredProject = $derived(projects.find(({ isFeatured }) => isFeatured) ?? projects[0])
+	let visibleProjects = $derived(projects.filter(({ status }) => status !== 'pre-production'))
 </script>
+
+<PageSeo title={settings?.title ?? 'Skeleton Flowers and Water'} />
 
 <Banner {...featuredProject} path="/projects/" />
 
@@ -28,7 +30,7 @@
 	<div class="grid gap-10 lg:grid-cols-3 lg:gap-6">
 		{#each products
 			.sort((a, b) => Number(b.variants[0]?.retail_price ?? 0) - Number(a.variants[0]?.retail_price ?? 0))
-			.slice(0, 3) as product}
+			.slice(0, 3) as product (product.id)}
 			<ProductTile
 				id={product.id}
 				name={product.name}

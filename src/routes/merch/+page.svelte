@@ -1,15 +1,15 @@
 <script lang="ts">
 	import type { PageData } from './$types'
-	import SEO from 'svelte-seo'
+	import PageSeo from '#lib/components/PageSeo.svelte'
 	import JsonLd from '#lib/components/JsonLd.svelte'
 	import { canonical } from '#lib/utils/site.js'
 	import ProductTile from '#lib/components/ProductTile.svelte'
 
 	let { data }: { data: PageData } = $props()
 
-	const { products } = data.body
+	let { products } = $derived(data.body)
 
-	const itemListLd = {
+	let itemListLd = $derived({
 		'@type': 'ItemList',
 		name: 'Merch by Skeleton Flowers and Water',
 		itemListElement: products.map((product, i) => ({
@@ -18,10 +18,10 @@
 			url: canonical(`/merch/${product.id}`),
 			name: product.name,
 		})),
-	}
+	})
 </script>
 
-<SEO
+<PageSeo
 	title="Merch - Skeleton Flowers and Water"
 	description="Shirts, beanies, stickers and the rest, from Skeleton Flowers and Water."
 />
@@ -36,7 +36,7 @@
 <section class="mx-auto max-w-6xl px-5 py-16 lg:px-10">
 	{#if products.length}
 		<div class="grid gap-10 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
-			{#each products as product}
+			{#each products as product (product.id)}
 				<ProductTile
 					id={product.id}
 					name={product.name}

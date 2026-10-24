@@ -4,7 +4,7 @@
 
 	let { data }: { data: PageData } = $props()
 
-	const { settings } = data.body
+	let settings = $derived(data.settings)
 
 	// ponytail: deliberately untracked — success_url (stripe.ts) has no session_id,
 	// so this URL can't tell a real purchase from a refresh/direct-visit/bot. See

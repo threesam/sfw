@@ -6,7 +6,7 @@
 
 	let { data }: { data: LayoutData } = $props()
 
-	let settings = $derived(data.body.settings)
+	let settings = $derived(data.settings)
 	let route = $derived(page?.route?.id || '')
 </script>
 

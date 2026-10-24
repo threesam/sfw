@@ -5,7 +5,6 @@
 	import Footer from '#lib/components/Footer.svelte'
 	import JsonLd from '#lib/components/JsonLd.svelte'
 	import { showCart } from '#lib/store.js'
-	import SEO from 'svelte-seo'
 	import { page } from '$app/state'
 	import { optimize } from '#lib/utils/img.js'
 	import { canonical, SITE_URL } from '#lib/utils/site.js'
@@ -14,7 +13,7 @@
 
 	let { data, children }: { data: LayoutData; children: Snippet } = $props()
 
-	let settings = $derived(data.body.settings)
+	let settings = $derived(data.settings)
 	let pageUrl = $derived(canonical(page.url.pathname))
 	let ogImage = $derived(optimize(settings?.image?.asset?.url, { w: 1200 }) ?? '')
 
@@ -34,24 +33,6 @@
 <svelte:head>
 	<link rel="canonical" href={pageUrl} />
 </svelte:head>
-
-<SEO
-	title={settings?.title}
-	description={settings?.description}
-	openGraph={{
-		title: settings?.title ?? '',
-		description: settings?.description ?? '',
-		url: pageUrl,
-		type: 'website',
-		images: ogImage ? [{ url: ogImage, width: 1200, height: 1200 }] : [],
-	}}
-	twitter={{
-		card: 'summary_large_image',
-		title: settings?.title ?? '',
-		description: settings?.description ?? '',
-		image: ogImage,
-	}}
-/>
 
 <JsonLd data={organizationLd} />
 

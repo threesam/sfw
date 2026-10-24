@@ -1,19 +1,16 @@
 <script lang="ts">
 	import Image from '$components/Image.svelte'
 	import PortableText from '$components/PortableText.svelte'
-	import SEO from 'svelte-seo'
+	import PageSeo from '#lib/components/PageSeo.svelte'
 	import type { PageData } from './$types'
 	import type { InputValue } from '@portabletext/svelte'
 	import { optimize } from '#lib/utils/img.js'
 
 	let { data }: { data: PageData } = $props()
-	let settings = $derived(data.body.settings)
+	let settings = $derived(data.settings)
 </script>
 
-<SEO
-	title="About - Skeleton Flowers and Water"
-	description={settings?.description}
-/>
+<PageSeo title="About - Skeleton Flowers and Water" />
 
 <div class="mx-auto max-w-3xl">
 	<Image src={settings?.image?.asset?.url} alt="" />
