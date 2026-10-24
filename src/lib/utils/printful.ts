@@ -9,8 +9,8 @@ import type { PrintfulProduct, PrintfulSyncProduct, PrintfulSyncVariant } from '
 export async function fetchPrintful(endpoint: string) {
   const res = await fetch(PRINTFUL_API_ENDPOINT + endpoint, {
     headers: {
-      Authorization: 'Bearer ' + (PRINTFUL_PRIVATE_ACCESS_KEY ?? ''),
-      'X-PF-Store-Id': PRINTFUL_STORE_ID ?? ''
+      Authorization: 'Bearer ' + PRINTFUL_PRIVATE_ACCESS_KEY,
+      'X-PF-Store-Id': PRINTFUL_STORE_ID
     }
   })
 
