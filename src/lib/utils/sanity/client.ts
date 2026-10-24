@@ -1,10 +1,10 @@
 import { createClient } from '@sanity/client'
-import { env } from '$env/dynamic/public'
+import { PUBLIC_SANITY_PROJECT_ID, PUBLIC_SANITY_DATASET } from '$app/env/public'
 import type { Project, SiteSettings } from '$types'
 
 const client = createClient({
-  projectId: env.PUBLIC_SANITY_PROJECT_ID,
-  dataset: env.PUBLIC_SANITY_DATASET,
+  projectId: PUBLIC_SANITY_PROJECT_ID,
+  dataset: PUBLIC_SANITY_DATASET,
   apiVersion: '2021-10-21',
   // Read path for every visitor request. The live API is metered and starts
   // returning 402 once the plan's request quota is hit, which took this site

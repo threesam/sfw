@@ -3,13 +3,13 @@
 @font-face {
   font-family: 'Staatliches';
   font-display: swap;
-  src: url('$lib/assets/fonts/Staatliches-Regular.woff2') format('woff2');
+  src: url('./lib/assets/fonts/Staatliches-Regular.woff2') format('woff2');
 }
 
 @font-face {
   font-family: 'Cherry';
   font-display: swap;
-  src: url('$lib/assets/fonts/Cherry Monospace-Light.woff2') format('woff2');
+  src: url('./lib/assets/fonts/Cherry Monospace-Light.woff2') format('woff2');
 }
 
 /* Body face. Schibsted Grotesk was drawn for a newspaper group, so it is built
@@ -23,7 +23,7 @@
   font-display: swap;
   font-style: normal;
   font-weight: 400 900;
-  src: url('$lib/assets/fonts/SchibstedGrotesk-VariableFont_wght.woff2') format('woff2-variations');
+  src: url('./lib/assets/fonts/SchibstedGrotesk-VariableFont_wght.woff2') format('woff2-variations');
 }
 
 @font-face {
@@ -31,7 +31,7 @@
   font-display: swap;
   font-style: italic;
   font-weight: 400 900;
-  src: url('$lib/assets/fonts/SchibstedGrotesk-Italic-VariableFont_wght.woff2')
+  src: url('./lib/assets/fonts/SchibstedGrotesk-Italic-VariableFont_wght.woff2')
     format('woff2-variations');
 }
 

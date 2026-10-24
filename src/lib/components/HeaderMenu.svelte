@@ -1,14 +1,13 @@
 <script lang="ts">
-	import { fly } from 'svelte/transition'
-	import { quintInOut } from 'svelte/easing'
-	import { page } from '$app/stores'
-	import { showMenu } from '$store'
-	import type { ProjectLink } from '$types'
+	import { fly } from 'svelte/transition';
+	import { quintInOut } from 'svelte/easing';
+	import { page } from '$app/state';
+	import { showMenu } from '$store';
+	import type { ProjectLink } from '$types';
 
-	let { links = [] as ProjectLink[] }: { links?: ProjectLink[] } = $props()
-
-	let currentRoute = $derived($page.url.pathname)
-	let clientHeight = $state(0)
+	let { links = [] as ProjectLink[] }: { links?: ProjectLink[] } = $props();
+	let currentRoute = $derived(page.url.pathname);
+	let clientHeight = $state(0);
 
 	function closeMenu() {
 		$showMenu = false
@@ -23,7 +22,7 @@
 	}
 </script>
 
-<svelte:window onkeydown={handleKey} />
+<svelte:window onkeydown={handleKey}></svelte:window>
 
 <!-- OVERLAY: click-outside is a mouse convenience; keyboard closes with Escape or the toggle.
      Not role="button" — a button wrapping the nav links hides them from assistive tech. -->

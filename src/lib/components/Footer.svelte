@@ -1,13 +1,13 @@
 <script lang="ts">
-	import SubscribeForm from './SubscribeForm.svelte'
-	import SocialLinks from './SocialLinks.svelte'
-	import { page } from '$app/stores'
-	import type { LayoutData } from '../../routes/$types'
+	import SubscribeForm from './SubscribeForm.svelte';
+	import SocialLinks from './SocialLinks.svelte';
+	import { page } from '$app/state';
+	import type { LayoutData } from '../../routes/$types';
 
-	let { data }: { data: LayoutData } = $props()
+	let { data }: { data: LayoutData } = $props();
 
-	let settings = $derived(data.body.settings)
-	let route = $derived($page?.route?.id || '')
+	let settings = $derived(data.body.settings);
+	let route = $derived(page?.route?.id || '');
 </script>
 
 {#if route !== '/contact'}

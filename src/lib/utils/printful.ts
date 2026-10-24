@@ -1,11 +1,16 @@
-import { env } from '$env/dynamic/private'
+import {
+  PRINTFUL_API_ENDPOINT,
+  PRINTFUL_PRIVATE_ACCESS_KEY,
+  PRINTFUL_STORE_ID
+} from '$app/env/private'
+
 import type { PrintfulProduct, PrintfulSyncProduct, PrintfulSyncVariant } from '$types'
 
 export async function fetchPrintful(endpoint: string) {
-  const res = await fetch(env.PRINTFUL_API_ENDPOINT + endpoint, {
+  const res = await fetch(PRINTFUL_API_ENDPOINT + endpoint, {
     headers: {
-      Authorization: 'Bearer ' + (env.PRINTFUL_PRIVATE_ACCESS_KEY ?? ''),
-      'X-PF-Store-Id': env.PRINTFUL_STORE_ID ?? ''
+      Authorization: 'Bearer ' + (PRINTFUL_PRIVATE_ACCESS_KEY ?? ''),
+      'X-PF-Store-Id': PRINTFUL_STORE_ID ?? ''
     }
   })
 

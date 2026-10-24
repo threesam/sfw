@@ -4,7 +4,7 @@
 	import SEO from 'svelte-seo'
 	import type { PageData } from './$types'
 	import type { InputValue } from '@portabletext/svelte'
-	import { optimize } from '$lib/utils/img'
+	import { optimize } from '#lib/utils/img.js'
 
 	let { data }: { data: PageData } = $props()
 	let settings = $derived(data.body.settings)

@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { page } from '$app/stores'
-	import HeaderMenu from '$components/HeaderMenu.svelte'
-	import Icons from '$components/Icons.svelte'
-	import { cartQuantity, showCart, showMenu } from '$store'
+	import { page } from '$app/state';
+	import HeaderMenu from '$components/HeaderMenu.svelte';
+	import Icons from '$components/Icons.svelte';
+	import { cartQuantity, showCart, showMenu } from '$store';
 
 	let {
 		links = [
@@ -12,7 +12,7 @@
 		],
 	} = $props()
 
-	let currentRoute = $derived($page.url.pathname)
+	let currentRoute = $derived(page.url.pathname);
 
 	$effect(() => {
 		// Close menu on route change
@@ -32,8 +32,8 @@
 			{#each links as { href, title } (href)}
 				<a
 					class="border-b-2 border-transparent text-base transition duration-300 hover:border-slate-500 lg:text-lg"
-					{href}>{title}</a
-				>
+					href={href}
+				>{title}</a>
 			{:else}
 				<p>no links!</p>
 			{/each}
@@ -65,7 +65,7 @@
 			</button>
 			<!-- MOBILE MENU TOGGLE: one button so focus survives the toggle -->
 			<button
-				onclick={() => ($showMenu = !$showMenu)}
+				onclick={() => $showMenu = !$showMenu}
 				aria-label={$showMenu ? 'Close menu' : 'Open menu'}
 				aria-expanded={$showMenu}
 				aria-controls="mobile-menu"
@@ -78,6 +78,6 @@
 
 	<!-- MOBILE MENU -->
 	{#if $showMenu}
-		<HeaderMenu {links} />
+		<HeaderMenu links={links} />
 	{/if}
 </header>

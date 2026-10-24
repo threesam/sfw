@@ -1,13 +1,13 @@
 import type { PrintfulOrder, PrintfulShipmentInfo } from '$types'
-import { env } from '$env/dynamic/private'
+import { SENDGRID_API_KEY, SENDGRID_VERIFIED_SENDER } from '$app/env/private'
 import { error } from '@sveltejs/kit'
-import OrderCreated from '$lib/emails/OrderCreated.svelte'
-import PackageShipped from '$lib/emails/PackageShipped.svelte'
+import OrderCreated from '#lib/emails/OrderCreated.svelte'
+import PackageShipped from '#lib/emails/PackageShipped.svelte'
 import { render } from 'svelte-email'
 import sendgrid from '@sendgrid/mail'
 import type { ComponentType, SvelteComponent } from 'svelte'
 
-sendgrid.setApiKey(env.SENDGRID_API_KEY)
+sendgrid.setApiKey(SENDGRID_API_KEY)
 
 export async function sendOrderCreatedNotification({ order }: { order: PrintfulOrder }) {
   if (!order.recipient.email) {
@@ -21,7 +21,7 @@ export async function sendOrderCreatedNotification({ order }: { order: PrintfulO
 
   return await sendgrid.send({
     to: order.recipient.email,
-    from: env.SENDGRID_VERIFIED_SENDER,
+    from: SENDGRID_VERIFIED_SENDER,
     subject: `Skeleton Flowers and Water: Order Created`,
     html: emailHtml
   })
@@ -58,7 +58,7 @@ export async function sendPackageShippedNotification({
 
   return await sendgrid.send({
     to: order.recipient.email,
-    from: env.SENDGRID_VERIFIED_SENDER,
+    from: SENDGRID_VERIFIED_SENDER,
     subject: `Skeleton Flowers and Water: Order Shipped`,
     html: emailHtml
   })
