@@ -1,21 +1,21 @@
 <script lang="ts">
 	import '../app.css'
-	import Cart from '$lib/components/Cart.svelte'
-	import Header from '$lib/components/Header.svelte'
-	import Footer from '$lib/components/Footer.svelte'
-	import JsonLd from '$lib/components/JsonLd.svelte'
-	import { showCart } from '$lib/store'
+	import Cart from '#lib/components/Cart.svelte'
+	import Header from '#lib/components/Header.svelte'
+	import Footer from '#lib/components/Footer.svelte'
+	import JsonLd from '#lib/components/JsonLd.svelte'
+	import { showCart } from '#lib/store.js'
 	import SEO from 'svelte-seo'
-	import { page } from '$app/stores'
-	import { optimize } from '$lib/utils/img'
-	import { canonical, SITE_URL } from '$lib/utils/site'
+	import { page } from '$app/state'
+	import { optimize } from '#lib/utils/img.js'
+	import { canonical, SITE_URL } from '#lib/utils/site.js'
 	import type { LayoutData } from './$types'
 	import type { Snippet } from 'svelte'
 
 	let { data, children }: { data: LayoutData; children: Snippet } = $props()
 
 	let settings = $derived(data.body.settings)
-	let pageUrl = $derived(canonical($page.url.pathname))
+	let pageUrl = $derived(canonical(page.url.pathname))
 	let ogImage = $derived(optimize(settings?.image?.asset?.url, { w: 1200 }) ?? '')
 
 	let organizationLd = $derived({

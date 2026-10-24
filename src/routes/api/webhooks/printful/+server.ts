@@ -1,7 +1,6 @@
 import { deleteProduct, upsertProduct } from '$utils/stripe.js'
 import { sendOrderCreatedNotification, sendPackageShippedNotification } from '$utils/sendgrid'
 import { getProduct } from '$utils/printful.js'
-import { json } from '@sveltejs/kit'
 import type { PrintfulWebhook } from '$types'
 import { createOrReplacePrintfulProduct } from '$utils/sanity'
 
@@ -13,7 +12,7 @@ export async function POST({ request }: { request: Request }) {
       order: data.order
     })
 
-    return json({
+    return Response.json({
       res
     })
   }
@@ -24,7 +23,7 @@ export async function POST({ request }: { request: Request }) {
       shipment: data.shipment
     })
 
-    return json({
+    return Response.json({
       res
     })
   }
@@ -51,7 +50,7 @@ export async function POST({ request }: { request: Request }) {
       stripeRes = error
     }
 
-    return json({
+    return Response.json({
       res: {
         sanity: sanityRes,
         stripe: stripeRes
@@ -62,7 +61,7 @@ export async function POST({ request }: { request: Request }) {
   if (type === 'product_deleted') {
     const res = await deleteProduct({ id: data.sync_product.external_id })
 
-    return json({
+    return Response.json({
       res
     })
   }

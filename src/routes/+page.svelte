@@ -1,16 +1,16 @@
 <script lang="ts">
 	import type { PageData } from './$types'
-	import { page } from '$app/stores'
-	import Banner from '$lib/components/Banner.svelte'
+	import { page } from '$app/state'
+	import Banner from '#lib/components/Banner.svelte'
 	import Swiper from '$components/Swiper.svelte'
-	import SubscribeForm from '$lib/components/SubscribeForm.svelte'
-	import SocialLinks from '$lib/components/SocialLinks.svelte'
-	import ProductTile from '$lib/components/ProductTile.svelte'
+	import SubscribeForm from '#lib/components/SubscribeForm.svelte'
+	import SocialLinks from '#lib/components/SocialLinks.svelte'
+	import ProductTile from '#lib/components/ProductTile.svelte'
 
 	let { data }: { data: PageData } = $props()
 
 	const { projects, products } = data.body
-	let settings = $derived(($page.data as { body?: { settings?: { links?: { title: string; href: string }[] } } }).body?.settings ?? null)
+	let settings = $derived((page.data as { body?: { settings?: { links?: { title: string; href: string }[] } } }).body?.settings ?? null)
 
 	const featuredProject = projects.find(({ isFeatured }) => isFeatured) ?? projects[0]
 	const visibleProjects = projects.filter(({ status }) => status !== 'pre-production')

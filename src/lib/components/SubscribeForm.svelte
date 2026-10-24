@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { fly } from 'svelte/transition'
-	import { track } from '$lib/utils/umami'
-	import { HONEYPOT_FIELD } from '$lib/honeypot'
+	import { track } from '#lib/utils/umami.js'
+	import { HONEYPOT_FIELD } from '#lib/honeypot.js'
 
 	let {
 		endpoint = '/api/subscribe',

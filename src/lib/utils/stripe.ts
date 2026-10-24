@@ -1,5 +1,5 @@
 import Stripe from 'stripe'
-import { STRIPE_SECRET_KEY } from '$env/static/private'
+import { STRIPE_SECRET_KEY } from '$app/env/private'
 import { getId } from './printful'
 import type { PrintfulProduct } from '$types'
 
@@ -19,7 +19,6 @@ export async function createCheckoutSession({
   pathname = '/'
 }) {
   const { data: allProducts } = await getAllProducts()
-
   const lineItems: CheckoutLineItem[] = []
 
   allProducts.forEach((p) => {

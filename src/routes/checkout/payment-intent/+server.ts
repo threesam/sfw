@@ -15,6 +15,6 @@ export async function POST({ request }: { request: Request }) {
 
     return new Response(session.url)
   } catch (e) {
-    throw error(500, e as Error)
+    error(500, (e as Error).message)
   }
 }
