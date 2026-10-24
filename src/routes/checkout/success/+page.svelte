@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { PageData } from './$types'
+	import PageSeo from '#lib/components/PageSeo.svelte'
 	import { optimize } from '#lib/utils/img.js'
 
 	let { data }: { data: PageData } = $props()
@@ -10,6 +11,8 @@
 	// so this URL can't tell a real purchase from a refresh/direct-visit/bot. See
 	// PR "umami tracking robustness" for the session-verified upgrade path.
 </script>
+
+<PageSeo title={settings?.title ?? 'Skeleton Flowers and Water'} />
 
 <section class="relative flex h-screen items-center justify-center">
 	<img

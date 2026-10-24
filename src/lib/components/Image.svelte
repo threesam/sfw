@@ -27,8 +27,13 @@
 	let optimized = $derived(optimize(resolvedSrc, { w: width }))
 	// Sanity asset filenames end in -<w>x<h>.<ext>. Handing the browser that ratio
 	// reserves the box before the lazy image arrives, so the content below it
-	// doesn't jump (it measured CLS 0.23 on /about). Other hosts: no hint.
-	let dims = $derived(resolvedSrc.match(/-(\d+)x(\d+)\.\w+$/))
+	// doesn't jump (it measured CLS 0.23 on /about). Other hosts, and cropped
+	// (rect=) URLs whose ratio differs from the original: no hint.
+	let dims = $derived(
+		resolvedSrc.includes('cdn.sanity.io') && !resolvedSrc.includes('rect=')
+			? resolvedSrc.match(/-(\d+)x(\d+)\.\w+(?:\?|$)/)
+			: null
+	)
 </script>
 
 <figure class={`h-full max-h-min w-full ${objectFit === 'contain' ? 'aspect-square' : ''}`}>
