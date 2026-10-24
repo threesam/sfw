@@ -25,6 +25,10 @@
 	let resolvedSrc = $derived(src || defaultSrc)
 	let resolvedAlt = $derived(src ? alt || '' : defaultAlt)
 	let optimized = $derived(optimize(resolvedSrc, { w: width }))
+	// Sanity asset filenames end in -<w>x<h>.<ext>. Handing the browser that ratio
+	// reserves the box before the lazy image arrives, so the content below it
+	// doesn't jump (it measured CLS 0.23 on /about). Other hosts: no hint.
+	let dims = $derived(resolvedSrc.match(/-(\d+)x(\d+)\.\w+$/))
 </script>
 
 <figure class={`h-full max-h-min w-full ${objectFit === 'contain' ? 'aspect-square' : ''}`}>
@@ -35,6 +39,8 @@
 			}`}
 			in:fade
 			src={optimized}
+			width={dims?.[1]}
+			height={dims?.[2]}
 			alt={resolvedAlt}
 			loading={priority ? 'eager' : 'lazy'}
 			decoding={priority ? 'sync' : 'async'}
